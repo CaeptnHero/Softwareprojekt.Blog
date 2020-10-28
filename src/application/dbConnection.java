@@ -2,15 +2,15 @@ package application;
 
 import java.sql.*;
 
-public class dbConnection {
-	final String dbUrl = "jdbc:mysql://localhost:3306/mydb?autoReconnect=true&serverTimezone=UTC";
-	final String dbUsername = "";
+public class DBConnection {
+	final String dbUrl = "jdbc:mysql://localhost:3306/blog?autoReconnect=true&serverTimezone=UTC";
+	final String dbUsername = "root";
 	final String dbPassword = "";
 	
 	private Connection connection;
 	private Statement statement;
 	
-	public dbConnection() {
+	public DBConnection() {
 		connection = null;
 		statement = null;
 	}
@@ -43,6 +43,4 @@ public class dbConnection {
 		}
 		return -1;
 	}
-	
-	
 }
