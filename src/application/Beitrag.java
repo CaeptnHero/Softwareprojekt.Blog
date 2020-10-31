@@ -8,11 +8,11 @@ public abstract class Beitrag {
 	private String text;
 	private LocalDateTime dateTime;
 	private Nutzer verfasser;
+	private Beitrag oberbeitrag;
 	private ArrayList<Kommentar> kommentare;
-	private Beitrag oberBeitrag;
 	
 	// ctor for UI
-	public Beitrag(Nutzer verfasser, String text) {
+	public Beitrag(Nutzer verfasser, String text, Beitrag oberbeitrag) {
 		this.verfasser = verfasser;
 		this.text = text;
 		this.dateTime = LocalDateTime.now();
@@ -23,7 +23,7 @@ public abstract class Beitrag {
 	}
 	
 	// ctor for db
-	public Beitrag(int id, Nutzer verfasser, String text, LocalDateTime dateTime) {
+	public Beitrag(int id, Nutzer verfasser, String text, LocalDateTime dateTime, Beitrag oberbeitrag) {
 		this.id = id;
 		this.verfasser = verfasser;
 		this.text = text;
@@ -50,8 +50,16 @@ public abstract class Beitrag {
 		return verfasser;
 	}
 	
+	public Beitrag getOberbeitrag() {
+		return oberbeitrag;
+	}
+	
 	public void addKommentar(Kommentar k) {
 		kommentare.add(k);
+	}
+	
+	public ArrayList<Kommentar> getKommentare() {
+		return kommentare;
 	}
 	
 	public void delteKommentar(Kommentar k) {
@@ -63,6 +71,6 @@ public abstract class Beitrag {
 		for(Beitrag b: kommentare) {
 			
 		}
-		oberBeitrag.delteKommentar((Kommentar)this); //delete ref
+		oberbeitrag.delteKommentar((Kommentar)this); //delete ref
 	}
 }

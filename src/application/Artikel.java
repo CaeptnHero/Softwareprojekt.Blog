@@ -7,13 +7,13 @@ public class Artikel extends Beitrag {
 	
 	// ctor for UI
 	public Artikel(Nutzer verfasser, String titel, String text) {
-		super(verfasser, text);
+		super(verfasser, text, null);
 		this.titel = titel;
 	}
 	
 	// ctor for db
 	public Artikel(int id, Nutzer verfasser, String titel, String text, LocalDateTime dateTime) {
-		super(id, verfasser, text, dateTime);
+		super(id, verfasser, text, dateTime, null);
 		this.titel = titel;
 	}
 	
