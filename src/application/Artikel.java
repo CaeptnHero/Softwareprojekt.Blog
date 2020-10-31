@@ -27,5 +27,7 @@ public class Artikel extends Beitrag {
 	
 	public void delete() {
 		super.delete();
+		//PLACEHOLDER ArtikelListe.remove(this)		//sich selbst löschen
+		//removeFromDB(this)						//sich selbst aus db löschen
 	}
 }

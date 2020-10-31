@@ -14,6 +14,8 @@ public class Kommentar extends Beitrag {
 	}
 	
 	public void delete() {
-		super.delete();
+		super.delete();	//eigene kommentare löschen
+		this.getOberbeitrag().delteKommentar(this);	//sich selbst löschen
+		//removeFromDB(this)						//sich selbst aus db löschen
 	}
 }

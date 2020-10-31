@@ -8,7 +8,7 @@ public abstract class Beitrag {
 	private String text;
 	private LocalDateTime dateTime;
 	private Nutzer verfasser;
-	private Beitrag oberbeitrag;
+	private Beitrag oberbeitrag;	//unötig?
 	private ArrayList<Kommentar> kommentare;
 	
 	// ctor for UI
@@ -63,14 +63,15 @@ public abstract class Beitrag {
 	}
 	
 	public void delteKommentar(Kommentar k) {
-		kommentare.remove(k);
+		//removeFromDB(k)		//kommentar aus db löschen
+		kommentare.remove(k);	//kommentar löschen
 	}
 	
 	public void delete() {
-		//delete childs
-		for(Beitrag b: kommentare) {
+		for(Kommentar k: kommentare) {
+			k.delete(); //recursion
 			
+			this.delteKommentar(k);	//eigene kommentare löschen
 		}
-		oberbeitrag.delteKommentar((Kommentar)this); //delete ref
 	}
 }
