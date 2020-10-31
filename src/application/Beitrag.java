@@ -8,7 +8,7 @@ public abstract class Beitrag {
 	private String text;
 	private LocalDateTime dateTime;
 	private Nutzer verfasser;
-	private Beitrag oberbeitrag;	//unötig?
+	private Beitrag oberbeitrag;
 	private ArrayList<Kommentar> kommentare;
 	
 	// ctor for UI
