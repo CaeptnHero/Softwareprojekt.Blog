@@ -13,14 +13,14 @@ public class MainController {
 	private TextField tfName;
 
 	@FXML
-	private JPasswortField pfPasswort;
+	private JPasswordField pfPasswort;
 
 	@FXML
 	private Button btLogin;
 
 	@FXML
 	private void handleButtonLoginAction(ActionEvent event) {
-		System.out.println(tfName.getText() + " " + pfPasswort.getText());
+		System.out.println(tfName.getText() + " " + new String(pfPasswort.getPassword()));
 	}
 
 }
