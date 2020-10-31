@@ -1,18 +1,19 @@
 package application;
 
-import java.util.*;
+import java.time.LocalDateTime;
 
 public class Kommentar extends Beitrag {
-	
-	private ArrayList<Kommentar> unterKommentare;
-	private Kommentar oberKommentar;
-	
-	public Kommentar() {
-		oberKommentar = null;
-		unterKommentare = new ArrayList<Kommentar>();
+	// ctor for UI
+	public Kommentar(Nutzer verfasser, String text) {
+		super(verfasser, text);
 	}
 	
-	public void addUnterKommentar(Kommentar k) {
-		unterKommentare.add(k);
+	// ctor for db
+	public Kommentar(int id, Nutzer verfasser, String text, LocalDateTime dateTime) {
+		super(id, verfasser, text, dateTime);
+	}
+	
+	public void delete() {
+		super.delete();
 	}
 }
