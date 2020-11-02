@@ -62,9 +62,9 @@
                                  <children>
                                     <Label text="Name:" />
                                     <Label text="Passwort:" GridPane.rowIndex="1" />
-                                    <TextField GridPane.columnIndex="1" />
-                                    <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Button mnemonicParsing="false" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="tfName" GridPane.columnIndex="1" />
+                                    <PasswordField fx:id="pfPasswort" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button fx:id="btLogin" mnemonicParsing="false" onAction="#handleButtonLoginAction" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children></AnchorPane>
@@ -92,7 +92,7 @@
                                     <Label text="Passwort:" GridPane.rowIndex="1" />
                                     <TextField GridPane.columnIndex="1" />
                                     <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Button mnemonicParsing="false" text="Registrieren" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Button fx:id="btRegister" mnemonicParsing="false" text="Registrieren" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children></AnchorPane>

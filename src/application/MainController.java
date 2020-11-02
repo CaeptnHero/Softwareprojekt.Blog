@@ -19,8 +19,16 @@ public class MainController {
 	private Button btLogin;
 
 	@FXML
+	private Button btRegister;
+
+	@FXML
 	private void handleButtonLoginAction(ActionEvent event) {
 		System.out.println(tfName.getText() + " " + pfPasswort.getText());
+
+	@FXML
+	private void handleButtonRegisterAction(ActionEvent event) {
+		System.out.println(tfName.getText() + " " + pfRegister.getText());
+	}
 	}
 
 }
