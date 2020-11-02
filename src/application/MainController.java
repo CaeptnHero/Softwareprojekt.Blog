@@ -28,7 +28,7 @@ public class MainController implements Initializable {
 
 	@FXML
 	private void handleButtonRegisterAction(ActionEvent event) {
-		System.out.println(tfName.getText() + " " + new String(pfPasswort.getText()));
+		System.out.println(tfName.getText() + " " + pfPasswort.getText());
 	}
 
 	@Override
