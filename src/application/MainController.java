@@ -28,11 +28,10 @@ public class MainController {
 
 	@FXML
 	private void handleButtonRegisterAction(ActionEvent event) {
-		System.out.println(tfName.getText() + " " + pfPasswort.getText());
-	
+		System.out.println(tfName.getText() + " " + new String(pfPasswort.getPassword()));
 	}
-		System.out.println(tfName.getText() + " " + new String(btPasswort.getPassword()));
 
-	}
+
+}
 
 
