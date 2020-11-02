@@ -1,19 +1,19 @@
 package application;
 
-import java.awt.Button;
-import java.awt.event.ActionEvent;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javax.swing.*;
+import javafx.event.ActionEvent;
+import javafx.fxml.*;
+import javafx.scene.control.*;
 
-public class MainController {
+public class MainController implements Initializable {
 
 	@FXML
 	private TextField tfName;
 
 	@FXML
-	private JPasswordField pfPasswort;
+	private PasswordField pfPasswort;
 
 	@FXML
 	private Button btLogin;
@@ -28,10 +28,14 @@ public class MainController {
 
 	@FXML
 	private void handleButtonRegisterAction(ActionEvent event) {
-		System.out.println(tfName.getText() + " " + new String(pfPasswort.getPassword()));
+		System.out.println(tfName.getText() + " " + new String(pfPasswort.getText()));
 	}
 
-
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 
