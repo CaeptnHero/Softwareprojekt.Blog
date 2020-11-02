@@ -16,8 +16,8 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			DBConnection test = new DBConnection();
-			test.connect();
+			//DBConnection test = new DBConnection(); //TEST ONLY
+			//test.connect(); //TEST ONLY
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
