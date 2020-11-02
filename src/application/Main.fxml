@@ -92,7 +92,7 @@
                                     <Label text="Passwort:" GridPane.rowIndex="1" />
                                     <TextField GridPane.columnIndex="1" />
                                     <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Button fx:id="btRegister" mnemonicParsing="false" text="Registrieren" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Button fx:id="btRegister" mnemonicParsing="false" onAction="#handleButtonRegisterAction" text="Registrieren" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children></AnchorPane>
