@@ -43,4 +43,15 @@ public class DBConnection {
 		}
 		return -1;
 	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+	
+	public Statement getStatement() {
+		return statement;
+	}
+	
+
+	
 }
