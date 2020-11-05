@@ -16,8 +16,8 @@ public class Blogger extends Nutzer {
 		this.passwort = passwort;
 	}
 	
-	public Artikel createArticle() {
-		Artikel a = new Artikel(null, nutzername, nutzername);
+	public Artikel createArticle(String titel, String text) {
+		Artikel a = new Artikel(null, titel, text);
 		String sql = "INSERT INTO beitrag VALUES (NULL, CURRENT_DATE(), '1', NULL)";
 		DBConnection db = new DBConnection();
 		db.connect();

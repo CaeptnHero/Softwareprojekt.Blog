@@ -27,7 +27,7 @@ public class DBConnection {
 	
 	/**
 	 * Führt eine SQL-Query aus (SELECT, ...).
-	 * @param sql SQL-Statement das ausgeführt werden soll.
+	 * @param sql SQL-Befehl das ausgeführt werden soll.
 	 * @return Resultset, welches alle zeilen der ausgeführten Abfrage zurückgibt.
 	 */
 	public ResultSet executeQuery(String sql) {
@@ -43,7 +43,7 @@ public class DBConnection {
 	
 	/**
 	 * Führt eine SQL-Update aus (INSERT, UPDATE, ...).
-	 * @param sql SQL-Statement das ausgeführt werden soll.
+	 * @param sql SQL-Befehl das ausgeführt werden soll.
 	 * @return Resultset, welches alle generierten Schlüssel zurückgibt.
 	 */
 	public ResultSet executeUpdate(String sql) {
