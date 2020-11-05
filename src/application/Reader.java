@@ -12,4 +12,8 @@ public class Reader extends Nutzer {
 		this.nutzername = nutzername;
 		this.passwort = passwort;
 	}
+	
+	public Reader() {
+		
+	}
 }
