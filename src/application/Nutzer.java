@@ -1,9 +1,9 @@
 package application;
 
 public abstract class Nutzer {
-	private int id;
-	private String nutzername;
-	private String passwort;
+	protected int id;
+	protected String nutzername;
+	protected String passwort;
 	
 	public int getId() {
 		return id;
