@@ -27,6 +27,11 @@ public class DBConnection {
 		}
 	}
 	
+	/**
+	 * Führt eine SQL-Query aus (SELECT, ...).
+	 * @param sql SQL-Befehl das ausgeführt werden soll.
+	 * @return Resultset, welches alle zeilen der ausgeführten Abfrage zurückgibt.
+	 */
 	public ResultSet executeQuery(String sql) {
 		try {
 			statement = connection.createStatement();
@@ -38,15 +43,21 @@ public class DBConnection {
 		return null;
 	}
 	
-	public int executeUpdate(String sql) {
+	/**
+	 * Führt eine SQL-Update aus (INSERT, UPDATE, ...).
+	 * @param sql SQL-Befehl das ausgeführt werden soll.
+	 * @return Resultset, welches alle generierten Schlüssel zurückgibt.
+	 */
+	public ResultSet executeUpdate(String sql) {
 		try {
 			statement = connection.createStatement();
-			return statement.executeUpdate(sql);
+			statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			return statement.getGeneratedKeys();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;
+		return null;
 	}
 	
 	public void close() {
@@ -137,6 +148,6 @@ public class DBConnection {
 		return statement;
 	}
 	
-
+	
 	
 }

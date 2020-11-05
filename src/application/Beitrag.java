@@ -30,6 +30,10 @@ public abstract class Beitrag {
 		this.dateTime = dateTime;
 	}
 	
+	public Beitrag() {
+		
+	}
+	
 	public int getId() {
 		return id;
 	}
