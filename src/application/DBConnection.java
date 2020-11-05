@@ -1,4 +1,3 @@
-package application;
 
 import java.sql.*;
 
@@ -76,4 +75,15 @@ public class DBConnection {
 		}
 		return null;
 	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+	
+	public Statement getStatement() {
+		return statement;
+	}
+	
+
+	
 }
