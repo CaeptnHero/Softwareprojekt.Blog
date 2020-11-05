@@ -58,6 +58,12 @@ public abstract class Beitrag {
 		kommentare.add(k);
 	}
 	
+	public void addKommentar(ArrayList<Kommentar> kommentare) {
+		for (Kommentar k : kommentare) {
+			this.kommentare.add(k);
+		}
+	}
+	
 	public ArrayList<Kommentar> getKommentare() {
 		return kommentare;
 	}
