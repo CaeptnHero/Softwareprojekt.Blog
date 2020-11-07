@@ -11,10 +11,16 @@ import javafx.scene.control.*;
 public class MainController implements Initializable {
 
 	@FXML
-	private TextField tfName;
+	private TextField tfNameLogin;
+	
+	@FXML
+	private TextField tfNameRegister;
 
 	@FXML
-	private PasswordField pfPasswort;
+	private PasswordField pfPasswortLogin;
+	
+	@FXML
+	private PasswordField pfPasswortRegister;
 
 	@FXML
 	private Button btLogin;
@@ -25,10 +31,10 @@ public class MainController implements Initializable {
 	@FXML
 	private void handleButtonLoginAction(ActionEvent event) {
 		
-		System.out.println(tfName.getText() + " " + pfPasswort.getText());
+		System.out.println(tfNameLogin.getText() + " " + pfPasswortLogin.getText());
 		AuthentifizierungsController ac = new AuthentifizierungsController();
 		try {
-			ac.Login(ac.DatenAusDbLesen(), tfName.getText(), pfPasswort.getText());
+			ac.Login(ac.DatenAusDbLesen(), tfNameLogin.getText(), pfPasswortLogin.getText());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -38,10 +44,10 @@ public class MainController implements Initializable {
 	@FXML
 	private void handleButtonRegisterAction(ActionEvent event) {
 		
-		System.out.println(tfName.getText() + " " + pfPasswort.getText());
+		System.out.println(tfNameRegister.getText() + " " + pfPasswortRegister.getText());
 		AuthentifizierungsController ac = new AuthentifizierungsController();
 		try {
-			ac.Regestrieren(ac.DatenAusDbLesen(), tfName.getText(), pfPasswort.getText());
+			ac.Regestrieren(ac.DatenAusDbLesen(), tfNameRegister.getText(), pfPasswortRegister.getText());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

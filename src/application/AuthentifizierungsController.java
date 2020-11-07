@@ -31,7 +31,7 @@ public class AuthentifizierungsController {
 				NutzerListe.add(n);
 				}
 	
-		//Dient der Kontrolle (Kann später entfernt werden
+		//Dient der Kontrolle (Kann später entfernt werden)
 		for (Nutzer n : NutzerListe)
 			System.out.println(n.getId() + " " + n.getNutzername() + " " + n.getPasswort());
 		
