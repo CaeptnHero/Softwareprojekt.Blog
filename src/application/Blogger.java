@@ -18,11 +18,12 @@ public class Blogger extends Nutzer {
 	
 	public Blogger() {
 		// TODO Auto-generated constructor stub
+		this.id = 1;
 	}
 
 	public Artikel createArticle(String titel, String text) {
 		Artikel a = new Artikel(null, titel, text);
-		String sql = "INSERT INTO beitrag VALUES (NULL, CURRENT_DATE(), '1', NULL)";
+		String sql = "INSERT INTO beitrag VALUES (NULL, CURRENT_DATE()," + this.id + ", NULL)";
 		DBConnection db = new DBConnection();
 		db.connect();
 		ResultSet res =	db.executeUpdate(sql);
