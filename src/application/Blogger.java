@@ -16,6 +16,10 @@ public class Blogger extends Nutzer {
 		this.passwort = passwort;
 	}
 	
+	public Blogger() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Artikel createArticle(String titel, String text) {
 		Artikel a = new Artikel(null, titel, text);
 		String sql = "INSERT INTO beitrag VALUES (NULL, CURRENT_DATE(), '1', NULL)";
@@ -30,8 +34,9 @@ public class Blogger extends Nutzer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		a.setId(autoincrement);
 		db.executeUpdate("INSERT INTO artikel VALUES (" + autoincrement +  ", '" + a.getTitel() + "', '" + a.getText() +"');");
 		db.close();
-		return null;
+		return a;
 	}
 }

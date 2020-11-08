@@ -62,6 +62,7 @@ public class DBConnection {
 	
 	public void close() {
 		try {
+			statement.close();
 			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
