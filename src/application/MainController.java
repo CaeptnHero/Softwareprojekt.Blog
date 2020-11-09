@@ -76,14 +76,7 @@ public class MainController implements Initializable {
 	
 	@FXML
 	private void handleButtonWebViewAction(ActionEvent event) {
-		System.out.println(tfNameLogin.getText() + " " + pfPasswortLogin.getText());
-		AuthentifizierungsController ac = new AuthentifizierungsController();
-		try {
-			ac.Login(ac.DatenAusDbLesen(), tfNameLogin.getText(), pfPasswortLogin.getText());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 
