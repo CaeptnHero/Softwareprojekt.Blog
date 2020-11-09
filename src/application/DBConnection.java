@@ -77,12 +77,13 @@ public class DBConnection {
 		try {
 			res.next();
 			if(res.getInt("rowcount") == 1) {
-				if (res.getBoolean("istBlogger")) {
-					return new Blogger(res.getInt("NID"),res.getString("Nutzername"),res.getString("Passwort"));
-				}
-				else {
-					return new Reader(res.getInt("NID"),res.getString("Nutzername"),res.getString("Passwort"));
-				}
+				int nid = res.getInt("NID");
+				String username = res.getString("Nutzername");
+				String pw = res.getString("Passwort");
+				if (res.getBoolean("istBlogger"))
+					return new Blogger(nid,username,pw);
+				else 
+					return new Reader(nid,username,pw);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -99,7 +100,7 @@ public class DBConnection {
 		try {
 			while (res.next()) {
 				int id = res.getInt("b.bid");
-				Nutzer verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
+				Blogger verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
 				String titel = res.getString("a.titel");
 				String text = res.getString("a.text");
 				LocalDateTime dateTime = LocalDateTime.parse(res.getString("b.datum"));	//TODO: testen ob das parsen funktioniert
@@ -148,7 +149,4 @@ public class DBConnection {
 	public Statement getStatement() {
 		return statement;
 	}
-	
-	
-	
 }

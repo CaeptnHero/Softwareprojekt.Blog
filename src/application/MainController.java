@@ -74,7 +74,8 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		
+		webView = new WebView();
+		WebEngine engine = webView.getEngine();
 	}
 }
 
