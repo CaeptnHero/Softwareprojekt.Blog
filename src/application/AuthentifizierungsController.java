@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 
-//Ließt die Daten aus der DB von der Tabelle nutzer
+//Lieï¿½t die Daten aus der DB von der Tabelle nutzer
 public class AuthentifizierungsController {
 	
 	private static String sql;
@@ -31,7 +31,7 @@ public class AuthentifizierungsController {
 				NutzerListe.add(n);
 				}
 	
-		//Dient der Kontrolle (Kann später entfernt werden)
+		//Dient der Kontrolle (Kann spï¿½ter entfernt werden)
 		for (Nutzer n : NutzerListe)
 			System.out.println(n.getId() + " " + n.getNutzername() + " " + n.getPasswort());
 		
