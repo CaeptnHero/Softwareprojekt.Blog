@@ -40,6 +40,9 @@ public class MainController implements Initializable {
 	
 	@FXML
 	private WebView webView;
+	
+	@FXML
+	private Button btnWW;
 
 	@FXML
 	private void handleButtonLoginAction(ActionEvent event) {
@@ -70,6 +73,19 @@ public class MainController implements Initializable {
 	private void handleButtonVeroeffentlichenAction(ActionEvent event) {
 		new Blogger().createArticle(tfTitel.getText(), taText.getText()); // FIXME: Blogger aus anderer Quelle bekommen.
 	}
+	
+	@FXML
+	private void handleButtonWebViewAction(ActionEvent event) {
+		System.out.println(tfNameLogin.getText() + " " + pfPasswortLogin.getText());
+		AuthentifizierungsController ac = new AuthentifizierungsController();
+		try {
+			ac.Login(ac.DatenAusDbLesen(), tfNameLogin.getText(), pfPasswortLogin.getText());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
