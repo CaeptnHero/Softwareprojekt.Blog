@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 
-//Ließt die Daten aus der DB von der Tabelle nutzer
+//Lieï¿½t die Daten aus der DB von der Tabelle nutzer
 public class AuthentifizierungsController {
 	
 	private static String sql;
@@ -25,13 +25,13 @@ public class AuthentifizierungsController {
 			rs = dbc.executeQuery(sql);
 			while (rs.next()) {
 				Nutzer n = new Reader();
-				n.setId(rs.getInt("id"));
+				n.setId(rs.getInt("nid"));
 				n.setNutzername(rs.getString("nutzername"));          
 				n.setPasswort(rs.getString("passwort"));
 				NutzerListe.add(n);
 				}
 	
-		//Dient der Kontrolle (Kann später entfernt werden)
+		//Dient der Kontrolle (Kann spï¿½ter entfernt werden)
 		for (Nutzer n : NutzerListe)
 			System.out.println(n.getId() + " " + n.getNutzername() + " " + n.getPasswort());
 		
@@ -76,7 +76,7 @@ public class AuthentifizierungsController {
 			DBConnection dbc = new DBConnection();
 			try {
 				dbc.connect();
-				sql ="INSERT INTO nutzer (id, nutzername, passwort) VALUES (NULL, '" + nutzername + "', '" + passwort + "')";
+				sql ="INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
 				dbc.executeUpdate(sql);
 				System.out.println("Benutzer wurde registriert");
 				JOptionPane.showMessageDialog(null,"Benutzer wurde registriert"); 
