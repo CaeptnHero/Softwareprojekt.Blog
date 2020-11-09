@@ -112,6 +112,6 @@
       </VBox>
    </center>
    <top>
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="684.0" text="Öffne Blog" />
+      <Button fx:id="btnWW" mnemonicParsing="false" onAction="#handleButtonWebViewAction" prefHeight="25.0" prefWidth="684.0" text="Öffne Blog" />
    </top>
 </BorderPane>
