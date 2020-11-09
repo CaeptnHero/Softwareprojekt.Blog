@@ -46,8 +46,8 @@ public class MainController implements Initializable {
 		System.out.println(tfNameLogin.getText() + " " + pfPasswortLogin.getText());
 		AuthentifizierungsController ac = new AuthentifizierungsController();
 		try {
-			ac.Login(ac.DatenAusDbLesen(), tfNameLogin.getText(), pfPasswortLogin.getText());
-		} catch (SQLException e) {
+			ac.Login(tfNameLogin.getText(), pfPasswortLogin.getText());
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -59,8 +59,8 @@ public class MainController implements Initializable {
 		System.out.println(tfNameRegister.getText() + " " + pfPasswortRegister.getText());
 		AuthentifizierungsController ac = new AuthentifizierungsController();
 		try {
-			ac.Regestrieren(ac.DatenAusDbLesen(), tfNameRegister.getText(), pfPasswortRegister.getText());
-		} catch (SQLException e) {
+			ac.Registrieren(tfNameRegister.getText(), pfPasswortRegister.getText());
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

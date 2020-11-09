@@ -141,12 +141,4 @@ public class DBConnection {
 		
 		return kommentare;
 	}
-	
- 	public Connection getConnection() {
-		return connection;
-	}
-	
-	public Statement getStatement() {
-		return statement;
-	}
 }
