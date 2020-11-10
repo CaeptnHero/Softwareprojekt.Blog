@@ -1,5 +1,6 @@
 package application;
 
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 
 public class Artikel extends Beitrag {
@@ -32,7 +33,18 @@ public class Artikel extends Beitrag {
 	
 	public void delete() {
 		super.delete();
+		
 		//PLACEHOLDER ArtikelListe.remove(this)		//sich selbst löschen
-		//removeFromDB(this)						//sich selbst aus db löschen
+		deleteFromDatabase();
+	
+	}
+	private void deleteFromDatabase() {
+		
+		String sql = "DELETE FROM artikel WHERE AID = " + this.getId();
+		DBConnection db = new DBConnection();
+		db.connect();
+		db.executeUpdate(sql);
+		sql = "DELETE FROM beitrag WHERE BID = " + this.getId();
+		db.executeUpdate(sql);
 	}
 }
