@@ -17,6 +17,10 @@ public class DBConnection {
 		statement = null;
 	}
 	
+	/**
+	 * Baut eine verbindung zur MySQL-Datenbank auf.
+	 * @author Daniel Isaak
+	 */
 	public void connect() {
 		try {
 			connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
@@ -29,8 +33,9 @@ public class DBConnection {
 	
 	/**
 	 * Führt eine SQL-Query aus (SELECT, ...).
-	 * @param sql SQL-Befehl das ausgeführt werden soll.
-	 * @return Resultset, welches alle zeilen der ausgeführten Abfrage zurückgibt.
+	 * @param sql SQL-Befehl das ausgefuehrt werden soll.
+	 * @return Resultset, welches alle zeilen der ausgefuehrten Abfrage zurückgibt.
+	 * @author Daniel Isaak
 	 */
 	public ResultSet executeQuery(String sql) {
 		try {
@@ -45,8 +50,9 @@ public class DBConnection {
 	
 	/**
 	 * Führt eine SQL-Update aus (INSERT, UPDATE, ...).
-	 * @param sql SQL-Befehl das ausgeführt werden soll.
+	 * @param sql SQL-Befehl das ausgefuehrt werden soll.
 	 * @return Resultset, welches alle generierten Schlüssel zurückgibt.
+	 * @author Daniel Isaak
 	 */
 	public ResultSet executeUpdate(String sql) {
 		try {
@@ -60,6 +66,10 @@ public class DBConnection {
 		return null;
 	}
 	
+	/**
+	 * Schließt die Verbindung zur MySQL-Datenbank.
+	 * @author Daniel Isaak
+	 */
 	public void close() {
 		try {
 			statement.close();
@@ -70,6 +80,13 @@ public class DBConnection {
 		}
 	}
 	
+	/**
+	* Fuert eine Datenbankabfrage aus, welcher nach einem bestimmten nutzer sucht und diesen zurückgibt.
+	* @param nutzername name des nutzers
+	* @param passwort passwort des nutzers
+	* @return Object, welches entweder ein Blogger oder ein Reader ist.
+	* @author Daniel Isaak
+	*/
 	public Object getUser(String nutzername, String passwort) {
 		String SQL = "SELECT COUNT(*) as rowcount, NID, Nutzername, Passwort, istBlogger FROM nutzer WHERE nutzer.Nutzername = \"" + nutzername + "\" AND nutzer.Passwort = \"" + passwort + "\"";
 		System.out.println(SQL);
