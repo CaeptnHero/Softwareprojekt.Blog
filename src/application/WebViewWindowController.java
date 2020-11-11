@@ -35,7 +35,7 @@ public class WebViewWindowController implements Initializable {
 		});
 
 		try {
-			webEngine.load(new File("www\\index.html").toURI().toURL().toString());
+			webEngine.load(new File("src\\www\\index.html").toURI().toURL().toString());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
