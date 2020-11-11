@@ -1,15 +1,16 @@
 package application;
 
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
-
+import java.io.IOException;
 import javafx.event.*;
 import javafx.fxml.*;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.web.*;
+import javafx.stage.*;
 
-public class MainController implements Initializable {
+public class MainController {
+	
+	private DBConnection dbc;
 
 	@FXML
 	private TextField tfNameLogin;
@@ -58,7 +59,6 @@ public class MainController implements Initializable {
 
 	@FXML
 	private void handleButtonRegisterAction(ActionEvent event) {
-		
 		System.out.println(tfNameRegister.getText() + " " + pfPasswortRegister.getText());
 		AuthentifizierungsController ac = new AuthentifizierungsController();
 		try {
@@ -76,15 +76,26 @@ public class MainController implements Initializable {
 	
 	@FXML
 	private void handleButtonWebViewAction(ActionEvent event) {
-		
+		Node source = (Node) event.getSource();
+		Stage oldStage = (Stage) source.getScene().getWindow();
+		//oldStage.close();
+		try {
+			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("WebViewWindow.fxml"));
+			WebViewWindowController mc = (WebViewWindowController) fxmlloader.getController();
+			
+			Parent root = (Parent) fxmlloader.load();
+			Stage stage = new Stage();
+			stage.setTitle("WebView");
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		webView = new WebView();
-		WebEngine engine = webView.getEngine();
+	
+	public void setDBConnection(DBConnection dbc) {
+		this.dbc = dbc;
 	}
 }
 
