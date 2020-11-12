@@ -77,7 +77,16 @@ public abstract class Beitrag {
 	}
 	
 	public void delteKommentar(Kommentar k) {
-		//removeFromDB(k)		//kommentar aus db löschen
+		//#region Kommentar aus DB löschen
+		String sql = "DELETE FROM kommentar WHERE KID = " + k.getId();
+		DBConnection db = new DBConnection();
+		db.connect();
+		db.executeUpdate(sql);
+		sql = "DELETE FROM beitrag WHERE BID = " + k.getId();
+		db.executeUpdate(sql);
+		//#endregion
+		
+		
 		kommentare.remove(k);	//kommentar löschen
 	}
 	

@@ -16,6 +16,15 @@ public class Kommentar extends Beitrag {
 	public void delete() {
 		super.delete();	//eigene kommentare löschen
 		this.getOberbeitrag().delteKommentar(this);	//sich selbst löschen
-		//removeFromDB(this)						//sich selbst aus db löschen
+		deleteFromDatabase(); // sich selnst aus db löschen
+	}
+	
+	private void deleteFromDatabase() {
+		String sql = "DELETE FROM kommentar WHERE KID = " + this.getId();
+		DBConnection db = new DBConnection();
+		db.connect();
+		db.executeUpdate(sql);
+		sql = "DELETE FROM beitrag WHERE BID = " + this.getId();
+		db.executeUpdate(sql);
 	}
 }
