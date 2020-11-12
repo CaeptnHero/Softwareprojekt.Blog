@@ -11,6 +11,8 @@ import javafx.stage.*;
 public class MainController {
 	
 	private DBConnection dbc;
+	
+	private WebViewWindowController mc;
 
 	@FXML
 	private TextField tfNameLogin;
@@ -81,8 +83,7 @@ public class MainController {
 		//oldStage.close();
 		try {
 			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("WebViewWindow.fxml"));
-			WebViewWindowController mc = (WebViewWindowController) fxmlloader.getController();
-			
+			mc = (WebViewWindowController) fxmlloader.getController();
 			Parent root = (Parent) fxmlloader.load();
 			Stage stage = new Stage();
 			stage.setTitle("WebView");
