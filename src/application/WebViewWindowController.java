@@ -23,14 +23,14 @@ public class WebViewWindowController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+
 		webEngine = webView.getEngine();
-		webEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
-			public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
-				if (newState == Worker.State.SUCCEEDED) {
-					jsbridge = new Bridge();
-					JSObject jso = (JSObject) webEngine.executeScript("window");
-					jso.setMember("bridge", jsbridge);
-				}
+		webEngine.setJavaScriptEnabled(true);
+		webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
+			if (newState == Worker.State.SUCCEEDED) {
+				jsbridge = new Bridge();
+				JSObject jso = (JSObject) webEngine.executeScript("window");
+				jso.setMember("bridge", jsbridge);
 			}
 		});
 
@@ -54,6 +54,10 @@ public class WebViewWindowController implements Initializable {
 	public class Bridge {
 		public void upcall() {
 			System.out.println("JS-UPCALL");
+			Artikel a = new Artikel(new Blogger(), "test", "filip ist ne cunt");
+			String test = String.format("uebergabe(new Artikel('%s','%s','%s'));","cunt",a.getTitel(),a.getText());
+			System.out.println(test);
+			webEngine.executeScript(test);
 		}
 	}
 }

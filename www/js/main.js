@@ -11,7 +11,18 @@ async function test() {
     }
 }
 
+function uebergabe(art) {
+    document.getElementById("p1").innerHTML = art["titel"] + ", " + art["text"];
+}
+
 function Sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
+class Artikel {
+    constructor(verfasser, titel, text) {
+        this.verfasser = verfasser;
+        this.titel = titel;
+        this.text = text;
+    }
+}
