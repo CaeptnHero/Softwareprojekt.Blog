@@ -19,6 +19,17 @@ function Sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
+class Beitrag {
+    constructor() {
+    }
+
+    anzeigen() {
+        let artikel = document.createElement('article');
+        artikel.className = 'post';
+        document.getElementById("content").appendChild(artikel);
+    }
+}
+
 class Artikel {
     constructor(verfasser, titel, text) {
         this.verfasser = verfasser;
