@@ -120,7 +120,9 @@ public class DBConnection {
 				Blogger verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
 				String titel = res.getString("a.titel");
 				String text = res.getString("a.text");
-				LocalDateTime dateTime = LocalDateTime.parse(res.getString("b.datum"));	//TODO: testen ob das parsen funktioniert
+				String date = res.getString("b.datum");
+				String formattedDate = date.substring(0,10) +"T" + date.substring(11,19);
+				LocalDateTime dateTime = LocalDateTime.parse(formattedDate);	//TODO: testen ob das parsen funktioniert
 				
 				Artikel a = new Artikel(id, verfasser, titel, text, dateTime);
 //				Alle Kommentare des Artikels abfragen
@@ -132,7 +134,6 @@ public class DBConnection {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
 		return artikel;
 	}
 	
