@@ -112,7 +112,7 @@ public class DBConnection {
 //	Alle artikel abfragen
 	public ArrayList<Artikel> getArtikel() {
 		ArrayList<Artikel> artikel = new ArrayList<>();
-		ResultSet res = executeQuery("select * from artikel a, beitrag b where a.aid = b.bid");
+		ResultSet res = executeQuery("select * from artikel a, beitrag b where a.aid = b.bid ORDER BY a.aid DESC");
 		
 		try {
 			while (res.next()) {
@@ -159,4 +159,5 @@ public class DBConnection {
 		
 		return kommentare;
 	}
+	
 }

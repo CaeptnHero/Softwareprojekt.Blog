@@ -3,6 +3,7 @@ window.onload = function() {
     test()
 }
 
+
 async function test() {
     while (true) {
         var h1 = this.document.querySelector('h1');
@@ -17,6 +18,11 @@ function uebergabe(art) {
 
 function Sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+function fill(art) {
+    document.getElementById("ti1").innerHTML = art["titel"];
+    document.getElementById("te1").innerHTML = art["text"];
 }
 
 class Beitrag {

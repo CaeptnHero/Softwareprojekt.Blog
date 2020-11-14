@@ -3,6 +3,7 @@ package application;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.*;
@@ -54,10 +55,24 @@ public class WebViewWindowController implements Initializable {
 	public class Bridge {
 		public void upcall() {
 			System.out.println("JS-UPCALL");
+			/*
 			Artikel a = new Artikel(new Blogger(), "test", "filip ist ne cunt");
 			String test = String.format("uebergabe(new Artikel('%s','%s','%s'));","cunt",a.getTitel(),a.getText());
 			System.out.println(test);
 			webEngine.executeScript(test);
+			*/
 		}
+		
+		public void fillWeb(int i) {
+			ArrayList<Artikel> a;
+			DBConnection db = new DBConnection();
+			db.connect();
+			a = db.getArtikel();
+			
+			for (int j = 0 + i -1; j <i; j++) {
+				String test = String.format("fill(new Artikel('%s','%s','%s'));",a.get(j).getVerfasser(),a.get(j).getTitel(),a.get(j).getText());
+				webEngine.executeScript(test);
+			}
+		}	
 	}
 }
