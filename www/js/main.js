@@ -1,19 +1,5 @@
 window.onload = function() {
-    
-    test()
-}
-
-
-async function test() {
-    while (true) {
-        var h1 = this.document.querySelector('h1');
-        h1.style.cssText = "color: #" + Math.floor(Math.random()*16777215).toString(16);
-        await Sleep(1000);
-    }
-}
-
-function uebergabe(art) {
-    document.getElementById("p1").innerHTML = art["titel"] + ", " + art["text"];
+    // on window loaded
 }
 
 function Sleep(milliseconds) {
