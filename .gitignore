@@ -23,3 +23,7 @@
 hs_err_pid*
 bin/
 .vscode/
+
+#IntelliJ DB anbindung
+.idea/dataSources/
+.idea/dataSources*.xml
