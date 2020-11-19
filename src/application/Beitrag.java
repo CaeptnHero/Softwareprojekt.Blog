@@ -1,5 +1,7 @@
 package application;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -16,10 +18,19 @@ public abstract class Beitrag {
 		this.verfasser = verfasser;
 		this.text = text;
 		this.dateTime = LocalDateTime.now();
-		kommentare = new ArrayList<Kommentar>();
-		
-		//this.id = ...
-		//get id from db auto inc
+		kommentare = new ArrayList<>();
+
+		String sql = String.format("INSERT INTO Beitrag (Datum, Verfasser, Oberbeitrag) VALUES (%s, %s, %s)", this.dateTime, this.verfasser, this.oberbeitrag);
+		DBConnection db = new DBConnection();
+		db.connect();
+		ResultSet res = db.executeUpdate(sql);
+		try {
+			if (res.next())
+				this.id = res.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	// ctor for db
@@ -67,9 +78,7 @@ public abstract class Beitrag {
 	}
 	
 	public void addKommentar(ArrayList<Kommentar> kommentare) {
-		for (Kommentar k : kommentare) {
-			this.kommentare.add(k);
-		}
+		this.kommentare.addAll(kommentare);
 	}
 	
 	public ArrayList<Kommentar> getKommentare() {

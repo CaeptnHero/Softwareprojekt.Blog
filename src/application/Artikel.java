@@ -10,6 +10,11 @@ public class Artikel extends Beitrag {
 	public Artikel(Blogger verfasser, String titel, String text) {
 		super(verfasser, text, null);
 		this.titel = titel;
+
+		String sql = String.format("INSERT INTO Artikel VALUES (%s, %s, %s)", this.getId(), titel, text);
+		DBConnection db = new DBConnection();
+		db.connect();
+		db.executeUpdate(sql);
 	}
 	
 	// ctor for db
