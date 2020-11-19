@@ -17,7 +17,7 @@
         </div>
     </header>
     <nav class="main-nav">
-        <div class="container">
+        <div id="container1">
             <ul>
                 <li onclick="bridge.fillWeb(1)" ><a href="#">TopicBox1</a></li>
                 <li onclick="bridge.fillWeb(2)" ><a href="#">TopicBox2</a></li>
@@ -29,20 +29,22 @@
     </nav>
     <section class="content">
         <article class="post">
-            <div class="container">
+            
                 <h2 id="ti1">Titel des Beitrags</h2>
                 <div class="columns">
                     <div class="item">
-                        <h4 id="te1" class="item-title">Text</h4>
+                        <p id="te1" class="item-title">Text</p>
                         <div class="fixed"><ul>
-                            <li>1</li>
-                            <li>2</li>
-                            <li class="next">...</li>
+                            <footer>
+                            <li onclick="bridge.fillWeb(1)" ><a href="#">1</a></li>
+                            <li onclick="bridge.fillWeb(2)" ><a href="#">2</a></li>
+                            <li onclick="bridge.fillWeb(3)" ><a href="#">...</a></li>
+                            </footer>
                         </ul>
                         </div>
                     </div>
                 </div>
-            </div>
+            
         </article>
     </section>
 </body>
