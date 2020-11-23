@@ -1,4 +1,6 @@
-package application;
+package Controller;
+
+import Model.Artikel;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -6,10 +8,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.*;
 import javafx.concurrent.Worker;
 import javafx.fxml.*;
 import javafx.scene.web.*;
+
 import netscape.javascript.JSObject;
 
 public class WebViewWindowController implements Initializable {

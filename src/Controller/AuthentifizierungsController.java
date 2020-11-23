@@ -1,4 +1,7 @@
-package application;
+package Controller;
+
+import Model.Nutzer;
+
 import javax.swing.JOptionPane;
 
 //Lie�t die Daten aus der DB von der Tabelle nutzer

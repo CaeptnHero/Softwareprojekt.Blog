@@ -1,9 +1,11 @@
-package application;
+package Model;
+
+import Controller.DBConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
 
 public abstract class Beitrag {
 	private int id;

@@ -1,6 +1,9 @@
-package application;
+package Controller;
+
+import Model.Blogger;
 
 import java.io.IOException;
+
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -82,7 +85,7 @@ public class MainController {
 		Stage oldStage = (Stage) source.getScene().getWindow();
 		//oldStage.close();
 		try {
-			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("WebViewWindow.fxml"));
+			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../View/WebViewWindow.fxml"));
 			mc = (WebViewWindowController) fxmlloader.getController();
 			Parent root = (Parent) fxmlloader.load();
 			Stage stage = new Stage();

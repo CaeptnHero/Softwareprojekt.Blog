@@ -1,4 +1,4 @@
-package application;
+package Model;
 
 public abstract class Nutzer {
 	protected int id;

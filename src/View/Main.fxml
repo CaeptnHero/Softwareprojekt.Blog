@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="251.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<BorderPane prefHeight="251.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <center>
       <VBox prefHeight="245.0" prefWidth="357.0" BorderPane.alignment="CENTER">
          <children>

@@ -1,4 +1,6 @@
-package application;
+package Controller;
+
+import Model.*;
 
 import java.sql.*;
 import java.time.LocalDateTime;

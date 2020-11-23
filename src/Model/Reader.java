@@ -1,4 +1,4 @@
-package application;
+package Model;
 
 public class Reader extends Nutzer {
 	public Reader(int id, String nutzername, String passwort) {

@@ -1,4 +1,6 @@
-package application;
+package Model;
+
+import Controller.DBConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
