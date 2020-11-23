@@ -6,7 +6,6 @@ h1 {
 }
 body {
     background:#2e3440;
-    font-family: base-font-family;
     color: rgb(206, 194, 194);
   }
   * {
@@ -19,11 +18,10 @@ body {
     margin: 0 auto;
   }
   .header {
-    background:#d8dee9;
+    background:#2e3440;
     padding: 10px;
   }
   .container1 {
-    
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -33,7 +31,7 @@ body {
 
   .container2{
     border: 2px solid;
-    color: #d8dee9;
+    color: #2e3440;
     padding: 20px 100px;
   }
 
@@ -65,7 +63,7 @@ body {
 /* Navigation-Bar */
 .main-nav {
   
-  color:#d8dee9;
+  color:#2e3440;
   transition: none;
 }
   a {
@@ -89,9 +87,9 @@ body {
       display: flex;
       text-transform: uppercase;
     }
-      :hover, :focus {
-        background: white;
-        color: darkblue;
+      :hover {
+        background: yellow;
+        color: #4c566a;
       }
     
     
@@ -109,16 +107,12 @@ body {
 }
 
 .columns {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  flex-wrap: wrap;
+
 }
   .item {
     padding: 25px;
     max-width: 47%;
-    background: white;
-    color:#d8dee9;
+    background: #2e3440;
     border-bottom: 5px solid;
     margin-bottom: 35px;
     position: relative;
@@ -126,16 +120,15 @@ body {
 }
 
     .item-title {
-      color: white;
+      color: #2e3440;
       font-size: 24px;
       margin: 0 0 5px 0;
-      font-family: heading-font-family;
     }
     .item-image {
       max-width: 100%;
     }
-    :hover, :focus {
-      background: #4c566a;
+    :hover {
+      background: #2e3440;
     }
       .social {
         position: absolute;
