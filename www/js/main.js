@@ -2,6 +2,10 @@ window.onload = function() {
     // on window loaded
 }
 
+window.onerror = function (msg, url, line) {
+    bridge.log(msg, url, line);
+}
+
 function Sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }

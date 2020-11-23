@@ -75,6 +75,10 @@ public class WebViewWindowController implements Initializable {
 				String test = String.format("fill(new Artikel('%s','%s','%s'));",a.get(j).getVerfasser(),a.get(j).getTitel(),a.get(j).getText());
 				webEngine.executeScript(test);
 			}
-		}	
+		}
+
+		public void log(String msg, String url, int line) {
+			System.out.println("Javascript error in " + url + " : " + line + "\n" + msg);
+		}
 	}
 }
