@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
-import Model.Nutzer;
+import model.Nutzer;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 //Lie�t die Daten aus der DB von der Tabelle nutzer
 public class AuthentifizierungsController {

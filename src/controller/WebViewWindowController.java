@@ -1,18 +1,18 @@
-package Controller;
+package controller;
 
-import Model.Artikel;
+import model.Artikel;
+import javafx.concurrent.Worker;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import javafx.concurrent.Worker;
-import javafx.fxml.*;
-import javafx.scene.web.*;
-
-import netscape.javascript.JSObject;
 
 public class WebViewWindowController implements Initializable {
 

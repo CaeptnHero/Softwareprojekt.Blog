@@ -1,15 +1,20 @@
-package Controller;
+package controller;
 
-import Model.Blogger;
+import model.Blogger;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-
-import javafx.event.*;
-import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.web.*;
-import javafx.stage.*;
 
 public class MainController {
 	
@@ -85,7 +90,7 @@ public class MainController {
 		Stage oldStage = (Stage) source.getScene().getWindow();
 		//oldStage.close();
 		try {
-			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../View/WebViewWindow.fxml"));
+			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../view/WebViewWindow.fxml"));
 			mc = (WebViewWindowController) fxmlloader.getController();
 			Parent root = (Parent) fxmlloader.load();
 			Stage stage = new Stage();

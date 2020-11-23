@@ -1,7 +1,7 @@
 package application;
 	
-import Controller.DBConnection;
-import Controller.MainController;
+import controller.DBConnection;
+import controller.MainController;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -19,7 +19,7 @@ public class Main extends Application {
 		dbc = new DBConnection();
 		
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/Main.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Main.fxml"));
 			BorderPane root = (BorderPane) loader.load();
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("../View/application.css").toExternalForm());
