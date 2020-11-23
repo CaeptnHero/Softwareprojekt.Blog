@@ -30,10 +30,7 @@ public abstract class Beitrag {
 		this.verfasser = verfasser;
 		this.text = text;
 		this.dateTime = dateTime;
-	}
-	
-	public Beitrag() {
-		
+		kommentare = new ArrayList<>();
 	}
 	
 	public int getId() {

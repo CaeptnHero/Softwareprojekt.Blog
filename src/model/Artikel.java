@@ -21,11 +21,6 @@ public class Artikel extends Beitrag {
 		super(id, verfasser, text, dateTime, null);
 		this.titel = titel;
 	}
-	
-	public Artikel() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public String getTitel() {
 		return titel;

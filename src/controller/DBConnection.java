@@ -129,16 +129,17 @@ public final class DBConnection {
 		
 		try {
 			while (res.next()) {
-				int id = res.getInt("b.bid");
+				int id = res.getInt("bid");
 				Blogger verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
-				String titel = res.getString("a.titel");
-				String text = res.getString("a.text");
-				String date = res.getString("b.datum");
-				String formattedDate = date.substring(0,10) +"T" + date.substring(11,19);
+				String titel = res.getString("titel");
+				String text = res.getString("text");
+				String date = res.getString("datum");
+				String formattedDate = date.substring(0,10) + "T" + date.substring(11,19);
 				LocalDateTime dateTime = LocalDateTime.parse(formattedDate);	//TODO: testen ob das parsen funktioniert
 				
 				Artikel a = new Artikel(id, verfasser, titel, text, dateTime);
 //				Alle Kommentare des Artikels abfragen
+
 				a.addKommentar(getKommentare(a));
 				
 				
@@ -146,6 +147,7 @@ public final class DBConnection {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return artikel;
 	}
@@ -157,10 +159,10 @@ public final class DBConnection {
 		
 		try {
 			while (res.next()) {
-				int id = res.getInt("b.bid");
+				int id = res.getInt("bid");
 				Nutzer verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
-				String text = res.getString("k.text");
-				LocalDateTime dateTime = LocalDateTime.parse(res.getString("b.datum"));	//TODO: testen ob das parsen funktioniert
+				String text = res.getString("text");
+				LocalDateTime dateTime = LocalDateTime.parse(res.getString("datum"));	//TODO: testen ob das parsen funktioniert
 				
 				Kommentar k = new Kommentar(id, verfasser, text, dateTime, Oberbeitrag);
 				k.addKommentar(getKommentare(k));	//rekursion

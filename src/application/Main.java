@@ -23,7 +23,7 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.setTitle("Blog");
-			System.out.println(DBConnection.getSeitenanzahl());
+
 			mc = loader.getController();
 			
 			primaryStage.show();
