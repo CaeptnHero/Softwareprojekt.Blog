@@ -16,8 +16,6 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
-		dbc = new DBConnection();
-		
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Main.fxml"));
 			BorderPane root = (BorderPane) loader.load();
@@ -26,9 +24,8 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.setTitle("Blog");
-			
+			System.out.println(DBConnection.getSeitenanzahl());
 			mc = loader.getController();
-			mc.setDBConnection(dbc);
 			
 			primaryStage.show();
 		} catch(Exception e) {

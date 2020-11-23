@@ -10,9 +10,7 @@ public class Kommentar extends Beitrag {
 		super(verfasser, text, oberbeitrag);
 
 		String sql = String.format("INSERT INTO Kommentar VALUES (%s, %s)", this.getId(), text);
-		DBConnection db = new DBConnection();
-		db.connect();
-		db.executeUpdate(sql);
+		DBConnection.executeUpdate(sql);
 	}
 	
 	// ctor for db
@@ -28,10 +26,8 @@ public class Kommentar extends Beitrag {
 	
 	private void deleteFromDatabase() {
 		String sql = "DELETE FROM kommentar WHERE KID = " + this.getId();
-		DBConnection db = new DBConnection();
-		db.connect();
-		db.executeUpdate(sql);
+		DBConnection.executeUpdate(sql);
 		sql = "DELETE FROM beitrag WHERE BID = " + this.getId();
-		db.executeUpdate(sql);
+		DBConnection.executeUpdate(sql);
 	}
 }

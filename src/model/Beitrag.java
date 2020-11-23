@@ -2,8 +2,6 @@ package model;
 
 import controller.DBConnection;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -23,17 +21,7 @@ public abstract class Beitrag {
 		kommentare = new ArrayList<>();
 
 		String sql = String.format("INSERT INTO Beitrag (Datum, Verfasser, Oberbeitrag) VALUES ('%s', %s, %s)", this.dateTime, this.verfasser.getId(), this.oberbeitrag == null ? "NULL" : this.oberbeitrag.getId());
-		DBConnection db = new DBConnection();
-		db.connect();
-		ResultSet res = db.executeUpdate(sql);
-		try {
-			if (res.next())
-				this.id = res.getInt(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		db.close();
+		this.id = DBConnection.executeUpdate(sql);
 	}
 	
 	// ctor for db
@@ -91,11 +79,9 @@ public abstract class Beitrag {
 	public void delteKommentar(Kommentar k) {
 		//#region Kommentar aus DB löschen
 		String sql = "DELETE FROM kommentar WHERE KID = " + k.getId();
-		DBConnection db = new DBConnection();
-		db.connect();
-		db.executeUpdate(sql);
+		DBConnection.executeUpdate(sql);
 		sql = "DELETE FROM beitrag WHERE BID = " + k.getId();
-		db.executeUpdate(sql);
+		DBConnection.executeUpdate(sql);
 		//#endregion
 		
 		

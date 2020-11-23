@@ -13,10 +13,7 @@ public class Artikel extends Beitrag {
 		this.titel = titel;
 
 		String sql = String.format("INSERT INTO Artikel VALUES (%s, '%s', '%s')", this.getId(), titel, text);
-		DBConnection db = new DBConnection();
-		db.connect();
-		db.executeUpdate(sql);
-		db.close();
+		DBConnection.executeUpdate(sql);
 	}
 	
 	// ctor for db
@@ -46,12 +43,9 @@ public class Artikel extends Beitrag {
 	
 	}
 	private void deleteFromDatabase() {
-		
 		String sql = "DELETE FROM artikel WHERE AID = " + this.getId();
-		DBConnection db = new DBConnection();
-		db.connect();
-		db.executeUpdate(sql);
+		DBConnection.executeUpdate(sql);
 		sql = "DELETE FROM beitrag WHERE BID = " + this.getId();
-		db.executeUpdate(sql);
+		DBConnection.executeUpdate(sql);
 	}
 }

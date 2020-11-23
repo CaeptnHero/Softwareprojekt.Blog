@@ -1,20 +1,24 @@
 package controller;
 
+import com.mysql.cj.result.Row;
 import model.*;
 
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetFactory;
+import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class DBConnection {
-	final String dbUrl = "jdbc:mysql://localhost:3306/blog?autoReconnect=true&serverTimezone=UTC";
-	final String dbUsername = "root";
-	final String dbPassword = "";
+public final class DBConnection {
+	static final String dbUrl = "jdbc:mysql://localhost:3306/blog?autoReconnect=true&serverTimezone=UTC";
+	static final String dbUsername = "root";
+	static final String dbPassword = "";
 	
-	private Connection connection;
-	private Statement statement;
-	
-	public DBConnection() {
+	private static Connection connection;
+	private static Statement statement;
+
+	private DBConnection() {
 		connection = null;
 		statement = null;
 	}
@@ -23,7 +27,7 @@ public class DBConnection {
 	 * Baut eine verbindung zur MySQL-Datenbank auf.
 	 * @author Daniel Isaak
 	 */
-	public void connect() {
+	public static void connect() {
 		try {
 			connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 		}
@@ -39,13 +43,19 @@ public class DBConnection {
 	 * @return Resultset, welches alle zeilen der ausgefuehrten Abfrage zurückgibt.
 	 * @author Daniel Isaak
 	 */
-	public ResultSet executeQuery(String sql) {
+	public static CachedRowSet executeQuery(String sql) {
 		try {
+			connect();
 			statement = connection.createStatement();
-			return statement.executeQuery(sql);
+			RowSetFactory factory = RowSetProvider.newFactory();
+			CachedRowSet rowset = factory.createCachedRowSet();
+			rowset.populate(statement.executeQuery(sql));
+			return rowset;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return null;
 	}
@@ -56,23 +66,29 @@ public class DBConnection {
 	 * @return Resultset, welches alle generierten Schlüssel zurückgibt.
 	 * @author Daniel Isaak
 	 */
-	public ResultSet executeUpdate(String sql) {
+	public static int executeUpdate(String sql) {
 		try {
+			connect();
 			statement = connection.createStatement();
 			statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			return statement.getGeneratedKeys();
+			ResultSet res = statement.getGeneratedKeys();
+			if(res.next()) {
+				return res.getInt(1);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close();
 		}
-		return null;
+		return -1;
 	}
 	
 	/**
 	 * Schließt die Verbindung zur MySQL-Datenbank.
 	 * @author Daniel Isaak
 	 */
-	public void close() {
+	public static void close() {
 		try {
 			statement.close();
 			connection.close();
@@ -89,7 +105,7 @@ public class DBConnection {
 	* @return Object, welches entweder ein Blogger oder ein Reader ist.
 	* @author Daniel Isaak
 	*/
-	public Object getUser(String nutzername, String passwort) {
+	public static Object getUser(String nutzername, String passwort) {
 		String SQL = "SELECT COUNT(*) as rowcount, NID, Nutzername, Passwort, istBlogger FROM nutzer WHERE nutzer.Nutzername = \"" + nutzername + "\" AND nutzer.Passwort = \"" + passwort + "\"";
 		System.out.println(SQL);
 		ResultSet res = executeQuery(SQL);
@@ -104,7 +120,7 @@ public class DBConnection {
 				else 
 					return new Reader(nid,username,pw);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -112,7 +128,7 @@ public class DBConnection {
 	}
 
 //	Alle artikel abfragen
-	public ArrayList<Artikel> getArtikel() {
+	public static ArrayList<Artikel> getArtikel() {
 		ArrayList<Artikel> artikel = new ArrayList<>();
 		ResultSet res = executeQuery("select * from artikel a, beitrag b where a.aid = b.bid ORDER BY a.aid DESC");
 		
@@ -140,7 +156,7 @@ public class DBConnection {
 	}
 	
 //	Alle Kommentare eines Oberbeitrags abfragen
-	private ArrayList<Kommentar> getKommentare(Beitrag Oberbeitrag) {
+	private static ArrayList<Kommentar> getKommentare(Beitrag Oberbeitrag) {
 		ArrayList<Kommentar> kommentare = new ArrayList<>();
 		ResultSet res = executeQuery("select * from beitrag b, kommentar k where b.bid = k.kid and b.oberbeitrag = " + Oberbeitrag.getId());
 		
@@ -162,7 +178,7 @@ public class DBConnection {
 		return kommentare;
 	}
 
-	public int getSeitenanzahl() {
+	public static int getSeitenanzahl() {
 		int anzahl = 0;
 		ResultSet res = executeQuery("SELECT count(*) from artikel");
 		try {

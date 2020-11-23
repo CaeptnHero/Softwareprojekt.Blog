@@ -67,9 +67,7 @@ public class WebViewWindowController implements Initializable {
 		
 		public void fillWeb(int i) {
 			ArrayList<Artikel> a;
-			DBConnection db = new DBConnection();
-			db.connect();
-			a = db.getArtikel();
+			a = DBConnection.getArtikel();
 			
 			for (int j = 0 + i -1; j <i; j++) {
 				String test = String.format("fill(new Artikel('%s','%s','%s'));",a.get(j).getVerfasser(),a.get(j).getTitel(),a.get(j).getText());
