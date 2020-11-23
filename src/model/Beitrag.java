@@ -22,7 +22,7 @@ public abstract class Beitrag {
 		this.dateTime = LocalDateTime.now();
 		kommentare = new ArrayList<>();
 
-		String sql = String.format("INSERT INTO Beitrag (Datum, Verfasser, Oberbeitrag) VALUES (%s, %s, %s)", this.dateTime, this.verfasser, this.oberbeitrag);
+		String sql = String.format("INSERT INTO Beitrag (Datum, Verfasser, Oberbeitrag) VALUES ('%s', %s, %s)", this.dateTime, this.verfasser.getId(), this.oberbeitrag == null ? "NULL" : this.oberbeitrag.getId());
 		DBConnection db = new DBConnection();
 		db.connect();
 		ResultSet res = db.executeUpdate(sql);
@@ -33,6 +33,7 @@ public abstract class Beitrag {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		db.close();
 	}
 	
 	// ctor for db

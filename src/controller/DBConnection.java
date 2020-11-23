@@ -161,5 +161,16 @@ public class DBConnection {
 		
 		return kommentare;
 	}
-	
+
+	public int getSeitenanzahl() {
+		int anzahl = 0;
+		ResultSet res = executeQuery("SELECT count(*) from artikel");
+		try {
+			res.next();
+			anzahl = res.getInt(1);
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return (int) Math.ceil(anzahl / 5.0);
+	}
 }

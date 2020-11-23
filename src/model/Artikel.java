@@ -12,10 +12,11 @@ public class Artikel extends Beitrag {
 		super(verfasser, text, null);
 		this.titel = titel;
 
-		String sql = String.format("INSERT INTO Artikel VALUES (%s, %s, %s)", this.getId(), titel, text);
+		String sql = String.format("INSERT INTO Artikel VALUES (%s, '%s', '%s')", this.getId(), titel, text);
 		DBConnection db = new DBConnection();
 		db.connect();
 		db.executeUpdate(sql);
+		db.close();
 	}
 	
 	// ctor for db

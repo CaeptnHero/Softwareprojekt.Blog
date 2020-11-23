@@ -24,7 +24,9 @@ public class Blogger extends Nutzer {
 	}
 
 	public Artikel createArticle(String titel, String text) {
-		String sql = "INSERT INTO beitrag VALUES (NULL, CURRENT_DATE()," + this.id + ", NULL)";
+		/*String sql = "INSERT INTO beitrag VALUES (NULL, CURRENT_DATE()," + this.id + ", NULL)";
+
+		System.out.println(sql);
 		DBConnection db = new DBConnection();
 		db.connect();
 		ResultSet res = db.executeUpdate(sql);
@@ -36,11 +38,15 @@ public class Blogger extends Nutzer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		Artikel a = new Artikel(this, titel, text);
+		//System.out.println("INSERT INTO artikel VALUES (" + autoincrement + ", '" + a.getTitel() + "', '" + a.getText() + "');");
 		a.setId(autoincrement);
-		db.executeUpdate("INSERT INTO artikel VALUES (" + autoincrement + ", '" + a.getTitel() + "', '" + a.getText() + "');");				
+		db.executeUpdate("INSERT INTO artikel VALUES (" + autoincrement + ", '" + a.getTitel() + "', '" + a.getText() + "');");
 		db.close();
-		return a;
+		return a;*/
+
+		return new Artikel(this, titel, text);
 	}
 
 	public void Artikeldelete ( Artikel art ) {
