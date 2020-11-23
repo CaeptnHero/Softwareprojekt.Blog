@@ -1,6 +1,7 @@
-package application;
+package model;
 
-import java.sql.ResultSet;
+import controller.DBConnection;
+
 import java.time.LocalDateTime;
 
 public class Artikel extends Beitrag {
