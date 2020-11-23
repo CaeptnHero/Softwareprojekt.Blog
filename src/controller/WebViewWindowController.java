@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 
 public class WebViewWindowController implements Initializable {
 
-	private DBConnection dbc;
 	private WebEngine webEngine;
 	private Bridge jsbridge;
 
@@ -45,10 +44,6 @@ public class WebViewWindowController implements Initializable {
 		}
 	}
 
-	public void setDBConnection(DBConnection dbc) {
-		this.dbc = dbc;
-	}
-
 	/**
 	 * Klasse die als Brueke zwischen Javascript und Java dient.
 	 * Alle methoden in dieser Klasse können über bridge.methode(); in Javascript/HTML aufgerufen werden.
@@ -69,7 +64,7 @@ public class WebViewWindowController implements Initializable {
 			ArrayList<Artikel> a;
 			a = DBConnection.getArtikel();
 			
-			for (int j = 0 + i -1; j <i; j++) {
+			for (int j = i -1; j <i; j++) {
 				String test = String.format("fill(new Artikel('%s','%s','%s'));",a.get(j).getVerfasser(),a.get(j).getTitel(),a.get(j).getText());
 				webEngine.executeScript(test);
 			}

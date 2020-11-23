@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	
 	private MainController mc;
-	private DBConnection dbc;
 	
 	@Override
 	public void start(Stage primaryStage) {

@@ -3,55 +3,56 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="css/main.css" rel="stylesheet">
     <title>Blog</title>
     <script src="js/main.js"></script>
 </head>
 
 <body>
-    <header class="header">
-        <div class="container">
-            <h1 class="site-title">Blog</h1>
-            <span class="site-tagline">An IT-Project</span>
-        </div>
-    </header>
-    <nav class="main-nav">
-        <div id="container1">
-            <ul>
-                <li onclick="bridge.fillWeb(1)" ><a href="#">TopicBox1</a></li>
-                <li onclick="bridge.fillWeb(2)" ><a href="#">TopicBox2</a></li>
-                <li onclick="bridge.fillWeb(3)" ><a href="#">TopicBox3</a></li>
-                <li onclick="bridge.fillWeb(4)" ><a href="#">TopicBox4</a></li>
-                <li onclick="bridge.fillWeb(5)" ><a href="#">TopicBox5</a></li>
-            </ul>
-        </div>
-    </nav>
-    <section class="content">
-        <article class="post">
-            <form>
-             <label for="tname">Titel des Beitrags</label><br>
-                <input type="text"  id="tname" name="tname"><br>
-                <label for="ttext">Text</label><br>
-                <input type="text"  id="ttext" name="ttext" >
-            </form>
-            <button type="button">Veröffentlichen</button>
-                <div class="columns">
-                    <div class="item">
-                        <p id="te1" class="item-title">Text</p>
-                        <div class="fixed"><ul>
-                            <footer>
-                            <li onclick="bridge.fillWeb(1)" ><a href="#">1</a></li>
-                            <li onclick="bridge.fillWeb(2)" ><a href="#">2</a></li>
-                            <li onclick="bridge.fillWeb(3)" ><a href="#">...</a></li>
-                            </footer>
-                        </ul>
-                        </div>
-                    </div>
+<header class="header">
+    <div class="container">
+        <h1 class="site-title">Blog</h1>
+        <span class="site-tagline">An IT-Project</span>
+    </div>
+</header>
+<nav class="main-nav">
+    <div id="container1">
+        <ul>
+            <li onclick="bridge.fillWeb(1)"><a href="#">TopicBox1</a></li>
+            <li onclick="bridge.fillWeb(2)"><a href="#">TopicBox2</a></li>
+            <li onclick="bridge.fillWeb(3)"><a href="#">TopicBox3</a></li>
+            <li onclick="bridge.fillWeb(4)"><a href="#">TopicBox4</a></li>
+            <li onclick="bridge.fillWeb(5)"><a href="#">TopicBox5</a></li>
+        </ul>
+    </div>
+</nav>
+<section class="content">
+    <article class="post">
+        <form>
+            <label for="tname">Titel des Beitrags</label><br>
+            <input id="tname" name="tname" type="text"><br>
+            <label for="ttext">Text</label><br>
+            <input id="ttext" name="ttext" type="text">
+        </form>
+        <button type="button">Veröffentlichen</button>
+        <div class="columns">
+            <div class="item">
+                <p class="item-title" id="te1">Text</p>
+                <div class="fixed">
+                    <ul>
+                        <footer>
+                            <li onclick="bridge.fillWeb(1)"><a href="#">1</a></li>
+                            <li onclick="bridge.fillWeb(2)"><a href="#">2</a></li>
+                            <li onclick="bridge.fillWeb(3)"><a href="#">...</a></li>
+                        </footer>
+                    </ul>
                 </div>
-            
-        </article>
-    </section>
+            </div>
+        </div>
+
+    </article>
+</section>
 </body>
 
 </html>

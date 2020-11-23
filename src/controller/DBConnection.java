@@ -17,11 +17,6 @@ public final class DBConnection {
 	
 	private static Connection connection;
 	private static Statement statement;
-
-	private DBConnection() {
-		connection = null;
-		statement = null;
-	}
 	
 	/**
 	 * Baut eine verbindung zur MySQL-Datenbank auf.
