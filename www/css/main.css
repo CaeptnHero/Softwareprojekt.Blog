@@ -87,8 +87,7 @@ body {
       display: flex;
       text-transform: uppercase;
     }
-      :hover {
-        background: yellow;
+     :hover {
         color: #4c566a;
       }
     
@@ -127,9 +126,9 @@ body {
     .item-image {
       max-width: 100%;
     }
-    :hover {
+   /* :hover {
       background: #2e3440;
-    }
+    }*/
       .social {
         position: absolute;
         bottom: -21px;
