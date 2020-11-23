@@ -88,19 +88,17 @@ ul {
     flex-direction: row;
     justify-content: center;
     width: 100%;
-}
-
-a {
-    padding: 15px 35px;
-    display: flex;
-    text-transform: uppercase;
-}
-
-:hover {
-    background: yellow;
-    color: #4c566a;
-}
-
+  }
+    a {
+      padding:  15px 35px;
+      display: flex;
+      text-transform: uppercase;
+    }
+     :hover {
+        color: #4c566a;
+      }
+    
+    
 
 .full-bleed {
     background-size: cover;
@@ -128,38 +126,34 @@ a {
     overflow: hidden;
 }
 
-.item-title {
-    color: #2e3440;
-    font-size: 24px;
-    margin: 0 0 5px 0;
-}
-
-.item-image {
-    max-width: 100%;
-}
-
-:hover {
-    background: #2e3440;
-}
-
-.social {
-    position: absolute;
-    bottom: -21px;
-    height: auto;
-    z-index: 5;
-    padding: 10px 0;
-}
-
-.fa {
-
-    padding: 0 5px;
-}
-
-.item {
-    max-width: 48%;
-}
-
-.social {
+    .item-title {
+      color: #2e3440;
+      font-size: 24px;
+      margin: 0 0 5px 0;
+    }
+    .item-image {
+      max-width: 100%;
+    }
+   /* :hover {
+      background: #2e3440;
+    }*/
+      .social {
+        position: absolute;
+        bottom: -21px;
+        height: auto;
+        z-index: 5;
+        padding: 10px 0;
+      }
+        .fa {
+        
+          padding: 0 5px;
+        }
+  
+       .item {
+         max-width: 48%;
+       }
+ 
+  .social {
     position: absolute;
     bottom: -60px;
     height: 0;
