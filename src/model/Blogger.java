@@ -24,8 +24,5 @@ public class Blogger extends Nutzer {
 
     public void Artikeldelete(Artikel art) {
         art.delete();
-
     }
-
-
 }

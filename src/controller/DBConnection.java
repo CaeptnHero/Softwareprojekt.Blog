@@ -9,6 +9,9 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * Dient als Schnittstelle zur MySQL-Datenbank
+ */
 public final class DBConnection {
     static final String dbUrl = "jdbc:mysql://localhost:3306/blog?autoReconnect=true&serverTimezone=UTC";
     static final String dbUsername = "root";
@@ -22,9 +25,24 @@ public final class DBConnection {
      *
      * @author Daniel Isaak
      */
-    public static void connect() {
+    public static void open() {
         try {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Schließt die Verbindung zur MySQL-Datenbank.
+     *
+     * @author Daniel Isaak
+     */
+    public static void close() {
+        try {
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -40,7 +58,7 @@ public final class DBConnection {
      */
     public static CachedRowSet executeQuery(String sql) {
         try {
-            connect();
+            open();
             statement = connection.createStatement();
             RowSetFactory factory = RowSetProvider.newFactory();
             CachedRowSet rowset = factory.createCachedRowSet();
@@ -64,7 +82,7 @@ public final class DBConnection {
      */
     public static int executeUpdate(String sql) {
         try {
-            connect();
+            open();
             statement = connection.createStatement();
             statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet res = statement.getGeneratedKeys();
@@ -78,21 +96,6 @@ public final class DBConnection {
             close();
         }
         return -1;
-    }
-
-    /**
-     * Schließt die Verbindung zur MySQL-Datenbank.
-     *
-     * @author Daniel Isaak
-     */
-    public static void close() {
-        try {
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -125,7 +128,11 @@ public final class DBConnection {
         return null;
     }
 
-    //	Alle artikel abfragen
+    /**
+     * Alle artikel abfragen
+     * @return
+     * @author
+     */
     public static ArrayList<Artikel> getArtikel() {
         ArrayList<Artikel> artikel = new ArrayList<>();
         ResultSet res = executeQuery("select * from artikel a, beitrag b where a.aid = b.bid ORDER BY a.aid DESC");
@@ -155,7 +162,12 @@ public final class DBConnection {
         return artikel;
     }
 
-    //	Alle Kommentare eines Oberbeitrags abfragen
+    /**
+     * Alle Kommentare eines Oberbeitrags abfragen
+     * @param Oberbeitrag
+     * @return
+     * @author
+     */
     private static ArrayList<Kommentar> getKommentare(Beitrag Oberbeitrag) {
         ArrayList<Kommentar> kommentare = new ArrayList<>();
         ResultSet res = executeQuery("select * from beitrag b, kommentar k where b.bid = k.kid and b.oberbeitrag = " + Oberbeitrag.getId());
@@ -178,6 +190,12 @@ public final class DBConnection {
         return kommentare;
     }
 
+    /**
+     * Fragt die anzahl der Artikel ab und berechnet damit die Seitenanzahl.
+     *
+     * @return aufgerundete Seitenanzahl
+     * @author Daniel Isaak
+     */
     public static int getSeitenanzahl() {
         int anzahl = 0;
         ResultSet res = executeQuery("SELECT count(*) from artikel");

@@ -4,11 +4,22 @@ import model.Nutzer;
 
 import javax.swing.*;
 
-//Lie�t die Daten aus der DB von der Tabelle nutzer
+/**
+ * Ließt die Daten aus der DB von der Tabelle nutzer
+ *
+ * @author
+ */
 public class AuthentifizierungsController {
 
     private static String sql;
 
+    /**
+     *
+     * @param nutzername
+     * @param passwort
+     * @return
+     * @author
+     */
     public Nutzer Login(String nutzername, String passwort) {
         Nutzer n = null;
         try {
@@ -27,6 +38,13 @@ public class AuthentifizierungsController {
         return n;
     }
 
+    /**
+     *
+     * @param nutzername
+     * @param passwort
+     * @return
+     * @author
+     */
     public boolean Registrieren(String nutzername, String passwort) {
         Nutzer n;
         try {
