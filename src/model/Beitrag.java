@@ -73,7 +73,7 @@ public abstract class Beitrag {
         return kommentare;
     }
 
-    public void delteKommentar(Kommentar k) {
+    public void deleteKommentar(Kommentar k) {
         //#region Kommentar aus DB löschen
         String sql = "DELETE FROM kommentar WHERE KID = " + k.getId();
         DBConnection.executeUpdate(sql);
@@ -89,7 +89,7 @@ public abstract class Beitrag {
         for (Kommentar k : kommentare) {
             k.delete(); //recursion
 
-            this.delteKommentar(k);    //eigene kommentare löschen
+            this.deleteKommentar(k);    //eigene kommentare löschen
         }
     }
 }
