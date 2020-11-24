@@ -1,58 +1,31 @@
 package model;
 
-import controller.DBConnection;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class Blogger extends Nutzer {
-	public Blogger(int id, String nutzername, String passwort) {
-		this.id = id;
-		this.nutzername = nutzername;
-		this.passwort = passwort;
-	}
+    public Blogger(int id, String nutzername, String passwort) {
+        this.id = id;
+        this.nutzername = nutzername;
+        this.passwort = passwort;
+    }
 
-	public Blogger(String nutzername, String passwort) {
-		this.id = -1;
-		this.nutzername = nutzername;
-		this.passwort = passwort;
-	}
+    public Blogger(String nutzername, String passwort) {
+        this.id = -1;
+        this.nutzername = nutzername;
+        this.passwort = passwort;
+    }
 
-	public Blogger() {
-		// TODO Auto-generated constructor stub
-		this.id = 1;
-	}
+    public Blogger() {
+        // TODO Auto-generated constructor stub
+        this.id = 1;
+    }
 
-	public Artikel createArticle(String titel, String text) {
-		/*String sql = "INSERT INTO beitrag VALUES (NULL, CURRENT_DATE()," + this.id + ", NULL)";
+    public Artikel createArticle(String titel, String text) {
+        return new Artikel(this, titel, text);
+    }
 
-		System.out.println(sql);
-		DBConnection db = new DBConnection();
-		db.connect();
-		ResultSet res = db.executeUpdate(sql);
-		int autoincrement = 0;
-		try {
-			if (res.next())
-				autoincrement = res.getInt(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public void Artikeldelete(Artikel art) {
+        art.delete();
 
-		Artikel a = new Artikel(this, titel, text);
-		//System.out.println("INSERT INTO artikel VALUES (" + autoincrement + ", '" + a.getTitel() + "', '" + a.getText() + "');");
-		a.setId(autoincrement);
-		db.executeUpdate("INSERT INTO artikel VALUES (" + autoincrement + ", '" + a.getTitel() + "', '" + a.getText() + "');");
-		db.close();
-		return a;*/
+    }
 
-		return new Artikel(this, titel, text);
-	}
-
-	public void Artikeldelete ( Artikel art ) {
-		art.delete();
-		
-		}
-	
 
 }

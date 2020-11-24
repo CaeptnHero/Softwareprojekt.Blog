@@ -3,7 +3,7 @@ window.onload = function() {
 }
 
 window.onerror = function (msg, url, line) {
-    bridge.log(msg, url, line);
+    bridge.errorLog(msg, url, line);
 }
 
 function Sleep(milliseconds) {
@@ -13,6 +13,12 @@ function Sleep(milliseconds) {
 function fill(art) {
     document.getElementById("ti1").innerHTML = art["titel"];
     document.getElementById("te1").innerHTML = art["text"];
+}
+
+function createArticle() {
+    let title = document.querySelector('input[name="tname"]').value;
+    let text = document.querySelector('input[name="ttext"]').value;
+    bridge.createArticle(title, text);
 }
 
 class Beitrag {

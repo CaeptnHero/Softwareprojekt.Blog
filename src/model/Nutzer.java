@@ -1,31 +1,31 @@
 package model;
 
 public abstract class Nutzer {
-	protected int id;
-	protected String nutzername;
-	protected String passwort;
-	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public String getNutzername() {
-		return nutzername;
-	}
-	
-	public void setNutzername(String nutzername) {
-		this.nutzername = nutzername;
-	}
-	
-	public String getPasswort() {
-		return passwort;
-	}
-	
-	public void setPasswort(String passwort) {
-		this.passwort = passwort;
-	}
+    protected int id;
+    protected String nutzername;
+    protected String passwort;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNutzername() {
+        return nutzername;
+    }
+
+    public void setNutzername(String nutzername) {
+        this.nutzername = nutzername;
+    }
+
+    public String getPasswort() {
+        return passwort;
+    }
+
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
+    }
 }
