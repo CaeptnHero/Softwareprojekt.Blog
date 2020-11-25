@@ -28,7 +28,7 @@
     </div>
 </nav>
 <section class="content">
-    <article class="post">
+    <div class="post">
         <form>
             <label for="tname">Titel des Beitrags</label><br>
             <input id="tname" name="tname" type="text"><br>
@@ -36,23 +36,59 @@
             <input id="ttext" name="ttext" type="text">
         </form>
         <button type="button" onclick="createArticle();">Veröffentlichen</button>
-        <article class="articlexample">
+
+        <article class="blogpost" id="blog1">
             <h2>Überschrift</h2>
             <p>Diese hier ist ein Beispieltext für den Artikel. Weitere Funktionen folgen.</p>
-    </article>
+            <button class="button button1">Kommentieren</button>
+            <button class="button button2">Löschen</button>
+        </article>
+
+        <article class="blogpost" id="blog2">
+            <h2>Überschrift</h2>
+            <p>Diese hier ist ein Beispieltext für den Artikel. Weitere Funktionen folgen.</p>
+            <button class="button button1">Kommentieren</button>
+            <button class="button button2">Löschen</button>
+        </article>
+
+        <article class="blogpost" id="blog3">
+            <h2>Überschrift</h2>
+            <p>Diese hier ist ein Beispieltext für den Artikel. Weitere Funktionen folgen.</p>
+            <button class="button button1">Kommentieren</button>
+            <button class="button button2">Löschen</button>
+        </article>
+
+        <article class="blogpost"id="blog4">
+        <h2>Überschrift</h2>
+        <p>Diese hier ist ein Beispieltext für den Artikel. Weitere Funktionen folgen.</p>
+            <button class="button button1">Kommentieren</button>
+            <button class="button button2">Löschen</button>
+        </article>
+
+        <article class="blogpost" id="blog5">
+        <h2>Überschrift</h2>
+        <p>Diese hier ist ein Beispieltext für den Artikel. Weitere Funktionen folgen.</p>
+            <button class="button button1">Kommentieren</button>
+            <button class="button button2">Löschen</button>
+        </article>
+
+         </div>
         <div class="columns">
             <div class="item">
                 <p class="item-title" id="te1">Text</p>
                 <div class="fixed">
                     <ul>
                         <footer id="page">
+                            <li onclick="bridge.fillWeb(1)" ><a href="#">1</a></li>
+                            <li onclick="bridge.fillWeb(2)" ><a href="#">2</a></li>
+                            <li onclick="bridge.fillWeb(3)" ><a href="#">...</a></li>
                         </footer>
                     </ul>
                 </div>
             </div>
         </div>
 
-    </article>
+    </div>
 </section>
 </body>
 
