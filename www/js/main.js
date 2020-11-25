@@ -17,13 +17,14 @@ function fill(art) {
 */
 
 function fill(art, s) {
+
+
     document.getElementById("titel"+ s).innerHTML = art["titel"];
     document.getElementById("text" + s).innerHTML = art["text"];
 }
 
 function ready(){
     addP();
-
 }
 
 //Hilfsfunktion um die Seitenanzahl aus Java per Bride zu verwenden
@@ -41,7 +42,8 @@ function Page(number){
         node.id = i;
         node.appendChild(textnode);
         document.getElementById("page").appendChild(node);
-        document.getElementById(i).innerHTML = i; // Anpassen sobald das Layout fertig. Als Beispiel <div class="message">Add Message<br>Title: <input type="text usw.
+        document.getElementById(i).innerHTML = "<li onclick='bridge.fillWeb(" + i + ")'><a>" + i + "</a></li>" ; // Anpassen sobald das Layout fertig. Als Beispiel <div class="message">Add Message<br>Title: <input type="text usw.
+
     }
 }
 
