@@ -15,18 +15,21 @@ function ready(){
     addP();
 }
 
+//Hilfsfunktion um die Seitenanzahl aus Java per Bride zu verwenden
 function addP(){
     bridge.addPage();
 }
 
-
+// Funktion um weitere Seiten hinzuzufügen
 function Page(number){
 
     for (i = 1; i <=number; i++ ) {
         var node = document.createElement("LI");
         var textnode = document.createTextNode(i);
+        node.id = i;
         node.appendChild(textnode);
         document.getElementById("page").appendChild(node);
+        document.getElementById(i).innerHTML = i; // Anpassen sobald das Layout fertig. Als Beispiel <div class="message">Add Message<br>Title: <input type="text usw.
     }
 }
 
