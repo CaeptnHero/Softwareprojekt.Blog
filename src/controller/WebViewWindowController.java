@@ -37,6 +37,7 @@ public class WebViewWindowController implements Initializable {
                 jsbridge = new Bridge();
                 JSObject jso = (JSObject) webEngine.executeScript("window");
                 jso.setMember("bridge", jsbridge);
+                webEngine.executeScript("ready();");
             }
         });
 
@@ -62,9 +63,10 @@ public class WebViewWindowController implements Initializable {
      * @author Daniel Isaak
      */
     public class Bridge {
-        public void upcall(String msg) {
+        public int upcall(String msg) {
             System.out.println("JS-UPCALL");
             System.out.println(msg);
+            return 15;
 			/*
 			Artikel a = new Artikel(new Blogger(), "test", "filip ist ne cunt");
 			String test = String.format("uebergabe(new Artikel('%s','%s','%s'));","cunt",a.getTitel(),a.getText());
@@ -95,5 +97,11 @@ public class WebViewWindowController implements Initializable {
         public void consoleLog(String msg) {
             System.out.println("Javascript log: " + msg);
         }
+
+        public void addPage() {
+            String s = String.format("Page('%s')", DBConnection.getSeitenanzahl());
+            webEngine.executeScript(s);
+        }
     }
+
 }

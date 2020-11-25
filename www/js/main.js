@@ -11,6 +11,25 @@ function fill(art) {
     document.getElementById("te1").innerHTML = art["text"];
 }
 
+function ready(){
+    addP();
+}
+
+function addP(){
+    bridge.addPage();
+}
+
+
+function Page(number){
+
+    for (i = 1; i <=number; i++ ) {
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode(i);
+        node.appendChild(textnode);
+        document.getElementById("page").appendChild(node);
+    }
+}
+
 function createArticle() {
     let title = document.querySelector('input[name="tname"]').value;
     let text = document.querySelector('input[name="ttext"]').value;
@@ -49,3 +68,4 @@ class Artikel {
         this.text = text;
     }
 }
+
