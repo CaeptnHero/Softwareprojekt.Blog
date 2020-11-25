@@ -1,5 +1,6 @@
 window.onload = function() {
     // on window loaded
+
 }
 
 window.onerror = function (msg, url, line) {
@@ -22,11 +23,13 @@ function fill(art, s) {
 
 function ready(){
     addP();
+
 }
 
 //Hilfsfunktion um die Seitenanzahl aus Java per Bride zu verwenden
 function addP(){
     bridge.addPage();
+    bridge.fillWeb(1);
 }
 
 // Funktion um weitere Seiten hinzuzufügen
