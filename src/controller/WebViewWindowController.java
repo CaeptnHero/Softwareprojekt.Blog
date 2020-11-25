@@ -90,9 +90,9 @@ public class WebViewWindowController implements Initializable {
             ArrayList<Artikel> a;
             a = DBConnection.getArtikel();
 
-            for (int j = i+((i-1)*4); i <= i*5; j++) {
+            for (int j = i; j <= i+5; j++) {    //FIXME: crash wenn weniger als 5 artikel in db
                 System.out.println(j);
-                String test1 = String.format("fill(new Artikel('%s','%s','%s') '%s');", a.get(j-1).getVerfasser(), a.get(j-1).getTitel(), a.get(j-1).getText(), j);
+                String test1 = String.format("fill(new Artikel('%s','%s','%s'), '%s');", a.get(j-1).getVerfasser(), a.get(j-1).getTitel(), a.get(j-1).getText(), j);
                 webEngine.executeScript(test1);
 
             }
