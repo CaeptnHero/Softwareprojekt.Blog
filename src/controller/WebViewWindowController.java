@@ -74,7 +74,7 @@ public class WebViewWindowController implements Initializable {
 			webEngine.executeScript(test);
 			*/
         }
-
+/*
         public void fillWeb(int i) {
             ArrayList<Artikel> a;
             a = DBConnection.getArtikel();
@@ -84,6 +84,20 @@ public class WebViewWindowController implements Initializable {
                 webEngine.executeScript(test);
             }
         }
+
+ */
+        public void fillWeb(int i) {
+            ArrayList<Artikel> a;
+            a = DBConnection.getArtikel();
+
+            for (int j = i+((i-1)*4); i <= i*5; j++) {
+                System.out.println(j);
+                String test1 = String.format("fill(new Artikel('%s','%s','%s') '%s');", a.get(j-1).getVerfasser(), a.get(j-1).getTitel(), a.get(j-1).getText(), j);
+                webEngine.executeScript(test1);
+
+            }
+        }
+
 
         public void createArticle(String titel, String text) {
             if (currBlogger != null)

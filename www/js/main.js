@@ -6,9 +6,18 @@ window.onerror = function (msg, url, line) {
     bridge.errorLog(msg, url, line);
 }
 
+
+
+/*
 function fill(art) {
     document.getElementById("ti1").innerHTML = art["titel"];
     document.getElementById("te1").innerHTML = art["text"];
+}
+*/
+
+function fill(art, s) {
+    document.getElementById("titel"+ s).innerHTML = art["titel"];
+    document.getElementById("text" + s).innerHTML = art["text"];
 }
 
 function ready(){
