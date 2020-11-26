@@ -1,7 +1,5 @@
 window.onload = function() {
-    // on window loaded
     clearArticles();
-    addDeleteEventHandler();
 }
 
 window.onerror = function (msg, url, line) {
@@ -43,7 +41,12 @@ function createArticle() {
     bridge.createArticle(title, text);
 }
 
-//Funktion zum anzeigen von Artikeln aus DB
+/**
+ * Fügt einen Artikel der webview hinzu
+ * @param ID
+ * @param Title
+ * @param Text
+ */
 function displayArticle(ID, Title, Text) {
     let article = document.createElement('article');
     article.id = `beitrag-${ID}`;
@@ -51,7 +54,7 @@ function displayArticle(ID, Title, Text) {
         `<h2>${Title}</h2>
          <p>${Text}</p>
          <div class="post-actions">
-            <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+            <button>Kommentieren</button> <button class="post-delete" onclick="deletePost('${article.id}');">Löschen</button>
          </div>
         <div class="comments"></div>`;
 
@@ -71,7 +74,7 @@ function addKommentar(beitragID, kommentarID, verfasser, kommentarText) {
     comment.innerHTML = `<span class="username">${verfasser}</span>
                     <p>${kommentarText}</p>
                     <div class="post-actions">
-                        <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+                        <button>Kommentieren</button> <button class="post-delete" onclick="deletePost('${comment.id}');">Löschen</button>
                     </div>
                     <div class="comments"></div>`;
 
@@ -79,22 +82,16 @@ function addKommentar(beitragID, kommentarID, verfasser, kommentarText) {
 }
 
 /**
- * Löscht 
+ * Beitrag aus der webview löschen
  * @param id
  */
-function deleteArticle(id) {
+function deletePost(id) {
     document.getElementById(id).remove();
 }
 
-function addDeleteEventHandler() {
-    var nodes = document.querySelectorAll('.post-delete');
-    nodes.forEach((element) => {
-        element.addEventListener('click', function () {
-            deleteArticle(this.parentElement.parentElement.id);
-        });
-    });
-}
-
+/**
+ * Artikel aus der webview löschen
+ */
 function clearArticles() {
     document.getElementById('article-section').innerHTML = '';
 }
