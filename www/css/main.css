@@ -13,24 +13,7 @@ a {
     text-decoration: none;
 }
 
-/* ====================== Header ====================== */
-#title-box {
-    max-width: 75px;
-    margin: auto;
-}
-
-#title-box > h1 {
-    margin: 0;
-
-    font-size: 50px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#title-box > span {
-    font-size: 18px;
-    font-style: italic;
-}
-
+/*  ====================== Navigations ======================  */
 nav {
     display: flex;
     flex-direction: row;
@@ -57,17 +40,127 @@ nav a {
     text-transform: uppercase;
     border-bottom: 1px solid;
 
-    padding:  15px 35px;
+    padding: 15px 35px;
+}
+
+nav a:hover {
+    /*background-color: #3B4252;*/
+    border-width: 3px;
+}
+
+
+/* ====================== Buttons ======================  */
+button {
+    color: #D8DEE9;
+    background-color: #3B4252;
+    font-weight: bolder;
+
+    padding: 8px;
+    border: 1px solid #2E3440;
+}
+button:hover {
+    background-color: #4C566A;
+}
+
+input, textarea {
+    color: #D8DEE9;
+
+    border: 2px solid #2E3440;
+    background-color: #4C566A;
+    padding: 4px;
+    margin-left: 0;
+}
+
+textarea::-webkit-resizer {
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent #2E3440 #2E3440 transparent;
+}
+
+/* ====================== Header ====================== */
+#title-box {
+    max-width: 75px;
+    margin: auto;
+}
+
+#title-box > h1 {
+    margin: 0;
+
+    font-size: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#title-box > span {
+    font-size: 18px;
+    font-style: italic;
 }
 
 /* ====================== Main ====================== */
-form > label, form > input {
+form > label, form > input, form > textarea {
     display: block;
 }
 
 form > label {
     margin-top: 10px;
 }
+
+/*  ====================== Artikel ======================  */
+#article-section, form {
+    margin: 16px 16px 16px 0;
+}
+
+article, form {
+    padding: 16px;
+    margin-bottom: 8px;
+    background-color: #3B4252;
+}
+
+article > h2 {
+    border-bottom: 3px solid #4C566A;
+}
+
+form {
+    margin-bottom: 64px;
+}
+
+.post-actions {
+    margin-bottom: 48px;
+}
+
+.post-actions .article-delete:hover {
+    background-color: #BF616A;
+}
+
+/*  ====================== Comments ======================  */
+div.comments > div {
+    padding-left: 16px;  /* P und buttons verschieben */
+
+    margin-right: 32px;
+    margin-left: 32px; /* Kommentar ebene */
+    margin-bottom: 32px; /* Abstand zu anderen kommentaren*/
+
+    border-left: 1px solid #949494;
+}
+
+div.comments p.username {
+    background-color: #3B4252;
+    transform: translate(-20px, -20px);
+}
+
+/* FIXME: test only */
+/*body {*/
+/*    animation: skew 3s infinite;*/
+/*    transform: skew(20deg);*/
+/*    animation-direction: alternate;*/
+/*}*/
+/*@keyframes skew {*/
+/*    0% {*/
+/*        transform: skew(20deg, 20deg);*/
+/*    }*/
+/*    100% {*/
+/*        transform: skew(-20deg, -20deg);*/
+/*    }*/
+/*}*/
 
 /* ====================== Footer ====================== */
 footer {

@@ -1,6 +1,7 @@
 window.onload = function() {
     // on window loaded
-    clearArticles();
+    // clearArticles();
+    addDeleteEventHandler();
 }
 
 window.onerror = function (msg, url, line) {
@@ -12,7 +13,7 @@ function fill(art, s) {
     // document.getElementById("text" + s).innerHTML = art["text"];
 
     //FIXME: tmp fix
-    displayArticle(-1, art.titel, art.text);
+    // displayArticle(-1, art.titel, art.text);
 }
 
 function ready(){
@@ -27,14 +28,12 @@ function addP(){
 
 // Funktion um weitere Seiten hinzuzufügen
 function Page(number){
+    var pageNav = document.querySelector("footer > nav > ul");
     for (i = 1; i <=number; i++ ) {
         var node = document.createElement("li");
-        var textnode = document.createTextNode(i);
-        node.id = i;
-        node.appendChild(textnode);
-        document.querySelector("footer > nav > ul").appendChild(node);
-        document.getElementById(i).innerHTML = "<li onclick='bridge.fillWeb(" + i + ")'><a>" + i + "</a></li>" ; // Anpassen sobald das Layout fertig. Als Beispiel <div class="message">Add Message<br>Title: <input type="text usw.
-
+        node.onclick = "bridge.fillWeb(" + i + ")";
+        node.innerHTML = "<a href='#'>" + i + "</a>";
+        pageNav.appendChild(node) //TODO: Anpassen sobald das Layout fertig. Als Beispiel <div class="message">Add Message<br>Title: <input type="text usw.
     }
 }
 
@@ -49,10 +48,11 @@ function displayArticle(ID, Title, Text) {
     let article = document.createElement('article');
     article.id = ID;
     article.innerHTML =
-        `<h2 id="titel2">${Title}</h2>
-         <p id="text2">${Text}</p>
-         <button class="button button1">Kommentieren</button>
-         <button class="button button2">Löschen</button>`;
+        `<h2>${Title}</h2>
+         <p>${Text}</p>
+         <div class="post-actions">
+            <button>Kommentieren</button> <button class="article-delete">Löschen</button>
+         </div>`;
 
     document.getElementById("article-section").appendChild(article);
 }
@@ -64,6 +64,16 @@ function addKommentar(beitragID, kommentarText) {
 
 function deleteArticle(id) {
     //TODO: kommentar aus view & DB löschen
+    document.getElementById(id).remove();
+}
+
+function addDeleteEventHandler() {
+    var nodes = document.querySelectorAll('.article-delete');
+    nodes.forEach((element) => {
+        element.addEventListener('click', function () {
+            deleteArticle(this.parentElement.parentElement.id);
+        });
+    });
 }
 
 function clearArticles() {

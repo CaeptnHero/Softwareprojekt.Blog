@@ -29,7 +29,7 @@
         <label for="article-title">Titel des Beitrags:</label>
         <input id="article-title" type="text">
         <label for="article-text">Text:</label>
-        <input id="article-text" type="text">
+        <textarea id="article-text" rows="4" cols="50"></textarea>
 
         <button type="submit" onclick="createArticle();">Veröffentlichen</button>
     </form>
@@ -38,8 +38,83 @@
         <article id="1">
             <h2>Test Artikel</h2>
             <p>Diese hier ist ein Beispieltext für den Artikel. Weitere Funktionen folgen.</p>
-            <button>Kommentieren</button>
-            <button>Löschen</button>
+
+            <div class="post-actions">
+                <button>Kommentieren</button> <button class="article-delete">Löschen</button>
+            </div>
+            <div class="comments">
+                <div id="2">
+                    <p class="username">
+                        Kommentar 1
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                    </p>
+                    <div class="post-actions">
+                        <button>Kommentieren</button> <button class="article-delete">Löschen</button>
+                    </div>
+                    <div class="comments">
+                        <div id="3">
+                            <p class="username">Kommentar 2</p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                            </p>
+                            <div class="post-actions">
+                                <button>Kommentieren</button> <button class="article-delete">Löschen</button>
+                            </div>
+                            <div class="comments">
+                                <div id="4">
+                                    <p class="username">Kommentar 3</p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                                    </p>
+                                    <div class="post-actions">
+                                        <button>Kommentieren</button> <button class="article-delete">Löschen</button>
+                                    </div>
+                                    <div class="comments">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="5">
+                            <p class="username">Kommentar 4</p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                            </p>
+                            <div class="post-actions">
+                                <button>Kommentieren</button> <button class="article-delete">Löschen</button>
+                            </div>
+                            <div class="comments">
+                                <div id="6">
+                                    <p class="username">Kommentar 6</p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                                    </p>
+                                    <div class="post-actions">
+                                        <button>Kommentieren</button> <button class="article-delete">Löschen</button>
+                                    </div>
+                                    <div class="comments">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="6">
+                    <p class="username">Kommentar 5</p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                    </p>
+                    <div class="post-actions">
+                        <button>Kommentieren</button> <button class="article-delete">Löschen</button>
+                    </div>
+                    <div class="comments">
+
+                    </div>
+                </div>
+            </div>
         </article>
     </section>
     <button onclick="displayArticle(1, 'Titel', 'Text')">Test</button>
