@@ -51,7 +51,7 @@ function displayArticle(ID, Title, Text) {
         `<h2>${Title}</h2>
          <p>${Text}</p>
          <div class="post-actions">
-            <button>Kommentieren</button> <button class="article-delete">Löschen</button>
+            <button>Kommentieren</button> <button class="post-delete">Löschen</button>
          </div>`;
 
     document.getElementById("article-section").appendChild(article);
@@ -68,7 +68,7 @@ function deleteArticle(id) {
 }
 
 function addDeleteEventHandler() {
-    var nodes = document.querySelectorAll('.article-delete');
+    var nodes = document.querySelectorAll('.post-delete');
     nodes.forEach((element) => {
         element.addEventListener('click', function () {
             deleteArticle(this.parentElement.parentElement.id);
