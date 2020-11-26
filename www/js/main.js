@@ -1,6 +1,6 @@
 window.onload = function() {
     // on window loaded
-    // clearArticles();
+    clearArticles();
     addDeleteEventHandler();
 }
 
@@ -13,7 +13,7 @@ function fill(art, s) {
     // document.getElementById("text" + s).innerHTML = art["text"];
 
     //FIXME: tmp fix
-    // displayArticle(-1, art.titel, art.text);
+    displayArticle(-1, art.titel, art.text);
 }
 
 function ready(){
@@ -46,24 +46,43 @@ function createArticle() {
 //Funktion zum anzeigen von Artikeln aus DB
 function displayArticle(ID, Title, Text) {
     let article = document.createElement('article');
-    article.id = ID;
+    article.id = `beitrag-${ID}`;
     article.innerHTML =
         `<h2>${Title}</h2>
          <p>${Text}</p>
          <div class="post-actions">
             <button>Kommentieren</button> <button class="post-delete">Löschen</button>
-         </div>`;
+         </div>
+        <div class="comments"></div>`;
 
     document.getElementById("article-section").appendChild(article);
 }
 
-//Funktion zum hinzufügen von kommentaren in webview & in die DB
-function addKommentar(beitragID, kommentarText) {
-    document.getElementById(beitragID.toString()).app
+/**
+ * Fügt in der webview einen Beitrag(Artikel/Kommentar) ein Kommentar hinzu
+ * @param beitragID
+ * @param kommentarID
+ * @param verfasser
+ * @param kommentarText
+ */
+function addKommentar(beitragID, kommentarID, verfasser, kommentarText) {
+    let comment = document.createElement('div');
+    comment.id = `beitrag-${kommentarID}`;
+    comment.innerHTML = `<span class="username">${verfasser}</span>
+                    <p>${kommentarText}</p>
+                    <div class="post-actions">
+                        <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+                    </div>
+                    <div class="comments"></div>`;
+
+    document.querySelector(`#beitrag-${beitragID} .comments`).appendChild(comment);
 }
 
+/**
+ * Löscht 
+ * @param id
+ */
 function deleteArticle(id) {
-    //TODO: kommentar aus view & DB löschen
     document.getElementById(id).remove();
 }
 
