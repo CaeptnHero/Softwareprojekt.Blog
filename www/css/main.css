@@ -45,7 +45,7 @@ nav a {
     padding: 15px 35px;
 }
 
-nav a:hover {
+nav a:hover, .active {
     /*background-color: #3B4252;*/
     border-width: 3px;
 }
@@ -171,4 +171,3 @@ footer {
     text-align: center;
     font-size: 13px;
 }
-

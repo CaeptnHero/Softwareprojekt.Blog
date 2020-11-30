@@ -29,9 +29,28 @@ function Page(number){
     var pageNav = document.querySelector("footer > nav > ul");
     for (i = 1; i <=number; i++ ) {
         var node = document.createElement("li");
-        node.onclick = "bridge.fillWeb(" + i + ")";
-        node.innerHTML = "<a href='#'>" + i + "</a>";
+        node.innerHTML = `<a href='#' onclick='changePage(${i});'>${i}</a>`;
+
+        //Default page
+        if(i == 1) {
+            node.firstChild.classList.add("active");
+        }
+
         pageNav.appendChild(node) //TODO: Anpassen sobald das Layout fertig. Als Beispiel <div class="message">Add Message<br>Title: <input type="text usw.
+    }
+}
+
+function changePage(pagenumber) {
+    clearArticles();
+    bridge.fillWeb(pagenumber);
+
+    var elements = document.querySelectorAll(`footer > nav > ul > li > a`);
+    for (let i = 0; i < elements.length; i++) {
+        if(elements[i].innerHTML == pagenumber) {
+            elements[i].classList.add("active");
+        } else {
+            elements[i].classList.remove("active");
+        }
     }
 }
 
