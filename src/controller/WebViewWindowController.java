@@ -86,16 +86,26 @@ public class WebViewWindowController implements Initializable {
         }
 
  */
-        public void fillWeb(int i) {
+        public void fillWeb(int seitenzahl) {
             ArrayList<Artikel> a;
             a = DBConnection.getArtikel();
 
-            for (int j = i+((i-1)*4); j <= i*5; j++) {    //FIXME: crash wenn weniger als 5 artikel in db
-                System.out.println(j);
-                String test1 = String.format("fill(new Artikel('%s','%s','%s'), '%s');", a.get(j-1).getVerfasser(), a.get(j-1).getTitel(), a.get(j-1).getText(), j);
+            int startIndex = (seitenzahl - 1) * 5;
+            for (int i = startIndex; i < a.size(); i++) {
+                if(i > startIndex + 5) {
+                    break;
+                }
+                System.out.println(i);
+                String test1 = String.format("fill(new Artikel('%s','%s','%s'), '%s');", a.get(i).getVerfasser(), a.get(i).getTitel(), a.get(i).getText(), i+1);
                 webEngine.executeScript(test1);
-
             }
+
+//            for (int j = seitenzahl+((seitenzahl-1)*4); j <= seitenzahl*5; j++) {    //FIXME: crash wenn weniger als 5 artikel in db
+//                System.out.println(j);
+//                String test1 = String.format("fill(new Artikel('%s','%s','%s'), '%s');", a.get(j-1).getVerfasser(), a.get(j-1).getTitel(), a.get(j-1).getText(), j);
+//                webEngine.executeScript(test1);
+//
+//            }
         }
 
 
