@@ -38,6 +38,7 @@ function Page(number){
 function createArticle() {
     let title = document.getElementById('article-title').value;
     let text = document.getElementById('article-text').value;
+
     bridge.createArticle(title, text);
 }
 
@@ -61,6 +62,12 @@ function displayArticle(ID, Title, Text) {
     document.getElementById("article-section").appendChild(article);
 }
 
+function createComment() {
+    bridge.upcall("Create Comment debug");
+    //bridge.createComment(-1, -1, "", ""); //TODO: implement
+    displayComment(-1, -1, "", "");
+}
+
 /**
  * Fügt in der webview einen Beitrag(Artikel/Kommentar) ein Kommentar hinzu
  * @param beitragID ID des neuen Kommentar
@@ -68,7 +75,7 @@ function displayArticle(ID, Title, Text) {
  * @param verfasser Verfasser der Kommentar
  * @param kommentarText Text des Kommentar
  */
-function addKommentar(kommentarID, beitragID, verfasser, kommentarText) {
+function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
     let comment = document.createElement('div');
     comment.id = `beitrag-${kommentarID}`;
     comment.innerHTML = `<span class="username">${verfasser}</span>
