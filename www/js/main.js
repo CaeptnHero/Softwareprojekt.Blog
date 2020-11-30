@@ -63,12 +63,12 @@ function displayArticle(ID, Title, Text) {
 
 /**
  * Fügt in der webview einen Beitrag(Artikel/Kommentar) ein Kommentar hinzu
- * @param beitragID
- * @param kommentarID
- * @param verfasser
- * @param kommentarText
+ * @param beitragID ID des neuen Kommentar
+ * @param kommentarID ID des Beitrags der Kommentiert werden soll
+ * @param verfasser Verfasser der Kommentar
+ * @param kommentarText Text des Kommentar
  */
-function addKommentar(beitragID, kommentarID, verfasser, kommentarText) {
+function addKommentar(kommentarID, beitragID, verfasser, kommentarText) {
     let comment = document.createElement('div');
     comment.id = `beitrag-${kommentarID}`;
     comment.innerHTML = `<span class="username">${verfasser}</span>
