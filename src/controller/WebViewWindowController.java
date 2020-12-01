@@ -91,12 +91,13 @@ public class WebViewWindowController implements Initializable {
 
  */
         public void fillWeb(int seitenzahl) {
+            System.out.println("Seite: " + seitenzahl);
             ArrayList<Artikel> a;
             a = DatabaseController.getArtikel();
 
             int startIndex = (seitenzahl - 1) * 5;
             for (int i = startIndex; i < a.size(); i++) {
-                if(i > startIndex + 5) {
+                if(i >= startIndex + 5) {
                     break;
                 }
                 System.out.println(i);
