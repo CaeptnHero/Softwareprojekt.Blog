@@ -1,6 +1,6 @@
 package model;
 
-import controller.DBConnection;
+import controller.DatabaseController;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,7 @@ public class Kommentar extends Beitrag {
         super(verfasser, text, oberbeitrag);
 
         String sql = String.format("INSERT INTO Kommentar VALUES (%s, %s)", this.getId(), text);
-        DBConnection.executeUpdate(sql);
+        DatabaseController.executeUpdate(sql);
     }
 
     // ctor for db
@@ -26,8 +26,8 @@ public class Kommentar extends Beitrag {
 
     private void deleteFromDatabase() {
         String sql = "DELETE FROM kommentar WHERE KID = " + this.getId();
-        DBConnection.executeUpdate(sql);
+        DatabaseController.executeUpdate(sql);
         sql = "DELETE FROM beitrag WHERE BID = " + this.getId();
-        DBConnection.executeUpdate(sql);
+        DatabaseController.executeUpdate(sql);
     }
 }

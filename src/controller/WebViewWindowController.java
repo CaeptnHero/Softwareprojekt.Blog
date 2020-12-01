@@ -23,13 +23,13 @@ public class WebViewWindowController implements Initializable {
     private Bridge jsbridge;
     private Reader currReader = null;
     private Blogger currBlogger = null;
+    private Nutzer currUser = null;
 
     @FXML
     private WebView webView = new WebView();
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
         webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
         webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
@@ -37,7 +37,12 @@ public class WebViewWindowController implements Initializable {
                 jsbridge = new Bridge();
                 JSObject jso = (JSObject) webEngine.executeScript("window");
                 jso.setMember("bridge", jsbridge);
+
                 webEngine.executeScript("ready();");
+                if (currBlogger == null && currReader == null)
+                    webEngine.executeScript("hideUserFunctions();");
+                else if (currReader != null)
+                    webEngine.executeScript("hideBloggerFunctions();");
             }
         });
 
@@ -54,6 +59,8 @@ public class WebViewWindowController implements Initializable {
             currBlogger = (Blogger) n;
         else
             currReader = (Reader) n;
+
+        currUser = n;
     }
 
     /**
@@ -63,17 +70,14 @@ public class WebViewWindowController implements Initializable {
      * @author Daniel Isaak
      */
     public class Bridge {
-        public int upcall(String msg) {
-            System.out.println("JS-UPCALL");
-            System.out.println(msg);
-            return 15;
-			/*
-			Artikel a = new Artikel(new Blogger(), "test", "filip ist ne cunt");
-			String test = String.format("uebergabe(new Artikel('%s','%s','%s'));","cunt",a.getTitel(),a.getText());
-			System.out.println(test);
-			webEngine.executeScript(test);
-			*/
+        public void errorLog(String msg, String url, int line) {
+            System.out.println("Javascript error in " + url + " : " + line + "\n" + msg);
         }
+
+        public void consoleLog(String msg) {
+            System.out.println("Javascript log: " + msg);
+        }
+
 /*
         public void fillWeb(int i) {
             ArrayList<Artikel> a;
@@ -88,7 +92,7 @@ public class WebViewWindowController implements Initializable {
  */
         public void fillWeb(int seitenzahl) {
             ArrayList<Artikel> a;
-            a = DBConnection.getArtikel();
+            a = DatabaseController.getArtikel();
 
             int startIndex = (seitenzahl - 1) * 5;
             for (int i = startIndex; i < a.size(); i++) {
@@ -108,22 +112,17 @@ public class WebViewWindowController implements Initializable {
 //            }
         }
 
-
         public void createArticle(String titel, String text) {
             if (currBlogger != null)
                 currBlogger.createArticle(titel, text);
         }
 
-        public void errorLog(String msg, String url, int line) {
-            System.out.println("Javascript error in " + url + " : " + line + "\n" + msg);
-        }
-
-        public void consoleLog(String msg) {
-            System.out.println("Javascript log: " + msg);
+        public void createComment(int KommentarID, int oberBeitragID, String text) {
+            //currUser.createKommentar(currUser, )
         }
 
         public void addPage() {
-            String s = String.format("Page('%s')", DBConnection.getSeitenanzahl());
+            String s = String.format("Page('%s')", DatabaseController.getSeitenanzahl());
             webEngine.executeScript(s);
         }
     }

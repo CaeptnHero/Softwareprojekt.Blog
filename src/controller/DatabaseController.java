@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Dient als Schnittstelle zur MySQL-Datenbank
  */
-public final class DBConnection {
+public final class DatabaseController {
     static final String dbUrl = "jdbc:mysql://localhost:3306/blog?autoReconnect=true&serverTimezone=UTC";
     static final String dbUsername = "root";
     static final String dbPassword = "";
@@ -59,7 +59,7 @@ public final class DBConnection {
     public static CachedRowSet executeQuery(String sql) {
         try {
             open();
-            statement = connection.createStatement();
+            statement = connection.prepareStatement(sql);
             RowSetFactory factory = RowSetProvider.newFactory();
             CachedRowSet rowset = factory.createCachedRowSet();
             rowset.populate(statement.executeQuery(sql));
@@ -83,7 +83,8 @@ public final class DBConnection {
     public static int executeUpdate(String sql) {
         try {
             open();
-            statement = connection.createStatement();
+            statement = connection.prepareStatement(sql);
+            //statement = connection.createStatement();
             statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet res = statement.getGeneratedKeys();
             if (res.next()) {

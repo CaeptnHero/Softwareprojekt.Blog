@@ -1,6 +1,6 @@
 package model;
 
-import controller.DBConnection;
+import controller.DatabaseController;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +13,7 @@ public class Artikel extends Beitrag {
         this.titel = titel;
 
         String sql = String.format("INSERT INTO Artikel VALUES (%s, '%s', '%s')", this.getId(), titel, text);
-        DBConnection.executeUpdate(sql);
+        DatabaseController.executeUpdate(sql);
     }
 
     // ctor for db
@@ -40,8 +40,8 @@ public class Artikel extends Beitrag {
 
     private void deleteFromDatabase() {
         String sql = "DELETE FROM artikel WHERE AID = " + this.getId();
-        DBConnection.executeUpdate(sql);
+        DatabaseController.executeUpdate(sql);
         sql = "DELETE FROM beitrag WHERE BID = " + this.getId();
-        DBConnection.executeUpdate(sql);
+        DatabaseController.executeUpdate(sql);
     }
 }

@@ -23,7 +23,7 @@ public class AuthentifizierungsController {
     public Nutzer Login(String nutzername, String passwort) {
         Nutzer n = null;
         try {
-            n = (Nutzer) DBConnection.getUser(nutzername, passwort);
+            n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
             if (n == null) {
                 System.out.println("Login fehlgeschlagen");
                 JOptionPane.showMessageDialog(null, "Login fehlgeschlagen");
@@ -48,10 +48,10 @@ public class AuthentifizierungsController {
     public boolean Registrieren(String nutzername, String passwort) {
         Nutzer n;
         try {
-            n = (Nutzer) DBConnection.getUser(nutzername, passwort);
+            n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
             if (n == null) {
                 sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
-                DBConnection.executeUpdate(sql);
+                DatabaseController.executeUpdate(sql);
                 System.out.println("Benutzer wurde registriert");
                 JOptionPane.showMessageDialog(null, "Benutzer wurde registriert");
                 return true;

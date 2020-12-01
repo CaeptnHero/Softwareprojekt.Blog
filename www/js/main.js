@@ -6,6 +6,24 @@ window.onerror = function (msg, url, line) {
     bridge.errorLog(msg, url, line);
 }
 
+function ready() {
+    addP();
+}
+
+function hideBloggerFunctions() {
+    document.querySelector("#create-article").style.display = "none";
+    document.querySelectorAll(".post-delete").forEach(button => {
+       button.style.display = "none";
+    });
+}
+
+function hideUserFunctions() {
+    hideBloggerFunctions();
+    document.querySelectorAll(".post-actions").forEach(item => {
+        item.style.display = "none";
+    });
+}
+
 function fill(art, s) {
     // document.getElementById("titel"+ s).innerHTML = art["titel"];
     // document.getElementById("text" + s).innerHTML = art["text"];
@@ -14,12 +32,8 @@ function fill(art, s) {
     displayArticle(-1, art.titel, art.text);
 }
 
-function ready(){
-    addP();
-}
-
 //Hilfsfunktion um die Seitenanzahl aus Java per Bride zu verwenden
-function addP(){
+function addP() {
     bridge.addPage();
     bridge.fillWeb(1);
 }
@@ -55,7 +69,7 @@ function displayArticle(ID, Title, Text) {
         `<h2>${Title}</h2>
          <p>${Text}</p>
          <div class="post-actions">
-            <button>Kommentieren</button> <button class="post-delete" onclick="deletePost('${article.id}');">Löschen</button>
+            <button onclick="createComment();">Kommentieren</button> <button class="post-delete" onclick="deletePost('${article.id}');">Löschen</button>
          </div>
         <div class="comments"></div>`;
 
@@ -63,8 +77,8 @@ function displayArticle(ID, Title, Text) {
 }
 
 function createComment() {
-    bridge.upcall("Create Comment debug");
-    //bridge.createComment(-1, -1, "", ""); //TODO: implement
+    bridge.consoleLog("Create Comment debug");
+    //bridge.createComment(1, 1, "", ""); //TODO: implement
     displayComment(-1, -1, "", "");
 }
 

@@ -1,6 +1,6 @@
 package model;
 
-import controller.DBConnection;
+import controller.DatabaseController;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public abstract class Beitrag {
         kommentare = new ArrayList<>();
 
         String sql = String.format("INSERT INTO Beitrag (Datum, Verfasser, Oberbeitrag) VALUES ('%s', %s, %s)", this.dateTime, this.verfasser.getId(), this.oberbeitrag == null ? "NULL" : this.oberbeitrag.getId());
-        this.id = DBConnection.executeUpdate(sql);
+        this.id = DatabaseController.executeUpdate(sql);
     }
 
     // ctor for db
@@ -76,9 +76,9 @@ public abstract class Beitrag {
     public void deleteKommentar(Kommentar k) {
         //#region Kommentar aus DB löschen
         String sql = "DELETE FROM kommentar WHERE KID = " + k.getId();
-        DBConnection.executeUpdate(sql);
+        DatabaseController.executeUpdate(sql);
         sql = "DELETE FROM beitrag WHERE BID = " + k.getId();
-        DBConnection.executeUpdate(sql);
+        DatabaseController.executeUpdate(sql);
         //#endregion
 
 

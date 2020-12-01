@@ -28,4 +28,8 @@ public abstract class Nutzer {
     public void setPasswort(String passwort) {
         this.passwort = passwort;
     }
+
+    public Kommentar createKommentar(Nutzer verfasser, String text, Beitrag oberbeitrag) {
+        return new Kommentar(verfasser, text, oberbeitrag);
+    }
 }

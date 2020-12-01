@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import model.Nutzer;
@@ -56,13 +53,18 @@ public class MainController {
     private Button btnWW;
 
     @FXML
+    private Label lblStatus;
+
+    @FXML
     private void handleButtonLoginAction(ActionEvent event) {
         System.out.println(tfNameLogin.getText() + " " + pfPasswortLogin.getText());
         AuthentifizierungsController ac = new AuthentifizierungsController();
         try {
             user = ac.Login(tfNameLogin.getText(), pfPasswortLogin.getText());
+            lblStatus.setText("Currently logged in as: " + tfNameLogin.getText());
         } catch (Exception e) {
             // TODO Auto-generated catch block
+            lblStatus.setText("Error in login.");
             e.printStackTrace();
         }
     }
@@ -73,6 +75,7 @@ public class MainController {
         AuthentifizierungsController ac = new AuthentifizierungsController();
         try {
             ac.Registrieren(tfNameRegister.getText(), pfPasswortRegister.getText());
+            lblStatus.setText("Registered new user: " + pfPasswortLogin.getText());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
