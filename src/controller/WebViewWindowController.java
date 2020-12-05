@@ -90,6 +90,11 @@ public class WebViewWindowController implements Initializable {
         }
 
  */
+        /**
+         * Beiträge werden aus der DB gelesen und anhand der Seitenanzahl die korrekten Beiträge auf der WebView angezeigt, durch die JavaScript funktion "fill"
+         *
+         * @param seitenzahl
+         */
         public void fillWeb(int seitenzahl) {
             System.out.println("Seite: " + seitenzahl);
             ArrayList<Artikel> a;
@@ -101,8 +106,8 @@ public class WebViewWindowController implements Initializable {
                     break;
                 }
                 System.out.println(i);
-                String test1 = String.format("fill(new Artikel('%s','%s','%s'), '%s');", a.get(i).getVerfasser(), a.get(i).getTitel(), a.get(i).getText(), i+1);
-                webEngine.executeScript(test1);
+                String script = String.format("fill(new Artikel('%s','%s','%s'), '%s');", a.get(i).getVerfasser(), a.get(i).getTitel(), a.get(i).getText(), i+1);
+                webEngine.executeScript(script);
             }
 
 //            for (int j = seitenzahl+((seitenzahl-1)*4); j <= seitenzahl*5; j++) {    //FIXME: crash wenn weniger als 5 artikel in db
@@ -121,7 +126,9 @@ public class WebViewWindowController implements Initializable {
         public void createComment(int KommentarID, int oberBeitragID, String text) {
             //currUser.createKommentar(currUser, )
         }
-
+        /**
+         * Die JavaScript Funktion "Page" wird mit dem Wert der Seitenazahl ausgeführt
+         */
         public void addPage() {
             String s = String.format("Page('%s')", DatabaseController.getSeitenanzahl());
             webEngine.executeScript(s);

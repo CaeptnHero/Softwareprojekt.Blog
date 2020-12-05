@@ -3,6 +3,7 @@ package controller;
 import model.Nutzer;
 
 import javax.swing.*;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * Ließt die Daten aus der DB von der Tabelle nutzer
@@ -14,11 +15,11 @@ public class AuthentifizierungsController {
     private static String sql;
 
     /**
-     *
+     * Es wird geschaut, ob der angegeben User in der DB ist und das Passwort übereinstimmt
      * @param nutzername
      * @param passwort
-     * @return
-     * @author
+     * @return Ein Objekt vom Typ Blogger,Reader oder Null
+     * @author Andre Martens
      */
     public Nutzer Login(String nutzername, String passwort) {
         Nutzer n = null;
@@ -39,12 +40,32 @@ public class AuthentifizierungsController {
     }
 
     /**
-     *
+     *Es wird bei der Registrierung geschaut, ob ein Nutzer mit dem angegeben Nutzer bereits in der DB existiert, wenn nicht, dann wird dieser hinzugefügt
      * @param nutzername
      * @param passwort
-     * @return
-     * @author
+     * @return True oder False abhängig davon, ob der User registiert werden konnte oder nicht
+     * @author Andre Martens
      */
+    public boolean Registrieren(String nutzername, String passwort) throws SQLIntegrityConstraintViolationException {
+        Nutzer n;
+            n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
+            if (n == null && nutzername.length() >=5 && passwort.length() >= 5) {
+                sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
+                int erfolgreich = DatabaseController.executeUpdate(sql);
+                if (erfolgreich != -1) {
+                    JOptionPane.showMessageDialog(null, "Benutzer wurde registirert");
+                    return true;
+                }
+            }else if(n != null){
+                JOptionPane.showMessageDialog(null, "Benutzername ist vergeben");
+            }else {
+                System.out.println("Fehlerhafte Registrierung");
+                JOptionPane.showMessageDialog(null, "Benutzername und Passwort müssen mindestens 5 Zeichen bestehen");
+            }
+            return false;
+    }
+
+/**
     public boolean Registrieren(String nutzername, String passwort) {
         Nutzer n;
         try {
@@ -64,4 +85,5 @@ public class AuthentifizierungsController {
         }
         return false;
     }
+ */
 }

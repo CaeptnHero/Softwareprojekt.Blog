@@ -5,6 +5,7 @@ import model.*;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
+import javax.swing.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public final class DatabaseController {
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            
         }
     }
 
@@ -90,6 +92,10 @@ public final class DatabaseController {
             if (res.next()) {
                 return res.getInt(1);
             }
+        } catch (SQLIntegrityConstraintViolationException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Benutzername ist vergeben");
+            return -1;
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
