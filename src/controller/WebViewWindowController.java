@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import model.Artikel;
-import model.Blogger;
-import model.Nutzer;
-import model.Reader;
+import model.*;
 import netscape.javascript.JSObject;
 
 import java.io.File;
@@ -105,8 +102,8 @@ public class WebViewWindowController implements Initializable {
                 if(i >= startIndex + 5) {
                     break;
                 }
-                System.out.println(i);
-                String script = String.format("fill(new Artikel('%s','%s','%s'), '%s');", a.get(i).getVerfasser(), a.get(i).getTitel(), a.get(i).getText(), i+1);
+                System.out.println("Beitrag: " + i);
+                String script = String.format("displayArticle(%d, '%s', '%s', '%s')", i+1, a.get(i).getVerfasser(), a.get(i).getTitel(), a.get(i).getText());
                 webEngine.executeScript(script);
             }
 
@@ -123,8 +120,10 @@ public class WebViewWindowController implements Initializable {
                 currBlogger.createArticle(titel, text);
         }
 
-        public void createComment(int KommentarID, int oberBeitragID, String text) {
-            //currUser.createKommentar(currUser, )
+        public void createComment(int oberBeitragID, String text) {
+            System.out.println("createComment(oberBeitragID=" + oberBeitragID + ", text="+text+")");
+            Beitrag b = DatabaseController.getBeitrag(oberBeitragID); //FIXME: retarded shit
+            currUser.createKommentar(text, b);
         }
         /**
          * Die JavaScript Funktion "Page" wird mit dem Wert der Seitenazahl ausgeführt

@@ -9,7 +9,7 @@ public class Kommentar extends Beitrag {
     public Kommentar(Nutzer verfasser, String text, Beitrag oberbeitrag) {
         super(verfasser, text, oberbeitrag);
 
-        String sql = String.format("INSERT INTO Kommentar VALUES (%s, %s)", this.getId(), text);
+        String sql = String.format("INSERT INTO Kommentar VALUES (%s, '%s')", this.getId(), text);
         DatabaseController.executeUpdate(sql);
     }
 

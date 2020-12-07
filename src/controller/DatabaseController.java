@@ -197,6 +197,66 @@ public final class DatabaseController {
         return kommentare;
     }
 
+    public static Beitrag getBeitrag(int bid) {
+        ResultSet res = executeQuery("select Oberbeitrag from beitrag where bid = " + bid);
+        int obid = -1;
+        try {
+            res.next();
+            obid = res.getInt("Oberbeitrag");
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+
+        if(obid == -1) {
+            System.out.println("Beitrag nicht gefunden");
+            return null;
+        } else if (obid == 0) {
+            res = executeQuery("select * from artikel a, beitrag b where a.aid = b.bid and b.bid = " + bid);
+            try {
+                while (res.next()) {
+                    int id = res.getInt("bid");
+                    Blogger verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
+                    String titel = res.getString("titel");
+                    String text = res.getString("text");
+                    String date = res.getString("datum");
+                    String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
+                    LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
+
+                    Artikel a = new Artikel(id, verfasser, titel, text, dateTime);
+
+                    //	Alle Kommentare des Artikels abfragen
+                    a.addKommentar(getKommentare(a));
+                    return a;
+                }
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
+
+        } else {
+            res = executeQuery("select * from Kommentar k, beitrag b where k.kid = b.bid and b.bid = " + bid);
+            try {
+                while (res.next()) {
+                    int id = res.getInt("bid");
+                    Blogger verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
+                    String text = res.getString("text");
+                    String date = res.getString("datum");
+                    String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
+                    LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
+
+                    Kommentar k = new Kommentar(id, verfasser, text, dateTime, null); //TODO: Beitrag ist null
+                    return k;
+                }
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Fragt die anzahl der Artikel ab und berechnet damit die Seitenanzahl.
      *

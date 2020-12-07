@@ -29,7 +29,7 @@ public abstract class Nutzer {
         this.passwort = passwort;
     }
 
-    public Kommentar createKommentar(Nutzer verfasser, String text, Beitrag oberbeitrag) {
-        return new Kommentar(verfasser, text, oberbeitrag);
+    public Kommentar createKommentar(String text, Beitrag oberbeitrag) {
+        return new Kommentar(this, text, oberbeitrag);
     }
 }

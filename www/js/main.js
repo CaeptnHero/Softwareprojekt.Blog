@@ -11,6 +11,7 @@ function ready() {
 }
 
 function hideBloggerFunctions() {
+    return; //FIXME: debug
     document.querySelector("#create-article").style.display = "none";
     document.querySelectorAll(".post-delete").forEach(button => {
        button.style.display = "none";
@@ -18,18 +19,11 @@ function hideBloggerFunctions() {
 }
 
 function hideUserFunctions() {
+    return; //FIXME: debug
     hideBloggerFunctions();
     document.querySelectorAll(".post-actions").forEach(item => {
         item.style.display = "none";
     });
-}
-
-function fill(art, s) {
-    // document.getElementById("titel"+ s).innerHTML = art["titel"];
-    // document.getElementById("text" + s).innerHTML = art["text"];
-
-    //FIXME: tmp fix
-    displayArticle(-1, art.titel, art.text);
 }
 
 //Hilfsfunktion um die Seitenanzahl aus Java per Bride zu verwenden
@@ -81,24 +75,39 @@ function createArticle() {
  * @param Title
  * @param Text
  */
-function displayArticle(ID, Title, Text) {
+function displayArticle(ID, Verfasser, Title, Text) {
     let article = document.createElement('article');
     article.id = `beitrag-${ID}`;
     article.innerHTML =
         `<h2>${Title}</h2>
          <p>${Text}</p>
          <div class="post-actions">
-            <button onclick="createComment();">Kommentieren</button> <button class="post-delete" onclick="deletePost('${article.id}');">Löschen</button>
+            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deletePost('${article.id}');">Löschen</button>
          </div>
         <div class="comments"></div>`;
 
     document.getElementById("article-section").appendChild(article);
 }
 
-function createComment() {
-    bridge.consoleLog("Create Comment debug");
-    //bridge.createComment(1, 1, "", ""); //TODO: implement
-    displayComment(-1, -1, "", "");
+function commentButtonClick(event) {
+    let bid = event.currentTarget.parentElement.parentElement.id;
+
+    let commentForm = document.createElement('form');
+    commentForm.classList.add('create-comment');
+    commentForm.innerHTML = `<label for="${bid}-comment">Text:</label>
+        <textarea id="${bid}-comment" rows="4" cols="50"></textarea>
+        <button type="submit" onclick="postComment('${bid}');">Veröffentlichen</button>`;
+
+    event.currentTarget.parentElement.append(commentForm);
+    event.currentTarget.disabled = true;
+}
+
+function postComment(htmlBID) {
+    let bid = htmlBID.split('-')[1];
+    let commentText = document.getElementById(`${htmlBID}-comment`).value;
+    bridge.createComment(bid, commentText);
+
+    //bridge.consoleLog(`htmlBID: ${htmlBID}\nComment: ${commentText}`); //FIXME: debug only
 }
 
 /**
@@ -135,23 +144,3 @@ function deletePost(id) {
 function clearArticles() {
     document.getElementById('article-section').innerHTML = '';
 }
-
-class Beitrag {
-    constructor() {
-    }
-
-    anzeigen() {
-        let artikel = document.createElement('article');
-        artikel.className = 'post';
-        document.getElementById("content").appendChild(artikel);
-    }
-}
-
-class Artikel {
-    constructor(verfasser, titel, text) {
-        this.verfasser = verfasser;
-        this.titel = titel;
-        this.text = text;
-    }
-}
-
