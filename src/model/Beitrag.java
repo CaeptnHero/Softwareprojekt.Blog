@@ -18,6 +18,7 @@ public abstract class Beitrag {
         this.verfasser = verfasser;
         this.text = text;
         this.dateTime = LocalDateTime.now();
+        this.oberbeitrag = oberbeitrag;
         kommentare = new ArrayList<>();
 
         String sql = String.format("INSERT INTO Beitrag (Datum, Verfasser, Oberbeitrag) VALUES ('%s', %s, %s)", this.dateTime, this.verfasser.getId(), this.oberbeitrag == null ? "NULL" : this.oberbeitrag.getId());

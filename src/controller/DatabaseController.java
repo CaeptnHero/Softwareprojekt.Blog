@@ -177,7 +177,8 @@ public final class DatabaseController {
      */
     private static ArrayList<Kommentar> getKommentare(Beitrag Oberbeitrag) {
         ArrayList<Kommentar> kommentare = new ArrayList<>();
-        ResultSet res = executeQuery("select * from beitrag b, kommentar k where b.bid = k.kid and b.oberbeitrag = " + Oberbeitrag.getId());
+        String query = "select * from beitrag b, kommentar k where b.bid = k.kid and b.oberbeitrag = " + Oberbeitrag.getId();
+        ResultSet res = executeQuery(query);    //FIXME: es kommt nichts zurück SQL abfrage liefer bei phpmyadmin jedoch 1 resultat
 
         try {
             while (res.next()) {

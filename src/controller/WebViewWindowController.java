@@ -94,17 +94,27 @@ public class WebViewWindowController implements Initializable {
          */
         public void fillWeb(int seitenzahl) {
             System.out.println("Seite: " + seitenzahl);
-            ArrayList<Artikel> a;
-            a = DatabaseController.getArtikel();
+            ArrayList<Artikel> allArticles;
+            allArticles = DatabaseController.getArtikel();
 
             int startIndex = (seitenzahl - 1) * 5;
-            for (int i = startIndex; i < a.size(); i++) {
+            for (int i = startIndex; i < allArticles.size(); i++) {
                 if(i >= startIndex + 5) {
                     break;
                 }
+                Artikel a = allArticles.get(i);
                 System.out.println("Beitrag: " + i);
-                String script = String.format("displayArticle(%d, '%s', '%s', '%s')", i+1, a.get(i).getVerfasser(), a.get(i).getTitel(), a.get(i).getText());
+                String script = String.format("displayArticle(%d, '%s', '%s', '%s')", i+1, a.getVerfasser(), a.getTitel(), a.getText());
                 webEngine.executeScript(script);
+                
+                //Kommentare einfügen
+                System.out.println("Artikel: " + a.getId() + " Kommentare: " +a.getKommentare().size());
+                for (int j = 0; j < a.getKommentare().size(); j++) {
+                    Kommentar k = a.getKommentare().get(j);
+                    System.out.println("Kommentar anzeigen: " + k.getId());
+                    script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), a.getId(), k.getVerfasser(), k.getText());
+                    webEngine.executeScript(script);
+                }
             }
 
 //            for (int j = seitenzahl+((seitenzahl-1)*4); j <= seitenzahl*5; j++) {    //FIXME: crash wenn weniger als 5 artikel in db
