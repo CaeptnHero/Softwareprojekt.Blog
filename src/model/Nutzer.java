@@ -32,4 +32,9 @@ public abstract class Nutzer {
     public Kommentar createKommentar(String text, Beitrag oberbeitrag) {
         return new Kommentar(this, text, oberbeitrag);
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
 }

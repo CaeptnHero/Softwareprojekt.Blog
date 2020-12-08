@@ -13,8 +13,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="251.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<BorderPane prefHeight="258.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <center>
       <VBox prefHeight="245.0" prefWidth="357.0" BorderPane.alignment="CENTER">
          <children>
@@ -26,9 +27,9 @@
                            <children>
                               <GridPane hgap="7.0" layoutX="20.0" layoutY="14.0" prefHeight="176.0" prefWidth="318.0" vgap="7.0">
                                  <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="193.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="70.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="78.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="121.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="96.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
@@ -43,7 +44,7 @@
                                     <Label text="Passwort:" GridPane.rowIndex="1" />
                                     <TextField fx:id="tfNameLogin" GridPane.columnIndex="1" GridPane.columnSpan="2" />
                                     <PasswordField fx:id="pfPasswortLogin" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                                    <Button fx:id="btLogin" mnemonicParsing="false" onAction="#handleButtonLoginAction" text="Login" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Button fx:id="btLogin" mnemonicParsing="false" onAction="#handleButtonLoginAction" prefHeight="25.0" prefWidth="96.0" text="Login" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children></AnchorPane>
@@ -55,9 +56,9 @@
                            <children>
                               <GridPane hgap="7.0" layoutX="20.0" layoutY="14.0" prefHeight="176.0" prefWidth="318.0" vgap="7.0">
                                  <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="160.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="103.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="87.0" minWidth="10.0" prefWidth="77.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="121.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="96.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
@@ -72,7 +73,7 @@
                                     <Label text="Passwort:" GridPane.rowIndex="1" />
                                     <TextField fx:id="tfNameRegister" GridPane.columnIndex="1" GridPane.columnSpan="2" />
                                     <PasswordField fx:id="pfPasswortRegister" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                                    <Button fx:id="btRegister" mnemonicParsing="false" onAction="#handleButtonRegisterAction" text="Registrieren" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Button fx:id="btRegister" mnemonicParsing="false" onAction="#handleButtonRegisterAction" prefHeight="25.0" prefWidth="124.0" text="Registrieren" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children></AnchorPane>
@@ -116,6 +117,9 @@
       <Button fx:id="btnWW" mnemonicParsing="false" onAction="#handleButtonWebViewAction" prefHeight="25.0" prefWidth="684.0" text="Öffne Blog" />
    </top>
    <bottom>
-      <Label fx:id="lblStatus" BorderPane.alignment="CENTER" />
+      <Label fx:id="lblStatus" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
    </bottom>
 </BorderPane>

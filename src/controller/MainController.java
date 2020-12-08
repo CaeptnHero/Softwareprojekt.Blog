@@ -57,15 +57,33 @@ public class MainController {
 
     @FXML
     private void handleButtonLoginAction(ActionEvent event) {
-        System.out.println(tfNameLogin.getText() + " " + pfPasswortLogin.getText());
-        AuthentifizierungsController ac = new AuthentifizierungsController();
-        try {
-            user = ac.Login(tfNameLogin.getText(), pfPasswortLogin.getText());
-            lblStatus.setText("Currently logged in as: " + tfNameLogin.getText());
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            lblStatus.setText("Error in login.");
-            e.printStackTrace();
+        if (user != null) {
+            lblStatus.setText("");
+            user = null;
+            tfNameLogin.setDisable(false);
+            pfPasswortLogin.setDisable(false);
+            btLogin.setText("Login");
+        }
+        else {
+            AuthentifizierungsController ac = new AuthentifizierungsController();
+            try {
+                user = ac.Login(tfNameLogin.getText(), pfPasswortLogin.getText());
+                if (user != null) {
+                    lblStatus.setText("Currently logged in as: " + tfNameLogin.getText() + " (" + user.toString() + ")");
+                    btLogin.setText("Log off");
+                    tfNameLogin.setDisable(true);
+                    pfPasswortLogin.setDisable(true);
+                    tfNameLogin.setText("");
+                    pfPasswortLogin.setText("");
+                }
+                else {
+                    lblStatus.setText("Login Failed! Wrong Username or Password");
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                lblStatus.setText("Error in login.");
+                e.printStackTrace();
+            }
         }
     }
 
