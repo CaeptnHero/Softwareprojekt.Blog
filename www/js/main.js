@@ -123,7 +123,7 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
     comment.innerHTML = `<span class="username">${verfasser}</span>
                     <p>${kommentarText}</p>
                     <div class="post-actions">
-                        <button>Kommentieren</button> <button class="post-delete" onclick="deletePost('${comment.id}');">Löschen</button>
+                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deletePost('${comment.id}');">Löschen</button>
                     </div>
                     <div class="comments"></div>`;
 

@@ -118,21 +118,19 @@ public class WebViewWindowController implements Initializable {
                 webEngine.executeScript(script);
 
                 //Kommentare einfügen
-                System.out.println("Artikel: " + a.getId() + " Kommentare: " +a.getKommentare().size());
-                for (int j = 0; j < a.getKommentare().size(); j++) {
-                    Kommentar k = a.getKommentare().get(j);
-                    System.out.println("Kommentar anzeigen: " + k.getId());
-                    script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), a.getId(), k.getVerfasser(), k.getText());
-                    webEngine.executeScript(script);
-                }
+                fillComments(a);
             }
+        }
 
-//            for (int j = seitenzahl+((seitenzahl-1)*4); j <= seitenzahl*5; j++) {    //FIXME: crash wenn weniger als 5 artikel in db
-//                System.out.println(j);
-//                String test1 = String.format("fill(new Artikel('%s','%s','%s'), '%s');", a.get(j-1).getVerfasser(), a.get(j-1).getTitel(), a.get(j-1).getText(), j);
-//                webEngine.executeScript(test1);
-//
-//            }
+        private void fillComments(Beitrag b) {
+            System.out.println("Artikel: " + b.getId() + " Kommentare: " +b.getKommentare().size());
+            for (int j = 0; j < b.getKommentare().size(); j++) {
+                Kommentar k = b.getKommentare().get(j);
+                System.out.println("Kommentar anzeigen: " + k.getId());
+                String script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), b.getId(), k.getVerfasser(), k.getText());
+                webEngine.executeScript(script);
+                fillComments(k);
+            }
         }
 
         public void createArticle(String titel, String text) {
