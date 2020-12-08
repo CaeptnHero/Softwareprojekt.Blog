@@ -88,6 +88,6 @@
       <Button fx:id="btnWW" mnemonicParsing="false" onAction="#handleButtonWebViewAction" prefHeight="25.0" prefWidth="684.0" text="Open Blog" />
    </top>
    <bottom>
-      <Label fx:id="lblStatus" BorderPane.alignment="CENTER"></Label>
+      <Label fx:id="lblStatus" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
