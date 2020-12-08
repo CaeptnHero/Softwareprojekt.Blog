@@ -140,10 +140,18 @@ public class WebViewWindowController implements Initializable {
                 currBlogger.createArticle(titel, text);
         }
 
+        public void deleteArticle(int id) {
+            System.out.println("delete Article: " + id);
+        }
+
         public void createComment(int oberBeitragID, String text) {
             System.out.println("createComment(oberBeitragID=" + oberBeitragID + ", text="+text+")");
             Beitrag b = DatabaseController.getBeitrag(oberBeitragID); //FIXME: retarded shit
             currUser.createKommentar(text, b);
+        }
+
+        public void deleteComment(int id) {
+            System.out.println("delete Comment: " + id);
         }
         /**
          * Die JavaScript Funktion "Page" wird mit dem Wert der Seitenazahl ausgeführt

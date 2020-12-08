@@ -82,7 +82,7 @@ function displayArticle(ID, Verfasser, Title, Text) {
         `<h2>${Title}</h2>
          <p>${Text}</p>
          <div class="post-actions">
-            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deletePost('${article.id}');">Löschen</button>
+            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deleteArticle('${article.id}');">Löschen</button>
          </div>
         <div class="comments"></div>`;
 
@@ -123,7 +123,7 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
     comment.innerHTML = `<span class="username">${verfasser}</span>
                     <p>${kommentarText}</p>
                     <div class="post-actions">
-                        <button>Kommentieren</button> <button class="post-delete" onclick="deletePost('${comment.id}');">Löschen</button>
+                        <button>Kommentieren</button> <button class="post-delete" onclick="deleteComment('${comment.id}');">Löschen</button>
                     </div>
                     <div class="comments"></div>`;
 
@@ -134,8 +134,14 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
  * Beitrag aus der webview löschen
  * @param id
  */
-function deletePost(id) {
+function deleteArticle(id) {
     document.getElementById(id).remove();
+    bridge.deleteArticle(id);
+}
+
+function deleteComment(id) {
+    document.getElementById(id).remove();
+    bridge.deleteComment(id);
 }
 
 /**
