@@ -12,8 +12,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
  */
 public class AuthentifizierungsController {
 
-    private static String sql;
-
     /**
      * Es wird geschaut, ob der angegeben User in der DB ist und das Passwort übereinstimmt
      * @param nutzername
@@ -50,7 +48,7 @@ public class AuthentifizierungsController {
         Nutzer n;
             n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
             if (n == null && nutzername.length() >=5 && passwort.length() >= 5) {
-                sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
+                String sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
                 int erfolgreich = DatabaseController.executeUpdate(sql);
                 if (erfolgreich != -1) {
                     JOptionPane.showMessageDialog(null, "Benutzer wurde registirert");

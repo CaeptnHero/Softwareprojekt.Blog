@@ -73,12 +73,12 @@ public class MainController {
                     btLogin.setText("Log off");
                     tfNameLogin.setDisable(true);
                     pfPasswortLogin.setDisable(true);
-                    tfNameLogin.setText("");
-                    pfPasswortLogin.setText("");
                 }
                 else {
                     lblStatus.setText("Login Failed! Wrong Username or Password");
                 }
+                tfNameLogin.setText("");
+                pfPasswortLogin.setText("");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 lblStatus.setText("Error in login.");
@@ -99,17 +99,12 @@ public class MainController {
             e.printStackTrace();
         }
     }
-	
-	/*@FXML
-	private void handleButtonVeroeffentlichenAction(ActionEvent event) {
-		new Blogger().createArticle(tfTitel.getText(), taText.getText()); // FIXME: Blogger aus anderer Quelle bekommen.
-	}*/
 
     @FXML
     private void handleButtonWebViewAction(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
-        //oldStage.close();
+
         try {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../view/WebViewWindow.fxml"));
             Parent root = fxmlloader.load();
