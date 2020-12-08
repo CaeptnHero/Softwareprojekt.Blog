@@ -113,7 +113,7 @@ public class WebViewWindowController implements Initializable {
                     break;
                 }
                 Artikel a = allArticles.get(i);
-                System.out.println("Beitrag: " + i);
+                System.out.print("Index=" + i);    //FIXME: debug only
                 String script = String.format("displayArticle(%d, '%s', '%s', '%s')", a.getId(), a.getVerfasser(), a.getTitel(), a.getText());
                 webEngine.executeScript(script);
 
@@ -123,10 +123,10 @@ public class WebViewWindowController implements Initializable {
         }
 
         private void fillComments(Beitrag b) {
-            System.out.println("Artikel: " + b.getId() + " Kommentare: " +b.getKommentare().size());
+            System.out.println(" AID=" + b.getId() + " Kommentare=" +b.getKommentare().size());    //FIXME: debug only
             for (int j = 0; j < b.getKommentare().size(); j++) {
                 Kommentar k = b.getKommentare().get(j);
-                System.out.println("Kommentar anzeigen: " + k.getId());
+                System.out.println("Kommentar anzeigen: " + k.getId()); //FIXME: debug only
                 String script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), b.getId(), k.getVerfasser(), k.getText());
                 webEngine.executeScript(script);
                 fillComments(k);
