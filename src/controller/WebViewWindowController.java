@@ -52,12 +52,22 @@ public class WebViewWindowController implements Initializable {
     }
 
     public void setUser(Nutzer n) {
-        if (n instanceof Blogger)
+        if (n == null) {
+            System.out.println("webview user: " + "NONE");
+            currReader = null;
+            currBlogger = null;
+            currUser = null;
+        }
+        else if (n instanceof Blogger) {
+            System.out.println("webview user: " + n.getNutzername());
             currBlogger = (Blogger) n;
-        else
+            currUser = currBlogger;
+        }
+        else {
+            System.out.println("webview user: " + n.getNutzername());
             currReader = (Reader) n;
-
-        currUser = n;
+            currUser = currReader;
+        }
     }
 
     /**
@@ -106,7 +116,7 @@ public class WebViewWindowController implements Initializable {
                 System.out.println("Beitrag: " + i);
                 String script = String.format("displayArticle(%d, '%s', '%s', '%s')", a.getId(), a.getVerfasser(), a.getTitel(), a.getText());
                 webEngine.executeScript(script);
-                
+
                 //Kommentare einfügen
                 System.out.println("Artikel: " + a.getId() + " Kommentare: " +a.getKommentare().size());
                 for (int j = 0; j < a.getKommentare().size(); j++) {
