@@ -104,7 +104,7 @@ public class WebViewWindowController implements Initializable {
                 }
                 Artikel a = allArticles.get(i);
                 System.out.println("Beitrag: " + i);
-                String script = String.format("displayArticle(%d, '%s', '%s', '%s')", i+1, a.getVerfasser(), a.getTitel(), a.getText());
+                String script = String.format("displayArticle(%d, '%s', '%s', '%s')", a.getId(), a.getVerfasser(), a.getTitel(), a.getText());
                 webEngine.executeScript(script);
                 
                 //Kommentare einfügen

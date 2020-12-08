@@ -180,12 +180,15 @@ public final class DatabaseController {
         String query = "select * from beitrag b, kommentar k where b.bid = k.kid and b.oberbeitrag = " + Oberbeitrag.getId();
         ResultSet res = executeQuery(query);    //FIXME: es kommt nichts zurück SQL abfrage liefer bei phpmyadmin jedoch 1 resultat
 
+
         try {
             while (res.next()) {
                 int id = res.getInt("bid");
                 Nutzer verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
                 String text = res.getString("text");
-                LocalDateTime dateTime = LocalDateTime.parse(res.getString("datum"));    //TODO: testen ob das parsen funktioniert
+                String date = res.getString("datum");
+                String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
+                LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
 
                 Kommentar k = new Kommentar(id, verfasser, text, dateTime, Oberbeitrag);
                 k.addKommentar(getKommentare(k));    //rekursion
@@ -193,6 +196,7 @@ public final class DatabaseController {
             }
         } catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
         }
 
         return kommentare;
