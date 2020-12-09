@@ -53,12 +53,15 @@ public class MainController {
     private Button btnWW;
 
     @FXML
-    private Label lblStatus;
+    private Label lblLoginStatus;
+
+    @FXML
+    private Label lblRegisterStatus;
 
     @FXML
     private void handleButtonLoginAction(ActionEvent event) {
         if (user != null) {
-            lblStatus.setText("");
+            setStatus("");
             user = null;
             tfNameLogin.setDisable(false);
             pfPasswortLogin.setDisable(false);
@@ -69,19 +72,19 @@ public class MainController {
             try {
                 user = ac.Login(tfNameLogin.getText(), pfPasswortLogin.getText());
                 if (user != null) {
-                    lblStatus.setText("Currently logged in as: " + tfNameLogin.getText() + " (" + user.toString() + ")");
+                    setStatus("Currently logged in as: " + tfNameLogin.getText() + " (" + user.toString() + ")");
                     btLogin.setText("Log off");
                     tfNameLogin.setDisable(true);
                     pfPasswortLogin.setDisable(true);
                 }
                 else {
-                    lblStatus.setText("Login Failed! Wrong Username or Password");
+                    setStatus("Login Failed! Wrong Username or Password");
                 }
                 tfNameLogin.setText("");
                 pfPasswortLogin.setText("");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
-                lblStatus.setText("Error in login.");
+                setStatus("Error in login.");
                 e.printStackTrace();
             }
         }
@@ -93,7 +96,7 @@ public class MainController {
         AuthentifizierungsController ac = new AuthentifizierungsController();
         try {
             ac.Registrieren(tfNameRegister.getText(), pfPasswortRegister.getText());
-            lblStatus.setText("Registered new user: " + pfPasswortLogin.getText());
+            lblRegisterStatus.setText("Registered new user: " + pfPasswortLogin.getText());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -119,6 +122,11 @@ public class MainController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    private void setStatus(String txt) {
+        lblLoginStatus.setText(txt);
+        lblRegisterStatus.setText(txt);
     }
 }
 

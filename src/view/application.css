@@ -1,4 +1,45 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-#lblStatus {
+* {
+    -fx-text-fill: #d8dee9;
+}
+
+TabPane, bottom {
+    -fx-background-color: #2e3440;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-effect: null;
+    -fx-opacity: 0;
+}
+
+.tab {
+    -fx-background-color: #2e3440;
+    -fx-text-fill: #d8dee9;
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0;
+}
+
+Vbox {
+    -fx-background-color: #2e3440;
+}
+
+Button {
+    -fx-background-color: #3B4252;
+    -fx-border-color: #2E3440;
+    -fx-border-width: 1px;
+}
+
+Button:hover {
+    -fx-background-color: #4C566A;
+}
+
+TextField, PasswordField {
+    -fx-background-color: #4C566A;
+    -fx-border-width: 2px;
+    -fx-text-fill: #D8DEE9;
+}
+
+#lblLoginStatus, #lblRegisterStatus{
     -fx-font-size: 14px;
+    -fx-background-color: #2e3440;
 }
