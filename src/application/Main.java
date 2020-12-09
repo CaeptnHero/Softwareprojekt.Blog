@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class Main extends Application {
 
     public static void main(String[] args) {
@@ -23,6 +25,10 @@ public class Main extends Application {
             primaryStage.setResizable(false);
             primaryStage.setTitle("Blog");
             primaryStage.show();
+
+            Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+            primaryStage.setX((screen.width - primaryStage.getWidth()) / 2);
+            primaryStage.setY((screen.height - primaryStage.getHeight()) / 2);
         } catch (Exception e) {
             e.printStackTrace();
         }

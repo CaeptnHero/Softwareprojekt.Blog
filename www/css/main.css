@@ -152,19 +152,20 @@ div.comments .username {
 }
 
 /* FIXME: test only */
-/*body {*/
-/*    animation: skew 3s infinite;*/
-/*    transform: skew(20deg);*/
-/*    animation-direction: alternate;*/
-/*}*/
-/*@keyframes skew {*/
-/*    0% {*/
-/*        transform: skew(20deg, 20deg);*/
-/*    }*/
-/*    100% {*/
-/*        transform: skew(-20deg, -20deg);*/
-/*    }*/
-/*}*/
+#easteregg {
+    animation: skew 3s infinite;
+    transform: skew(20deg);
+    animation-direction: alternate;
+}
+
+@keyframes skew {
+    0% {
+        transform: skew(20deg, 20deg);
+    }
+    100% {
+        transform: skew(-20deg, -20deg);
+    }
+}
 
 /* ====================== Footer ====================== */
 footer {
