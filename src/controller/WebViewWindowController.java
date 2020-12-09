@@ -35,7 +35,8 @@ public class WebViewWindowController implements Initializable {
                 JSObject jso = (JSObject) webEngine.executeScript("window");
                 jso.setMember("bridge", jsbridge);
 
-                webEngine.executeScript("ready();");
+                webEngine.executeScript(String.format("ready('%s', %b);", ((currUser != null) ? currUser.getNutzername() : ""), currBlogger != null));
+                //webEngine.executeScript("ready(' " + ((currUser != null) ? currUser.getNutzername() : "Visitor") + "');");
                 if (currBlogger == null && currReader == null)
                     webEngine.executeScript("hideUserFunctions();");
                 else if (currReader != null)

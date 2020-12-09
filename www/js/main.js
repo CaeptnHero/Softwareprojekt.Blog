@@ -6,7 +6,8 @@ window.onerror = function (msg, url, line) {
     bridge.errorLog(msg, url, line);
 }
 
-function ready() {
+function ready(username, isblogger) {
+    document.getElementById("currUser").innerText += username + (username !== `` ? (isblogger ? " (Blogger)" : " (Reader)") : " Visitor");
     addP();
 }
 
