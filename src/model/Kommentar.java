@@ -24,7 +24,7 @@ public class Kommentar extends Beitrag {
         deleteFromDatabase(); // sich selnst aus db löschen
     }
 
-    private void deleteFromDatabase() {
+    public void deleteFromDatabase() {
         String sql = "DELETE FROM kommentar WHERE KID = " + this.getId();
         DatabaseController.executeUpdate(sql);
         sql = "DELETE FROM beitrag WHERE BID = " + this.getId();

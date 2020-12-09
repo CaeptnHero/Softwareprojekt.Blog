@@ -83,6 +83,7 @@ public final class DatabaseController {
      * @author Daniel Isaak
      */
     public static int executeUpdate(String sql) {
+        System.out.println(sql);
         try {
             open();
             statement = connection.prepareStatement(sql);

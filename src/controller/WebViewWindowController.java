@@ -138,8 +138,15 @@ public class WebViewWindowController implements Initializable {
                 currBlogger.createArticle(titel, text);
         }
 
-        public void deleteArticle(int id) {
-            System.out.println("delete Article: " + id);
+        public void deleteArticle(String id) {
+            int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
+            System.out.println("delete Article: " + dbid);
+
+            //FIXME: OBJECT ORIENTED MAYBE?
+            String sql = "DELETE FROM artikel WHERE AID = " + dbid;
+            DatabaseController.executeUpdate(sql);
+            sql = "DELETE FROM beitrag WHERE BID = " + dbid;
+            DatabaseController.executeUpdate(sql);
         }
 
         public void createComment(int oberBeitragID, String text) {
@@ -148,8 +155,15 @@ public class WebViewWindowController implements Initializable {
             currUser.createKommentar(text, b);
         }
 
-        public void deleteComment(int id) {
-            System.out.println("delete Comment: " + id);
+        public void deleteComment(String id) {
+            int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
+            System.out.println("delete Comment: " + dbid);
+
+            //FIXME: OBJECT ORIENTED MAYBE?
+            String sql = "DELETE FROM kommentar WHERE KID = " + dbid;
+            DatabaseController.executeUpdate(sql);
+            sql = "DELETE FROM beitrag WHERE BID = " + dbid;
+            DatabaseController.executeUpdate(sql);
         }
         /**
          * Die JavaScript Funktion "Page" wird mit dem Wert der Seitenazahl ausgeführt

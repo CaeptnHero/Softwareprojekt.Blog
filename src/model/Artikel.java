@@ -35,7 +35,6 @@ public class Artikel extends Beitrag {
 
         //PLACEHOLDER ArtikelListe.remove(this)		//TODO: sich selbst löschen
         deleteFromDatabase();
-
     }
 
     private void deleteFromDatabase() {

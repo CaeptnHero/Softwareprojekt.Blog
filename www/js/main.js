@@ -11,7 +11,7 @@ function ready() {
 }
 
 function hideBloggerFunctions() {
-    return; //FIXME: debug
+    //return; //FIXME: debug
     document.querySelector("#create-article").style.display = "none";
     document.querySelectorAll(".post-delete").forEach(button => {
        button.style.display = "none";
@@ -19,7 +19,7 @@ function hideBloggerFunctions() {
 }
 
 function hideUserFunctions() {
-    return; //FIXME: debug
+    //return; //FIXME: debug
     hideBloggerFunctions();
     document.querySelectorAll(".post-actions").forEach(item => {
         item.style.display = "none";
@@ -123,7 +123,7 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
     comment.innerHTML = `<span class="username">${verfasser}</span>
                     <p>${kommentarText}</p>
                     <div class="post-actions">
-                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deletePost('${comment.id}');">Löschen</button>
+                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deleteComment('${comment.id}');">Löschen</button>
                     </div>
                     <div class="comments"></div>`;
 
@@ -135,13 +135,27 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
  * @param id
  */
 function deleteArticle(id) {
-    document.getElementById(id).remove();
+    var items = document.querySelectorAll(`#${id} div`);
+    var itemsarr = Array.from(items).filter(item => item.id !== "").reverse();
+    itemsarr.forEach( item => {
+        bridge.deleteComment(item.id);
+    });
     bridge.deleteArticle(id);
+
+    //document.getElementById(id).remove();
+    location.reload();
 }
 
 function deleteComment(id) {
-    document.getElementById(id).remove();
+    var items = document.querySelectorAll(`#${id} div`);
+    var itemsarr = Array.from(items).filter(item => item.id !== "").reverse();
+    itemsarr.forEach( item => {
+        bridge.deleteComment(item.id);
+    });
     bridge.deleteComment(id);
+
+    //document.getElementById(id).remove();
+    location.reload();
 }
 
 /**
