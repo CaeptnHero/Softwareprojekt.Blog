@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 public class WebViewWindowController implements Initializable {
 
     private WebEngine webEngine;
+    private Bridge jsbridge;
     private Reader currReader = null;
     private Blogger currBlogger = null;
     private Nutzer currUser = null;
@@ -30,8 +31,9 @@ public class WebViewWindowController implements Initializable {
         webEngine.setJavaScriptEnabled(true);
         webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
+                jsbridge = new Bridge();
                 JSObject jso = (JSObject) webEngine.executeScript("window");
-                jso.setMember("bridge", new Bridge());
+                jso.setMember("bridge", jsbridge);
 
                 webEngine.executeScript(String.format("ready(' %s', %b);", ((currUser != null) ? currUser.getNutzername() : ""), currBlogger != null));
                 //webEngine.executeScript("ready(' " + ((currUser != null) ? currUser.getNutzername() : "Visitor") + "');");
@@ -52,7 +54,7 @@ public class WebViewWindowController implements Initializable {
 
     public void setUser(Nutzer n) {
         if (n == null) {
-            System.out.println("webview user: " + "Visitor");
+            System.out.println("webview user: " + "NONE");
             currReader = null;
             currBlogger = null;
             currUser = null;
@@ -84,6 +86,18 @@ public class WebViewWindowController implements Initializable {
             System.out.println("Javascript log: " + msg);
         }
 
+/*
+        public void fillWeb(int i) {
+            ArrayList<Artikel> a;
+            a = DBConnection.getArtikel();
+
+            for (int j = i - 1; j < i; j++) {
+                String test = String.format("fill(new Artikel('%s','%s','%s'));", a.get(j).getVerfasser(), a.get(j).getTitel(), a.get(j).getText());
+                webEngine.executeScript(test);
+            }
+        }
+
+ */
         /**
          * Beiträge werden aus der DB gelesen und anhand der Seitenanzahl die korrekten Beiträge auf der WebView angezeigt, durch die JavaScript funktion "fill"
          *
@@ -152,7 +166,6 @@ public class WebViewWindowController implements Initializable {
             sql = "DELETE FROM beitrag WHERE BID = " + dbid;
             DatabaseController.executeUpdate(sql);
         }
-
         /**
          * Die JavaScript Funktion "Page" wird mit dem Wert der Seitenazahl ausgeführt
          */

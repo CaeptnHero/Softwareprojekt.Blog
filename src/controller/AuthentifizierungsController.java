@@ -62,4 +62,26 @@ public class AuthentifizierungsController {
             }
             return false;
     }
+
+/**
+    public boolean Registrieren(String nutzername, String passwort) {
+        Nutzer n;
+        try {
+            n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
+            if (n == null) {
+                sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
+                DatabaseController.executeUpdate(sql);
+                System.out.println("Benutzer wurde registriert");
+                JOptionPane.showMessageDialog(null, "Benutzer wurde registriert");
+                return true;
+            }
+            System.out.println("Der Nutzername ist bereits vergeben");
+            JOptionPane.showMessageDialog(null, "Der Nutzername ist bereits vergeben");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+ */
 }
