@@ -61,6 +61,8 @@ function changePage(pagenumber) {
             elements[i].classList.remove("active");
         }
     }
+
+    //TODO: nach jedem seitenwechsel auch regeln anwenden
 }
 
 function createArticle() {
@@ -68,6 +70,7 @@ function createArticle() {
     let text = document.getElementById('article-text').value;
 
     bridge.createArticle(title, text);
+    bridge.reloadSite();
 }
 
 /**
@@ -108,6 +111,7 @@ function postComment(htmlBID) {
     let commentText = document.getElementById(`${htmlBID}-comment`).value;
     bridge.createComment(bid, commentText);
 
+    bridge.reloadSite();
     //bridge.consoleLog(`htmlBID: ${htmlBID}\nComment: ${commentText}`); //FIXME: debug only
 }
 
@@ -144,7 +148,7 @@ function deleteArticle(id) {
     bridge.deleteArticle(id);
 
     //document.getElementById(id).remove();
-    location.reload();
+    bridge.reloadSite();
 }
 
 function deleteComment(id) {
@@ -156,7 +160,7 @@ function deleteComment(id) {
     bridge.deleteComment(id);
 
     //document.getElementById(id).remove();
-    location.reload();
+    bridge.reloadSite();
 }
 
 /**

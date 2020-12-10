@@ -36,7 +36,6 @@ public class WebViewWindowController implements Initializable {
                 jso.setMember("bridge", jsbridge);
 
                 webEngine.executeScript(String.format("ready(' %s', %b);", ((currUser != null) ? currUser.getNutzername() : ""), currBlogger != null));
-                //webEngine.executeScript("ready(' " + ((currUser != null) ? currUser.getNutzername() : "Visitor") + "');");
                 if (currBlogger == null && currReader == null)
                     webEngine.executeScript("hideUserFunctions();");
                 else if (currReader != null)
@@ -78,6 +77,10 @@ public class WebViewWindowController implements Initializable {
      * @author Daniel Isaak
      */
     public class Bridge {
+        public void reloadSite() {
+            webEngine.reload();
+        }
+
         public void errorLog(String msg, String url, int line) {
             System.out.println("Javascript error in " + url + " : " + line + "\n" + msg);
         }
