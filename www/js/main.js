@@ -1,3 +1,5 @@
+var usertype = 0;
+
 window.onload = function() {
     clearArticles();
 }
@@ -9,6 +11,10 @@ window.onerror = function (msg, url, line) {
 function ready(username, isblogger) {
     document.getElementById("currUser").innerText += username + (username !== ` ` ? (isblogger ? " (Blogger)" : " (Reader)") : " Visitor");
     addP();
+}
+
+function setUsertype(usertype) {
+    this.usertype = usertype;
 }
 
 function hideBloggerFunctions() {
@@ -61,7 +67,12 @@ function changePage(pagenumber) {
             elements[i].classList.remove("active");
         }
     }
+    bridge.consoleLog(this.usertype);
 
+    if (this.usertype === 1)
+        hideBloggerFunctions();
+    else if (this.usertype === 0)
+        hideUserFunctions();
     //TODO: nach jedem seitenwechsel auch regeln anwenden
 }
 

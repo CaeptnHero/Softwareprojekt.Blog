@@ -36,10 +36,18 @@ public class WebViewWindowController implements Initializable {
                 jso.setMember("bridge", jsbridge);
 
                 webEngine.executeScript(String.format("ready(' %s', %b);", ((currUser != null) ? currUser.getNutzername() : ""), currBlogger != null));
-                if (currBlogger == null && currReader == null)
+                
+                int usertype = -1;
+                if (currUser == null) {
+                    System.out.println("IM IN");
                     webEngine.executeScript("hideUserFunctions();");
-                else if (currReader != null)
+                    usertype = 0;
+                }
+                else if (currReader != null) {
                     webEngine.executeScript("hideBloggerFunctions();");
+                    usertype = 1;
+                }
+                webEngine.executeScript(String.format("setUsertype(%d);",usertype));
             }
         });
 
