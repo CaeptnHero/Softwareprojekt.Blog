@@ -19,7 +19,8 @@ TabPane {
     -fx-background-radius: 5 5 0 0, 4 4 0 0;
 }
 
-.tab:hover {
+.tab:hover, .tab:selected {
+    -fx-focus-color: transparent;
     -fx-background-color: #4C566A;
 }
 
