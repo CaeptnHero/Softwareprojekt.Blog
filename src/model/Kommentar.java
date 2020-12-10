@@ -1,7 +1,6 @@
 package model;
 
 import controller.DatabaseController;
-
 import java.time.LocalDateTime;
 
 public class Kommentar extends Beitrag {

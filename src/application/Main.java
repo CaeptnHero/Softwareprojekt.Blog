@@ -26,6 +26,7 @@ public class Main extends Application {
             primaryStage.setTitle("Blog");
             primaryStage.show();
 
+            //Auf bildschirm zentrieren
             Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
             primaryStage.setX((screen.width - primaryStage.getWidth()) / 2);
             primaryStage.setY((screen.height - primaryStage.getHeight()) / 2);

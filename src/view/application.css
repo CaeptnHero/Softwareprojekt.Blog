@@ -1,6 +1,7 @@
 /* ====================== All ====================== */
 * {
     -fx-text-fill: #d8dee9;
+    -fx-font-family: Arial, Helvetica, sans-serif;
 }
 
 /* ====================== Tabs ====================== */
@@ -27,6 +28,7 @@ TabPane {
 /* ====================== Buttons ====================== */
 Button {
     -fx-background-color: #3B4252;
+    -fx-font-size: 12px;
 }
 
 Button:hover {
@@ -39,6 +41,10 @@ TextField, PasswordField {
     -fx-text-fill: #D8DEE9;
 }
 
+Label {
+    -fx-font-size: 1.2em;
+}
+
 #lblLoginStatus, #lblRegisterStatus{
-    -fx-font-size: 14px;
+    -fx-font-size: 1.4em;
 }

@@ -1,7 +1,6 @@
 package model;
 
 import controller.DatabaseController;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

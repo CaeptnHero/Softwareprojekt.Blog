@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.web.WebView?>
 
 <BorderPane prefHeight="740.0" prefWidth="1269.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WebViewWindowController">
    <center>
-      <WebView fx:id="webView" prefHeight="200.0" prefWidth="1038.0" BorderPane.alignment="CENTER" />
+      <WebView fx:id="webView" cacheHint="SPEED" depthTest="DISABLE" prefHeight="-1.0" prefWidth="-1.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></WebView>
    </center>
 </BorderPane>

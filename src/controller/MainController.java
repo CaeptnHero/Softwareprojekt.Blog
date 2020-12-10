@@ -15,49 +15,26 @@ import java.io.IOException;
 
 public class MainController {
 
-    private WebViewWindowController wvwc;
-
     private Nutzer user;
 
     @FXML
-    private TextField tfNameLogin;
+    private TextField tfNameLogin, tfNameRegister, tfTitel;
 
     @FXML
-    private TextField tfNameRegister;
+    private PasswordField pfPasswortLogin, pfPasswortRegister;
 
     @FXML
-    private PasswordField pfPasswortLogin;
+    private Button btLogin, btRegister, btVeroeffentlichen, btnWW;
 
     @FXML
-    private PasswordField pfPasswortRegister;
-
-    @FXML
-    private Button btLogin;
-
-    @FXML
-    private Button btRegister;
-
-    @FXML
-    private TextField tfTitel;
+    private Label lblLoginStatus, lblRegisterStatus;
 
     @FXML
     private TextArea taText;
 
     @FXML
-    private Button btVeroeffentlichen;
-
-    @FXML
     private WebView webView;
-
-    @FXML
-    private Button btnWW;
-
-    @FXML
-    private Label lblLoginStatus;
-
-    @FXML
-    private Label lblRegisterStatus;
-
+    
     @FXML
     private void handleButtonLoginAction(ActionEvent event) {
         if (user != null) {
@@ -72,7 +49,7 @@ public class MainController {
             try {
                 user = ac.Login(tfNameLogin.getText(), pfPasswortLogin.getText());
                 if (user != null) {
-                    setStatus("Currently logged in as: " + tfNameLogin.getText() + " (" + user.toString() + ")");
+                    setStatus("Logged in as: " + tfNameLogin.getText() + " (" + user.toString() + ")");
                     btLogin.setText("Log off");
                     tfNameLogin.setDisable(true);
                     pfPasswortLogin.setDisable(true);
@@ -111,7 +88,7 @@ public class MainController {
         try {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../view/WebViewWindow.fxml"));
             Parent root = fxmlloader.load();
-            wvwc = fxmlloader.getController();
+            WebViewWindowController wvwc = fxmlloader.getController();
             wvwc.setUser(user);
             Stage stage = new Stage();
             stage.setTitle("WebView");
