@@ -7,7 +7,7 @@ window.onerror = function (msg, url, line) {
 }
 
 function ready(username, isblogger) {
-    document.getElementById("currUser").innerText += username + (username !== `` ? (isblogger ? " (Blogger)" : " (Reader)") : " Visitor");
+    document.getElementById("currUser").innerText += username + (username !== ` ` ? (isblogger ? " (Blogger)" : " (Reader)") : " Visitor");
     addP();
 }
 

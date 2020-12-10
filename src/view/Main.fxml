@@ -30,7 +30,7 @@
                                 <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
                                 <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
                                 <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
