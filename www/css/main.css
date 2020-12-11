@@ -51,7 +51,6 @@ nav a:hover, .active {
     border-width: 3px;
 }
 
-
 /* ====================== Buttons ======================  */
 button {
     color: #D8DEE9;
@@ -101,6 +100,10 @@ textarea::-webkit-resizer {
     font-style: italic;
 }
 
+.collapsed {
+    display: none;
+}
+
 /* ====================== Main ====================== */
 form > label, form > input, form > textarea {
     display: block;
@@ -115,7 +118,7 @@ form > label {
     margin: 16px 16px 16px 0;
 }
 
-article, form {
+article, form, #article-show {
     padding: 16px;
     margin-bottom: 8px;
     background-color: #3B4252;

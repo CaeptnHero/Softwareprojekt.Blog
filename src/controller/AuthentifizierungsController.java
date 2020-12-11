@@ -45,43 +45,23 @@ public class AuthentifizierungsController {
      * @author Andre Martens
      */
     public boolean Registrieren(String nutzername, String passwort) throws SQLIntegrityConstraintViolationException {
-        Nutzer n;
-            n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
-            if (n == null && nutzername.length() >=5 && passwort.length() >= 5) {
-                String sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
-                int erfolgreich = DatabaseController.executeUpdate(sql);
-                if (erfolgreich != -1) {
-                    JOptionPane.showMessageDialog(null, "Benutzer wurde registirert");
-                    return true;
-                }
-            }else if(n != null){
-                JOptionPane.showMessageDialog(null, "Benutzername ist vergeben");
-            }else {
-                System.out.println("Fehlerhafte Registrierung");
-                JOptionPane.showMessageDialog(null, "Benutzername und Passwort müssen mindestens 5 Zeichen bestehen");
-            }
-            return false;
-    }
+        nutzername = DatabaseController.escapeString(nutzername);
+        passwort = DatabaseController.escapeString(passwort);
 
-/**
-    public boolean Registrieren(String nutzername, String passwort) {
-        Nutzer n;
-        try {
-            n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
-            if (n == null) {
-                sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
-                DatabaseController.executeUpdate(sql);
-                System.out.println("Benutzer wurde registriert");
-                JOptionPane.showMessageDialog(null, "Benutzer wurde registriert");
+        Nutzer n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
+        if (n == null && nutzername.length() >=5 && passwort.length() >= 5) {
+            String sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
+            int erfolgreich = DatabaseController.executeUpdate(sql);
+            if (erfolgreich != -1) {
+                JOptionPane.showMessageDialog(null, "Benutzer wurde registirert");
                 return true;
             }
-            System.out.println("Der Nutzername ist bereits vergeben");
-            JOptionPane.showMessageDialog(null, "Der Nutzername ist bereits vergeben");
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
+        }else if(n != null){
+            JOptionPane.showMessageDialog(null, "Benutzername ist vergeben");
+        }else {
+            System.out.println("Fehlerhafte Registrierung");
+            JOptionPane.showMessageDialog(null, "Benutzername und Passwort müssen mindestens 5 Zeichen bestehen");
         }
         return false;
     }
- */
 }

@@ -130,8 +130,12 @@ public class WebViewWindowController implements Initializable {
         }
 
         public void createArticle(String titel, String text) {
-            if (currBlogger != null)
+            if (currBlogger != null) {
+                titel = DatabaseController.escapeString(titel);
+                text = DatabaseController.escapeString(text);
+
                 currBlogger.createArticle(titel, text);
+            }
         }
 
         public void deleteArticle(String id) {
@@ -146,6 +150,8 @@ public class WebViewWindowController implements Initializable {
         }
 
         public void createComment(int oberBeitragID, String text) {
+            text = DatabaseController.escapeString(text);
+
             System.out.println("createComment(oberBeitragID=" + oberBeitragID + ", text="+text+")");
             Beitrag b = DatabaseController.getBeitrag(oberBeitragID); //FIXME: retarded shit
             currUser.createKommentar(text, b);

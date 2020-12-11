@@ -25,7 +25,7 @@ function setUsertype(usertype) {
 
 function hideBloggerFunctions() {
     //return; //FIXME: debug
-    document.querySelector("#create-article").style.display = "none";
+    document.querySelector("#create-article, #article-show").style.display = "none";
     document.querySelectorAll(".post-delete").forEach(button => {
        button.style.display = "none";
     });

@@ -29,10 +29,10 @@ public final class DatabaseController {
     public static void open() {
         try {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+            statement = connection.createStatement();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-
         }
     }
 
@@ -51,6 +51,28 @@ public final class DatabaseController {
         }
     }
 
+    private static CachedRowSet cacheRowSet(ResultSet in) throws SQLException {
+        RowSetFactory factory = RowSetProvider.newFactory();
+        CachedRowSet out = factory.createCachedRowSet();
+        out.populate(in);
+        return out;
+    }
+
+    public static String escapeString(String str) {
+        String data = "";
+        if (!str.equals("")) {
+            str = str.replace("\\", "\\\\");
+            str = str.replace("'", "\\'");
+            str = str.replace("\0", "\\0");
+            str = str.replace("\n", "\\n");
+            str = str.replace("\r", "\\r");
+            str = str.replace("\"", "\\\"");
+            str = str.replace("\\x1a", "\\Z");
+            data = str;
+        }
+        return data;
+    }
+
     /**
      * Führt eine SQL-Query aus (SELECT, ...).
      *
@@ -58,14 +80,11 @@ public final class DatabaseController {
      * @return Resultset, welches alle zeilen der ausgefuehrten Abfrage zurückgibt.
      * @author Daniel Isaak
      */
-    public static CachedRowSet executeQuery(String sql) {
+    public static ResultSet executeQuery(String sql) {
+        System.out.println("SQL QUERY EXECUTED: " + sql);
         try {
             open();
-            statement = connection.prepareStatement(sql);
-            RowSetFactory factory = RowSetProvider.newFactory();
-            CachedRowSet rowset = factory.createCachedRowSet();
-            rowset.populate(statement.executeQuery(sql));
-            return rowset;
+            return cacheRowSet(statement.executeQuery(sql));
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -83,11 +102,9 @@ public final class DatabaseController {
      * @author Daniel Isaak
      */
     public static int executeUpdate(String sql) {
-        System.out.println(sql);
+        System.out.println("SQL UPDATE EXECUTED: " + sql);
         try {
             open();
-            statement = connection.prepareStatement(sql);
-            //statement = connection.createStatement();
             statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet res = statement.getGeneratedKeys();
             if (res.next()) {
@@ -115,8 +132,10 @@ public final class DatabaseController {
      * @author Daniel Isaak
      */
     public static Object getUser(String nutzername, String passwort) {
+        nutzername = escapeString(nutzername);
+        passwort = escapeString(passwort);
+
         String SQL = "SELECT COUNT(*) as rowcount, NID, Nutzername, Passwort, istBlogger FROM nutzer WHERE nutzer.Nutzername = \"" + nutzername + "\" AND nutzer.Passwort = \"" + passwort + "\"";
-        System.out.println(SQL);
         ResultSet res = executeQuery(SQL);
         try {
             res.next();

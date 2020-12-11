@@ -28,8 +28,8 @@
 </header>
 
 <main>
-    <form id="create-article">
-        <h2>Neuer Blogeintrag</h2>
+    <button id="article-show" onclick="document.getElementById(`create-article`).classList.toggle(`collapsed`);">Neuer Blogeintrag</button>
+    <form id="create-article" class="collapsed">
         <label for="article-title">Titel des Beitrags:</label>
         <input id="article-title" type="text">
         <label for="article-text">Text:</label>
