@@ -1,4 +1,5 @@
 var usertype = 0;
+var currPage = 1;
 
 window.onload = function() {
     clearArticles();
@@ -10,7 +11,12 @@ window.onerror = function (msg, url, line) {
 
 function ready(username, isblogger) {
     document.getElementById("currUser").innerText += username + (username !== ` ` ? (isblogger ? " (Blogger)" : " (Reader)") : " Visitor");
-    addP();
+    bridge.addPage();
+    //addP(); //FIXME: not needed anymore
+}
+
+function reloadSite() {
+    bridge.reloadSite(currPage, window.scrollY);
 }
 
 function setUsertype(usertype) {
@@ -33,11 +39,11 @@ function hideUserFunctions() {
     });
 }
 
-//Hilfsfunktion um die Seitenanzahl aus Java per Bride zu verwenden
-function addP() {
+/*Hilfsfunktion um die Seitenanzahl aus Java per Bride zu verwenden
+function addP() { //FIXME: not needed anymore
     bridge.addPage();
     bridge.fillWeb(1);
-}
+}*/
 
 // Funktion um weitere Seiten hinzuzufügen
 function Page(number){
@@ -46,16 +52,17 @@ function Page(number){
         var node = document.createElement("li");
         node.innerHTML = `<a href='#' onclick='changePage(${i});'>${i}</a>`;
 
-        //Default page
+        /* FIXME: NOT NEEDED ANYMORE
         if(i == 1) {
             node.firstChild.classList.add("active");
-        }
+        }*/
 
         pageNav.appendChild(node) //TODO: Anpassen sobald das Layout fertig. Als Beispiel <div class="message">Add Message<br>Title: <input type="text usw.
     }
 }
 
 function changePage(pagenumber) {
+    currPage = pagenumber;
     clearArticles();
     bridge.fillWeb(pagenumber);
 
@@ -67,13 +74,12 @@ function changePage(pagenumber) {
             elements[i].classList.remove("active");
         }
     }
-    bridge.consoleLog(this.usertype);
 
+    // Regeln Anwenden
     if (this.usertype === 1)
         hideBloggerFunctions();
     else if (this.usertype === 0)
         hideUserFunctions();
-    //TODO: nach jedem seitenwechsel auch regeln anwenden
 }
 
 function createArticle() {
@@ -81,7 +87,7 @@ function createArticle() {
     let text = document.getElementById('article-text').value;
 
     bridge.createArticle(title, text);
-    bridge.reloadSite();
+    reloadSite();
 }
 
 /**
@@ -111,7 +117,7 @@ function commentButtonClick(event) {
     commentForm.classList.add('create-comment');
     commentForm.innerHTML = `<label for="${bid}-comment">Text:</label>
         <textarea id="${bid}-comment" rows="4" cols="50"></textarea>
-        <button type="submit" onclick="postComment('${bid}');">Veröffentlichen</button>`;
+        <button onclick="postComment('${bid}');">Veröffentlichen</button>`;
 
     event.currentTarget.parentElement.append(commentForm);
     event.currentTarget.disabled = true;
@@ -122,7 +128,7 @@ function postComment(htmlBID) {
     let commentText = document.getElementById(`${htmlBID}-comment`).value;
     bridge.createComment(bid, commentText);
 
-    bridge.reloadSite();
+    reloadSite();
     //bridge.consoleLog(`htmlBID: ${htmlBID}\nComment: ${commentText}`); //FIXME: debug only
 }
 
@@ -158,8 +164,7 @@ function deleteArticle(id) {
     });
     bridge.deleteArticle(id);
 
-    //document.getElementById(id).remove();
-    bridge.reloadSite();
+    reloadSite();
 }
 
 function deleteComment(id) {
@@ -170,8 +175,7 @@ function deleteComment(id) {
     });
     bridge.deleteComment(id);
 
-    //document.getElementById(id).remove();
-    bridge.reloadSite();
+    reloadSite();
 }
 
 /**
@@ -180,3 +184,5 @@ function deleteComment(id) {
 function clearArticles() {
     document.getElementById('article-section').innerHTML = '';
 }
+
+

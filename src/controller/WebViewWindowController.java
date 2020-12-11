@@ -21,6 +21,8 @@ public class WebViewWindowController implements Initializable {
     private Reader currReader = null;
     private Blogger currBlogger = null;
     private Nutzer currUser = null;
+    private int currPage = 1;
+    private int scrollPosition = 0;
 
     @FXML
     private WebView webView = new WebView();
@@ -30,24 +32,16 @@ public class WebViewWindowController implements Initializable {
         webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
         webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
-            if (newState == Worker.State.SUCCEEDED) {
+            if (newState == Worker.State.SUCCEEDED) { //on window reload
                 jsbridge = new Bridge();
                 JSObject jso = (JSObject) webEngine.executeScript("window");
                 jso.setMember("bridge", jsbridge);
 
+                int usertype = currUser == null ? 0 : (currReader != null ? 1 : -1);
                 webEngine.executeScript(String.format("ready(' %s', %b);", ((currUser != null) ? currUser.getNutzername() : ""), currBlogger != null));
-                
-                int usertype = -1;
-                if (currUser == null) {
-                    System.out.println("IM IN");
-                    webEngine.executeScript("hideUserFunctions();");
-                    usertype = 0;
-                }
-                else if (currReader != null) {
-                    webEngine.executeScript("hideBloggerFunctions();");
-                    usertype = 1;
-                }
-                webEngine.executeScript(String.format("setUsertype(%d);",usertype));
+                webEngine.executeScript(String.format("setUsertype(%d);", usertype));
+                webEngine.executeScript(String.format("changePage(%d);", currPage));
+                webEngine.executeScript(String.format("window.scrollTo(0, %d);", scrollPosition));
             }
         });
 
@@ -85,7 +79,9 @@ public class WebViewWindowController implements Initializable {
      * @author Daniel Isaak
      */
     public class Bridge {
-        public void reloadSite() {
+        public void reloadSite(int currPage, int scrollPosition) {
+            WebViewWindowController.this.currPage = currPage;
+            WebViewWindowController.this.scrollPosition = scrollPosition;
             webEngine.reload();
         }
 
@@ -97,18 +93,6 @@ public class WebViewWindowController implements Initializable {
             System.out.println("Javascript log: " + msg);
         }
 
-/*
-        public void fillWeb(int i) {
-            ArrayList<Artikel> a;
-            a = DBConnection.getArtikel();
-
-            for (int j = i - 1; j < i; j++) {
-                String test = String.format("fill(new Artikel('%s','%s','%s'));", a.get(j).getVerfasser(), a.get(j).getTitel(), a.get(j).getText());
-                webEngine.executeScript(test);
-            }
-        }
-
- */
         /**
          * Beiträge werden aus der DB gelesen und anhand der Seitenanzahl die korrekten Beiträge auf der WebView angezeigt, durch die JavaScript funktion "fill"
          *
