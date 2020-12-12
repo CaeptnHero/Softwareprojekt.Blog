@@ -117,7 +117,6 @@ public class MainController {
             stage.setTitle("WebView");
             stage.setScene(new Scene(root));
             stage.show();
-
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

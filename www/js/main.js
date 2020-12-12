@@ -1,6 +1,3 @@
-var usertype = 0;
-var currPage = 1;
-
 window.onload = function() {
     clearArticles();
 }
@@ -9,18 +6,22 @@ window.onerror = function (msg, url, line) {
     bridge.errorLog(msg, url, line);
 }
 
-function ready(username, isblogger) {
-    document.getElementById("currUser").innerText += username + (username !== ` ` ? (isblogger ? " (Blogger)" : " (Reader)") : " Visitor");
+window.console.log = function (message) {
+    bridge.consoleLog(message);
+}
+
+function ready(username, usertype, currPage, scrollPosition) {
+    this.currPage = currPage;
+    this.usertype = usertype;
+
+    document.getElementById("currUser").innerText += username + (usertype === 0 ? " Visitor" : (usertype === 1 ? " (Reader)" : " (Blogger)"));
     bridge.addPage();
-    //addP(); //FIXME: not needed anymore
+    changePage(currPage);
+    window.scrollTo(0, scrollPosition);
 }
 
 function reloadSite() {
-    bridge.reloadSite(currPage, window.scrollY);
-}
-
-function setUsertype(usertype) {
-    this.usertype = usertype;
+    bridge.reloadSite(this.currPage, window.scrollY);
 }
 
 function hideBloggerFunctions() {
@@ -39,12 +40,6 @@ function hideUserFunctions() {
     });
 }
 
-/*Hilfsfunktion um die Seitenanzahl aus Java per Bride zu verwenden
-function addP() { //FIXME: not needed anymore
-    bridge.addPage();
-    bridge.fillWeb(1);
-}*/
-
 // Funktion um weitere Seiten hinzuzufügen
 function Page(number){
     var pageNav = document.querySelector("footer > nav > ul");
@@ -52,17 +47,12 @@ function Page(number){
         var node = document.createElement("li");
         node.innerHTML = `<a href='#' onclick='changePage(${i});'>${i}</a>`;
 
-        /* FIXME: NOT NEEDED ANYMORE
-        if(i == 1) {
-            node.firstChild.classList.add("active");
-        }*/
-
         pageNav.appendChild(node) //TODO: Anpassen sobald das Layout fertig. Als Beispiel <div class="message">Add Message<br>Title: <input type="text usw.
     }
 }
 
 function changePage(pagenumber) {
-    currPage = pagenumber;
+    this.currPage = pagenumber;
     clearArticles();
     bridge.fillWeb(pagenumber);
 
@@ -87,6 +77,7 @@ function createArticle() {
     let text = document.getElementById('article-text').value;
 
     bridge.createArticle(title, text);
+    this.currPage = 1;
     reloadSite();
 }
 
@@ -103,7 +94,7 @@ function displayArticle(ID, Verfasser, Title, Text) {
         `<h2>${Title}</h2>
          <p>${Text}</p>
          <div class="post-actions">
-            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deleteArticle('${article.id}');">Löschen</button>
+            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deleteBeitrag('${article.id}');">Löschen</button>
          </div>
         <div class="comments"></div>`;
 
@@ -129,7 +120,7 @@ function postComment(htmlBID) {
     bridge.createComment(bid, commentText);
 
     reloadSite();
-    //bridge.consoleLog(`htmlBID: ${htmlBID}\nComment: ${commentText}`); //FIXME: debug only
+    //console.log(`htmlBID: ${htmlBID}\nComment: ${commentText}`); //FIXME: debug only
 }
 
 /**
@@ -145,7 +136,7 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
     comment.innerHTML = `<span class="username">${verfasser}</span>
                     <p>${kommentarText}</p>
                     <div class="post-actions">
-                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deleteComment('${comment.id}');">Löschen</button>
+                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deleteBeitrag('${comment.id}');">Löschen</button>
                     </div>
                     <div class="comments"></div>`;
 
@@ -153,33 +144,22 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
 }
 
 /**
- * Beitrag aus der webview löschen
+ * Beitrag aus der Webview und Datenbank löschen
  * @param id
  */
-function deleteArticle(id) {
-    var items = document.querySelectorAll(`#${id} div`);
-    var itemsarr = Array.from(items).filter(item => item.id !== "").reverse();
+function deleteBeitrag(id) {
+    let items = document.querySelectorAll(`#${id} div`);
+    let itemsarr = Array.from(items).filter(item => item.id !== "").reverse();
     itemsarr.forEach( item => {
-        bridge.deleteComment(item.id);
+        bridge.deleteBeitrag(item.id);
     });
-    bridge.deleteArticle(id);
-
-    reloadSite();
-}
-
-function deleteComment(id) {
-    var items = document.querySelectorAll(`#${id} div`);
-    var itemsarr = Array.from(items).filter(item => item.id !== "").reverse();
-    itemsarr.forEach( item => {
-        bridge.deleteComment(item.id);
-    });
-    bridge.deleteComment(id);
+    bridge.deleteBeitrag(id);
 
     reloadSite();
 }
 
 /**
- * Artikel aus der webview löschen
+ * ALle Artikel aus der webview entfernen
  */
 function clearArticles() {
     document.getElementById('article-section').innerHTML = '';

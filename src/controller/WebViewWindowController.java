@@ -31,6 +31,7 @@ public class WebViewWindowController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
+
         webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) { //on window reload
                 jsbridge = new Bridge();
@@ -38,10 +39,8 @@ public class WebViewWindowController implements Initializable {
                 jso.setMember("bridge", jsbridge);
 
                 int usertype = currUser == null ? 0 : (currReader != null ? 1 : -1);
-                webEngine.executeScript(String.format("ready(' %s', %b);", ((currUser != null) ? currUser.getNutzername() : ""), currBlogger != null));
-                webEngine.executeScript(String.format("setUsertype(%d);", usertype));
-                webEngine.executeScript(String.format("changePage(%d);", currPage));
-                webEngine.executeScript(String.format("window.scrollTo(0, %d);", scrollPosition));
+                String username = ((currUser != null) ? currUser.getNutzername() : "");
+                webEngine.executeScript(String.format("ready(' %s', %d, %d, %d);", username, usertype, currPage, scrollPosition));
             }
         });
 
@@ -86,7 +85,7 @@ public class WebViewWindowController implements Initializable {
         }
 
         public void errorLog(String msg, String url, int line) {
-            System.out.println("Javascript error in " + url + " : " + line + "\n" + msg);
+            System.out.println("JS error in " + url + " : " + line + "\n" + msg);
         }
 
         public void consoleLog(String msg) {
@@ -138,17 +137,6 @@ public class WebViewWindowController implements Initializable {
             }
         }
 
-        public void deleteArticle(String id) {
-            int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
-            System.out.println("delete Article: " + dbid);
-
-            //FIXME: OBJECT ORIENTED MAYBE?
-            String sql = "DELETE FROM artikel WHERE AID = " + dbid;
-            DatabaseController.executeUpdate(sql);
-            sql = "DELETE FROM beitrag WHERE BID = " + dbid;
-            DatabaseController.executeUpdate(sql);
-        }
-
         public void createComment(int oberBeitragID, String text) {
             text = DatabaseController.escapeString(text);
 
@@ -157,16 +145,19 @@ public class WebViewWindowController implements Initializable {
             currUser.createKommentar(text, b);
         }
 
-        public void deleteComment(String id) {
+        public void deleteBeitrag(String id) {
             int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
-            System.out.println("delete Comment: " + dbid);
+            System.out.println("delete Beitrag: " + dbid);
 
             //FIXME: OBJECT ORIENTED MAYBE?
-            String sql = "DELETE FROM kommentar WHERE KID = " + dbid;
+            String sql = "DELETE FROM artikel WHERE AID = " + dbid;
+            DatabaseController.executeUpdate(sql);
+            sql = "DELETE FROM kommentar WHERE KID = " + dbid;
             DatabaseController.executeUpdate(sql);
             sql = "DELETE FROM beitrag WHERE BID = " + dbid;
             DatabaseController.executeUpdate(sql);
         }
+
         /**
          * Die JavaScript Funktion "Page" wird mit dem Wert der Seitenazahl ausgeführt
          */
