@@ -20,43 +20,16 @@ public class MainController {
     private User user;
 
     @FXML
-    private TextField tfNameLogin;
+    private TextField tfNameLogin, tfNameRegister, tfTitel;
 
     @FXML
-    private TextField tfNameRegister;
+    private PasswordField pfPasswordLogin, pfPasswordRegister;
 
     @FXML
-    private PasswordField pfPasswortLogin;
+    private Button btLogin, btRegister, btnWW;
 
     @FXML
-    private PasswordField pfPasswortRegister;
-
-    @FXML
-    private Button btLogin;
-
-    @FXML
-    private Button btRegister;
-
-    @FXML
-    private TextField tfTitel;
-
-    @FXML
-    private TextArea taText;
-
-    @FXML
-    private Button btVeroeffentlichen;
-
-    @FXML
-    private WebView webView;
-
-    @FXML
-    private Button btnWW;
-
-    @FXML
-    private Label lblLoginStatus;
-
-    @FXML
-    private Label lblRegisterStatus;
+    private Label lblLoginStatus, lblRegisterStatus;
 
     @FXML
     private void handleButtonLoginAction(ActionEvent event) {
@@ -64,24 +37,24 @@ public class MainController {
             setStatus("");
             user = null;
             tfNameLogin.setDisable(false);
-            pfPasswortLogin.setDisable(false);
+            pfPasswordLogin.setDisable(false);
             btLogin.setText("Login");
         }
         else {
             AuthenticationController ac = new AuthenticationController();
             try {
-                user = ac.login(tfNameLogin.getText(), pfPasswortLogin.getText());
+                user = ac.login(tfNameLogin.getText(), pfPasswordLogin.getText());
                 if (user != null) {
                     setStatus("Currently logged in as: " + tfNameLogin.getText() + " (" + user.toString() + ")");
                     btLogin.setText("Log off");
                     tfNameLogin.setDisable(true);
-                    pfPasswortLogin.setDisable(true);
+                    pfPasswordLogin.setDisable(true);
                 }
                 else {
                     setStatus("Login Failed! Wrong Username or Password");
                 }
                 tfNameLogin.setText("");
-                pfPasswortLogin.setText("");
+                pfPasswordLogin.setText("");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 setStatus("Error in login.");
@@ -92,10 +65,10 @@ public class MainController {
 
     @FXML
     private void handleButtonRegisterAction(ActionEvent event) {
-        System.out.println(tfNameRegister.getText() + " " + pfPasswortRegister.getText());
+        System.out.println(tfNameRegister.getText() + " " + pfPasswordRegister.getText());
         AuthenticationController ac = new AuthenticationController();
         try {
-            boolean register = ac.register(tfNameRegister.getText(), pfPasswortRegister.getText());
+            boolean register = ac.register(tfNameRegister.getText(), pfPasswordRegister.getText());
             if (register)
                 setStatus("Nutzer registriert: " + tfNameRegister.getText());
             else
