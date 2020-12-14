@@ -78,10 +78,8 @@ public class WebViewWindowController implements Initializable {
      * @author Daniel Isaak
      */
     public class Bridge {
-        public void reloadSite(int currPage, int scrollPosition) {
-            WebViewWindowController.this.currPage = currPage;
-            WebViewWindowController.this.scrollPosition = scrollPosition;
-            webEngine.reload();
+        private Object executeJavascript(String script) {
+            return webEngine.executeScript(script);
         }
 
         public void errorLog(String msg, String url, int line) {
@@ -90,6 +88,12 @@ public class WebViewWindowController implements Initializable {
 
         public void consoleLog(String msg) {
             System.out.println("Javascript log: " + msg);
+        }
+
+        public void reloadSite(int currPage, int scrollPosition) {
+            WebViewWindowController.this.currPage = currPage;
+            WebViewWindowController.this.scrollPosition = scrollPosition;
+            webEngine.reload();
         }
 
         /**
@@ -128,20 +132,18 @@ public class WebViewWindowController implements Initializable {
             }
         }
 
-        public void createArticle(String titel, String text) {
-            if (currBlogger != null) {
-                titel = DatabaseController.escapeString(titel);
-                text = DatabaseController.escapeString(text);
-
-                currBlogger.createArticle(titel, text);
-            }
-        }
-
-        public void createComment(int oberBeitragID, String text) {
+        public void createArticle(String title, String text) {
+            title = DatabaseController.escapeString(title);
             text = DatabaseController.escapeString(text);
 
-            System.out.println("createComment(oberBeitragID=" + oberBeitragID + ", text="+text+")");
-            Post b = DatabaseController.getPost(oberBeitragID); //FIXME: retarded shit
+            currBlogger.createArticle(title, text);
+        }
+
+        public void createComment(int parentID, String text) {
+            text = DatabaseController.escapeString(text);
+
+            System.out.println("createComment(oberBeitragID=" + parentID + ", text="+ text +")");
+            Post b = DatabaseController.getPost(parentID); //FIXME: retarded shit
             currUser.createComment(text, b);
         }
 
@@ -164,10 +166,6 @@ public class WebViewWindowController implements Initializable {
         public void addPage() {
             String s = String.format("Page('%s')", DatabaseController.getNumberOfPages());
             jsBridge.executeJavascript(s);
-        }
-
-        private Object executeJavascript(String script) {
-            return webEngine.executeScript(script);
         }
     }
 
