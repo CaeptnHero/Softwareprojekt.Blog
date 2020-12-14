@@ -35,12 +35,12 @@ public class WebViewWindowController implements Initializable {
         webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) { //on window reload
                 jsbridge = new Bridge();
-                JSObject jso = (JSObject) webEngine.executeScript("window");
+                JSObject jso = (JSObject) jsbridge.executeJavascript("window");
                 jso.setMember("bridge", jsbridge);
 
                 int usertype = currUser == null ? 0 : (currReader != null ? 1 : -1);
                 String username = ((currUser != null) ? currUser.getUsername() : "");
-                webEngine.executeScript(String.format("ready(' %s', %d, %d, %d);", username, usertype, currPage, scrollPosition));
+                jsbridge.executeJavascript(String.format("ready(' %s', %d, %d, %d);", username, usertype, currPage, scrollPosition));
             }
         });
 
@@ -110,7 +110,7 @@ public class WebViewWindowController implements Initializable {
                 Article a = allArticles.get(i);
                 System.out.print("Index=" + i);    //FIXME: debug only
                 String script = String.format("displayArticle(%d, '%s', '%s', '%s')", a.getId(), a.getAuthor(), a.getTitle(), a.getText());
-                webEngine.executeScript(script);
+                jsbridge.executeJavascript(script);
 
                 //Kommentare einfügen
                 fillComments(a);
@@ -123,7 +123,7 @@ public class WebViewWindowController implements Initializable {
                 Comment k = b.getComments().get(j);
                 System.out.println("Kommentar anzeigen: " + k.getId()); //FIXME: debug only
                 String script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), b.getId(), k.getAuthor(), k.getText());
-                webEngine.executeScript(script);
+                jsbridge.executeJavascript(script);
                 fillComments(k);
             }
         }
@@ -163,7 +163,11 @@ public class WebViewWindowController implements Initializable {
          */
         public void addPage() {
             String s = String.format("Page('%s')", DatabaseController.getNumberOfPages());
-            webEngine.executeScript(s);
+            jsbridge.executeJavascript(s);
+        }
+
+        private Object executeJavascript(String script) {
+            return webEngine.executeScript(script);
         }
     }
 

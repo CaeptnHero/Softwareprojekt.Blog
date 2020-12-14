@@ -122,15 +122,11 @@ public final class DatabaseController {
      * Fuert eine Datenbankabfrage aus, welcher nach einem bestimmten nutzer sucht und diesen zurückgibt.
      *
      * @param username name des nutzers
-     * @param password passwort des nutzers
      * @return Object, welches entweder ein Blogger oder ein Reader ist.
      * @author Daniel Isaak
      */
-    public static Object getUser(String username, String password) {
-        username = escapeString(username);
-        password = escapeString(password);
-
-        String SQL = "SELECT COUNT(*) as rowcount, NID, Nutzername, Passwort, istBlogger FROM nutzer WHERE nutzer.Nutzername = \"" + username + "\" AND nutzer.Passwort = \"" + password + "\"";
+    public static Object getUser(String username) {
+        String SQL = "SELECT COUNT(*) as rowcount, NID, Nutzername, Passwort, istBlogger FROM nutzer WHERE nutzer.Nutzername = \"" + username + "\"";
         ResultSet res = executeQuery(SQL);
         try {
             res.next();
@@ -194,7 +190,6 @@ public final class DatabaseController {
         ArrayList<Comment> kommentare = new ArrayList<>();
         String query = "select * from beitrag b, kommentar k where b.bid = k.kid and b.oberbeitrag = " + Oberbeitrag.getId();
         ResultSet res = executeQuery(query);    //FIXME: es kommt nichts zurück SQL abfrage liefer bei phpmyadmin jedoch 1 resultat
-
 
         try {
             while (res.next()) {

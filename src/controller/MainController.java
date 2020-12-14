@@ -95,8 +95,11 @@ public class MainController {
         System.out.println(tfNameRegister.getText() + " " + pfPasswortRegister.getText());
         AuthenticationController ac = new AuthenticationController();
         try {
-            ac.register(tfNameRegister.getText(), pfPasswortRegister.getText());
-            lblRegisterStatus.setText("Registered new user: " + pfPasswortLogin.getText());
+            boolean register = ac.register(tfNameRegister.getText(), pfPasswortRegister.getText());
+            if (register)
+                setStatus("Nutzer registriert: " + tfNameRegister.getText());
+            else
+                setStatus("Registrierung fehlgeschlagen");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

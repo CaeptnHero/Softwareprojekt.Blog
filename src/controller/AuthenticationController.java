@@ -3,7 +3,6 @@ package controller;
 import model.User;
 
 import javax.swing.*;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * Ließt die Daten aus der DB von der Tabelle nutzer
@@ -20,10 +19,12 @@ public class AuthenticationController {
      * @author Andre Martens
      */
     public User login(String username, String password) {
+        username = DatabaseController.escapeString(username);
+
         User n = null;
         try {
-            n = (User) DatabaseController.getUser(username, password);
-            if (n == null) {
+            n = (User) DatabaseController.getUser(username);
+            if (n == null || !n.getPassword().equals(password)) {
                 System.out.println("Login fehlgeschlagen");
                 JOptionPane.showMessageDialog(null, "Login fehlgeschlagen");
                 return null;
@@ -46,9 +47,8 @@ public class AuthenticationController {
      */
     public boolean register(String username, String password) {
         username = DatabaseController.escapeString(username);
-        password = DatabaseController.escapeString(password);
 
-        User n = (User) DatabaseController.getUser(username, password);
+        User n = (User) DatabaseController.getUser(username);
         if (n == null && username.length() >=5 && password.length() >= 5) {
             String sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + username + "', '" + password + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
             int erfolgreich = DatabaseController.executeUpdate(sql);
