@@ -1,6 +1,6 @@
 package controller;
 
-import model.Nutzer;
+import model.User;
 
 import javax.swing.*;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -10,19 +10,19 @@ import java.sql.SQLIntegrityConstraintViolationException;
  *
  * @author
  */
-public class AuthentifizierungsController {
+public class AuthenticationController {
 
     /**
      * Es wird geschaut, ob der angegeben User in der DB ist und das Passwort übereinstimmt
-     * @param nutzername
-     * @param passwort
+     * @param username
+     * @param password
      * @return Ein Objekt vom Typ Blogger,Reader oder Null
      * @author Andre Martens
      */
-    public Nutzer Login(String nutzername, String passwort) {
-        Nutzer n = null;
+    public User login(String username, String password) {
+        User n = null;
         try {
-            n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
+            n = (User) DatabaseController.getUser(username, password);
             if (n == null) {
                 System.out.println("Login fehlgeschlagen");
                 JOptionPane.showMessageDialog(null, "Login fehlgeschlagen");
@@ -39,18 +39,18 @@ public class AuthentifizierungsController {
 
     /**
      *Es wird bei der Registrierung geschaut, ob ein Nutzer mit dem angegeben Nutzer bereits in der DB existiert, wenn nicht, dann wird dieser hinzugefügt
-     * @param nutzername
-     * @param passwort
+     * @param username
+     * @param password
      * @return True oder False abhängig davon, ob der User registiert werden konnte oder nicht
      * @author Andre Martens
      */
-    public boolean Registrieren(String nutzername, String passwort) throws SQLIntegrityConstraintViolationException {
-        nutzername = DatabaseController.escapeString(nutzername);
-        passwort = DatabaseController.escapeString(passwort);
+    public boolean register(String username, String password) {
+        username = DatabaseController.escapeString(username);
+        password = DatabaseController.escapeString(password);
 
-        Nutzer n = (Nutzer) DatabaseController.getUser(nutzername, passwort);
-        if (n == null && nutzername.length() >=5 && passwort.length() >= 5) {
-            String sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + nutzername + "', '" + passwort + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
+        User n = (User) DatabaseController.getUser(username, password);
+        if (n == null && username.length() >=5 && password.length() >= 5) {
+            String sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + username + "', '" + password + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
             int erfolgreich = DatabaseController.executeUpdate(sql);
             if (erfolgreich != -1) {
                 JOptionPane.showMessageDialog(null, "Benutzer wurde registirert");

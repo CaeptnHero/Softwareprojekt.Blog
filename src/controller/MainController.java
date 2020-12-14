@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import model.Nutzer;
+import model.User;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class MainController {
 
     private WebViewWindowController wvwc;
 
-    private Nutzer user;
+    private User user;
 
     @FXML
     private TextField tfNameLogin;
@@ -68,9 +68,9 @@ public class MainController {
             btLogin.setText("Login");
         }
         else {
-            AuthentifizierungsController ac = new AuthentifizierungsController();
+            AuthenticationController ac = new AuthenticationController();
             try {
-                user = ac.Login(tfNameLogin.getText(), pfPasswortLogin.getText());
+                user = ac.login(tfNameLogin.getText(), pfPasswortLogin.getText());
                 if (user != null) {
                     setStatus("Currently logged in as: " + tfNameLogin.getText() + " (" + user.toString() + ")");
                     btLogin.setText("Log off");
@@ -93,9 +93,9 @@ public class MainController {
     @FXML
     private void handleButtonRegisterAction(ActionEvent event) {
         System.out.println(tfNameRegister.getText() + " " + pfPasswortRegister.getText());
-        AuthentifizierungsController ac = new AuthentifizierungsController();
+        AuthenticationController ac = new AuthenticationController();
         try {
-            ac.Registrieren(tfNameRegister.getText(), pfPasswortRegister.getText());
+            ac.register(tfNameRegister.getText(), pfPasswortRegister.getText());
             lblRegisterStatus.setText("Registered new user: " + pfPasswortLogin.getText());
         } catch (Exception e) {
             // TODO Auto-generated catch block

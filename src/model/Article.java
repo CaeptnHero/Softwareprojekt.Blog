@@ -4,30 +4,30 @@ import controller.DatabaseController;
 
 import java.time.LocalDateTime;
 
-public class Artikel extends Beitrag {
-    private String titel;
+public class Article extends Post {
+    private String title;
 
     // ctor for UI
-    public Artikel(Blogger verfasser, String titel, String text) {
+    public Article(Blogger verfasser, String title, String text) {
         super(verfasser, text, null);
-        this.titel = titel;
+        this.title = title;
 
-        String sql = String.format("INSERT INTO Artikel VALUES (%s, '%s', '%s')", this.getId(), titel, text);
+        String sql = String.format("INSERT INTO Artikel VALUES (%s, '%s', '%s')", this.getId(), title, text);
         DatabaseController.executeUpdate(sql);
     }
 
     // ctor for db
-    public Artikel(int id, Blogger verfasser, String titel, String text, LocalDateTime dateTime) {
+    public Article(int id, Blogger verfasser, String title, String text, LocalDateTime dateTime) {
         super(id, verfasser, text, dateTime, null);
-        this.titel = titel;
+        this.title = title;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void delete() {

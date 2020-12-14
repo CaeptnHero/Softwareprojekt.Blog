@@ -1,17 +1,17 @@
 package model;
 
-public class Blogger extends Nutzer {
-    public Blogger(int id, String nutzername, String passwort) {
+public class Blogger extends User {
+    public Blogger(int id, String username, String password) {
         this.id = id;
-        this.nutzername = nutzername;
-        this.passwort = passwort;
+        this.username = username;
+        this.password = password;
     }
 
-    public Artikel createArticle(String titel, String text) {
-        return new Artikel(this, titel, text);
+    public Article createArticle(String title, String text) {
+        return new Article(this, title, text);
     }
 
-    public void Artikeldelete(Artikel art) {
+    public void Artikeldelete(Article art) {
         art.delete();
     }
 }

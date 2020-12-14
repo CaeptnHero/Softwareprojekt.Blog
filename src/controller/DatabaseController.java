@@ -5,7 +5,6 @@ import model.*;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
-import javax.swing.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -110,10 +109,6 @@ public final class DatabaseController {
             if (res.next()) {
                 return res.getInt(1);
             }
-        } catch (SQLIntegrityConstraintViolationException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Benutzername ist vergeben");
-            return -1;
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -126,27 +121,27 @@ public final class DatabaseController {
     /**
      * Fuert eine Datenbankabfrage aus, welcher nach einem bestimmten nutzer sucht und diesen zurückgibt.
      *
-     * @param nutzername name des nutzers
-     * @param passwort   passwort des nutzers
+     * @param username name des nutzers
+     * @param password passwort des nutzers
      * @return Object, welches entweder ein Blogger oder ein Reader ist.
      * @author Daniel Isaak
      */
-    public static Object getUser(String nutzername, String passwort) {
-        nutzername = escapeString(nutzername);
-        passwort = escapeString(passwort);
+    public static Object getUser(String username, String password) {
+        username = escapeString(username);
+        password = escapeString(password);
 
-        String SQL = "SELECT COUNT(*) as rowcount, NID, Nutzername, Passwort, istBlogger FROM nutzer WHERE nutzer.Nutzername = \"" + nutzername + "\" AND nutzer.Passwort = \"" + passwort + "\"";
+        String SQL = "SELECT COUNT(*) as rowcount, NID, Nutzername, Passwort, istBlogger FROM nutzer WHERE nutzer.Nutzername = \"" + username + "\" AND nutzer.Passwort = \"" + password + "\"";
         ResultSet res = executeQuery(SQL);
         try {
             res.next();
             if (res.getInt("rowcount") == 1) {
                 int nid = res.getInt("NID");
-                String username = res.getString("Nutzername");
+                String un = res.getString("Nutzername");
                 String pw = res.getString("Passwort");
                 if (res.getBoolean("istBlogger"))
-                    return new Blogger(nid, username, pw);
+                    return new Blogger(nid, un, pw);
                 else
-                    return new Reader(nid, username, pw);
+                    return new Reader(nid, un, pw);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -160,8 +155,8 @@ public final class DatabaseController {
      * @return
      * @author
      */
-    public static ArrayList<Artikel> getArtikel() {
-        ArrayList<Artikel> artikel = new ArrayList<>();
+    public static ArrayList<Article> getArticle() {
+        ArrayList<Article> article = new ArrayList<>();
         ResultSet res = executeQuery("select * from artikel a, beitrag b where a.aid = b.bid ORDER BY a.aid DESC");
 
         try {
@@ -174,19 +169,19 @@ public final class DatabaseController {
                 String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
                 LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
 
-                Artikel a = new Artikel(id, verfasser, titel, text, dateTime);
+                Article a = new Article(id, verfasser, titel, text, dateTime);
 //				Alle Kommentare des Artikels abfragen
 
-                a.addKommentar(getKommentare(a));
+                a.addComment(getComments(a));
 
 
-                artikel.add(a);
+                article.add(a);
             }
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
         }
-        return artikel;
+        return article;
     }
 
     /**
@@ -195,8 +190,8 @@ public final class DatabaseController {
      * @return
      * @author
      */
-    private static ArrayList<Kommentar> getKommentare(Beitrag Oberbeitrag) {
-        ArrayList<Kommentar> kommentare = new ArrayList<>();
+    private static ArrayList<Comment> getComments(Post Oberbeitrag) {
+        ArrayList<Comment> kommentare = new ArrayList<>();
         String query = "select * from beitrag b, kommentar k where b.bid = k.kid and b.oberbeitrag = " + Oberbeitrag.getId();
         ResultSet res = executeQuery(query);    //FIXME: es kommt nichts zurück SQL abfrage liefer bei phpmyadmin jedoch 1 resultat
 
@@ -204,14 +199,14 @@ public final class DatabaseController {
         try {
             while (res.next()) {
                 int id = res.getInt("bid");
-                Nutzer verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
+                User verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
                 String text = res.getString("text");
                 String date = res.getString("datum");
                 String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
                 LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
 
-                Kommentar k = new Kommentar(id, verfasser, text, dateTime, Oberbeitrag);
-                k.addKommentar(getKommentare(k));    //rekursion
+                Comment k = new Comment(id, verfasser, text, dateTime, Oberbeitrag);
+                k.addComment(getComments(k));    //rekursion
                 kommentare.add(k);
             }
         } catch (Exception e) {
@@ -222,7 +217,7 @@ public final class DatabaseController {
         return kommentare;
     }
 
-    public static Beitrag getBeitrag(int bid) {
+    public static Post getPost(int bid) {
         ResultSet res = executeQuery("select Oberbeitrag from beitrag where bid = " + bid);
         int obid = -1;
         try {
@@ -248,10 +243,10 @@ public final class DatabaseController {
                     String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
                     LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
 
-                    Artikel a = new Artikel(id, verfasser, titel, text, dateTime);
+                    Article a = new Article(id, verfasser, titel, text, dateTime);
 
                     //	Alle Kommentare des Artikels abfragen
-                    a.addKommentar(getKommentare(a));
+                    a.addComment(getComments(a));
                     return a;
                 }
             } catch (Exception e) {
@@ -270,7 +265,7 @@ public final class DatabaseController {
                     String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
                     LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
 
-                    Kommentar k = new Kommentar(id, verfasser, text, dateTime, null); //TODO: Beitrag ist null
+                    Comment k = new Comment(id, verfasser, text, dateTime, null); //TODO: Beitrag ist null
                     return k;
                 }
             } catch (Exception e) {
@@ -288,7 +283,7 @@ public final class DatabaseController {
      * @return aufgerundete Seitenanzahl
      * @author Daniel Isaak
      */
-    public static int getSeitenanzahl() {
+    public static int getNumberOfPages() {
         int anzahl = 0;
         ResultSet res = executeQuery("SELECT count(*) from artikel");
         try {

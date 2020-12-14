@@ -20,7 +20,7 @@ public class WebViewWindowController implements Initializable {
     private Bridge jsbridge;
     private Reader currReader = null;
     private Blogger currBlogger = null;
-    private Nutzer currUser = null;
+    private User currUser = null;
     private int currPage = 1;
     private int scrollPosition = 0;
 
@@ -39,7 +39,7 @@ public class WebViewWindowController implements Initializable {
                 jso.setMember("bridge", jsbridge);
 
                 int usertype = currUser == null ? 0 : (currReader != null ? 1 : -1);
-                String username = ((currUser != null) ? currUser.getNutzername() : "");
+                String username = ((currUser != null) ? currUser.getUsername() : "");
                 webEngine.executeScript(String.format("ready(' %s', %d, %d, %d);", username, usertype, currPage, scrollPosition));
             }
         });
@@ -52,7 +52,7 @@ public class WebViewWindowController implements Initializable {
         }
     }
 
-    public void setUser(Nutzer n) {
+    public void setUser(User n) {
         if (n == null) {
             System.out.println("webview user: " + "NONE");
             currReader = null;
@@ -60,12 +60,12 @@ public class WebViewWindowController implements Initializable {
             currUser = null;
         }
         else if (n instanceof Blogger) {
-            System.out.println("webview user: " + n.getNutzername());
+            System.out.println("webview user: " + n.getUsername());
             currBlogger = (Blogger) n;
             currUser = currBlogger;
         }
         else {
-            System.out.println("webview user: " + n.getNutzername());
+            System.out.println("webview user: " + n.getUsername());
             currReader = (Reader) n;
             currUser = currReader;
         }
@@ -99,17 +99,17 @@ public class WebViewWindowController implements Initializable {
          */
         public void fillWeb(int seitenzahl) {
             System.out.println("Seite: " + seitenzahl);
-            ArrayList<Artikel> allArticles;
-            allArticles = DatabaseController.getArtikel();
+            ArrayList<Article> allArticles;
+            allArticles = DatabaseController.getArticle();
 
             int startIndex = (seitenzahl - 1) * 5;
             for (int i = startIndex; i < allArticles.size(); i++) {
                 if(i >= startIndex + 5) {
                     break;
                 }
-                Artikel a = allArticles.get(i);
+                Article a = allArticles.get(i);
                 System.out.print("Index=" + i);    //FIXME: debug only
-                String script = String.format("displayArticle(%d, '%s', '%s', '%s')", a.getId(), a.getVerfasser(), a.getTitel(), a.getText());
+                String script = String.format("displayArticle(%d, '%s', '%s', '%s')", a.getId(), a.getAuthor(), a.getTitle(), a.getText());
                 webEngine.executeScript(script);
 
                 //Kommentare einfügen
@@ -117,12 +117,12 @@ public class WebViewWindowController implements Initializable {
             }
         }
 
-        private void fillComments(Beitrag b) {
-            System.out.println(" AID=" + b.getId() + " Kommentare=" +b.getKommentare().size());    //FIXME: debug only
-            for (int j = 0; j < b.getKommentare().size(); j++) {
-                Kommentar k = b.getKommentare().get(j);
+        private void fillComments(Post b) {
+            System.out.println(" AID=" + b.getId() + " Kommentare=" +b.getComments().size());    //FIXME: debug only
+            for (int j = 0; j < b.getComments().size(); j++) {
+                Comment k = b.getComments().get(j);
                 System.out.println("Kommentar anzeigen: " + k.getId()); //FIXME: debug only
-                String script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), b.getId(), k.getVerfasser(), k.getText());
+                String script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), b.getId(), k.getAuthor(), k.getText());
                 webEngine.executeScript(script);
                 fillComments(k);
             }
@@ -141,8 +141,8 @@ public class WebViewWindowController implements Initializable {
             text = DatabaseController.escapeString(text);
 
             System.out.println("createComment(oberBeitragID=" + oberBeitragID + ", text="+text+")");
-            Beitrag b = DatabaseController.getBeitrag(oberBeitragID); //FIXME: retarded shit
-            currUser.createKommentar(text, b);
+            Post b = DatabaseController.getPost(oberBeitragID); //FIXME: retarded shit
+            currUser.createComment(text, b);
         }
 
         public void deleteBeitrag(String id) {
@@ -162,7 +162,7 @@ public class WebViewWindowController implements Initializable {
          * Die JavaScript Funktion "Page" wird mit dem Wert der Seitenazahl ausgeführt
          */
         public void addPage() {
-            String s = String.format("Page('%s')", DatabaseController.getSeitenanzahl());
+            String s = String.format("Page('%s')", DatabaseController.getNumberOfPages());
             webEngine.executeScript(s);
         }
     }

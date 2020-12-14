@@ -4,23 +4,23 @@ import controller.DatabaseController;
 
 import java.time.LocalDateTime;
 
-public class Kommentar extends Beitrag {
+public class Comment extends Post {
     // ctor for UI
-    public Kommentar(Nutzer verfasser, String text, Beitrag oberbeitrag) {
-        super(verfasser, text, oberbeitrag);
+    public Comment(User author, String text, Post parent) {
+        super(author, text, parent);
 
         String sql = String.format("INSERT INTO Kommentar VALUES (%s, '%s')", this.getId(), text);
         DatabaseController.executeUpdate(sql);
     }
 
     // ctor for db
-    public Kommentar(int id, Nutzer verfasser, String text, LocalDateTime dateTime, Beitrag oberbeitrag) {
-        super(id, verfasser, text, dateTime, oberbeitrag);
+    public Comment(int id, User author, String text, LocalDateTime dateTime, Post parent) {
+        super(id, author, text, dateTime, parent);
     }
 
     public void delete() {
         super.delete();    //eigene kommentare löschen
-        this.getOberbeitrag().deleteKommentar(this);    //sich selbst löschen
+        this.getParent().deleteComment(this);    //sich selbst löschen
         deleteFromDatabase(); // sich selnst aus db löschen
     }
 
