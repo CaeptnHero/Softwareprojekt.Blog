@@ -32,8 +32,6 @@ public class Article extends Post {
 
     public void delete() {
         super.delete();
-
-        //PLACEHOLDER ArtikelListe.remove(this)		//TODO: sich selbst löschen
         deleteFromDatabase();
     }
 

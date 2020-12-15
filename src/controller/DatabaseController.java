@@ -148,6 +148,7 @@ public final class DatabaseController {
 
     /**
      * Alle artikel abfragen
+     *
      * @return
      * @author
      */
@@ -182,6 +183,7 @@ public final class DatabaseController {
 
     /**
      * Alle Kommentare eines Oberbeitrags abfragen
+     *
      * @param Oberbeitrag
      * @return
      * @author
@@ -223,7 +225,7 @@ public final class DatabaseController {
             e.printStackTrace();
         }
 
-        if(obid == -1) {
+        if (obid == -1) {
             System.out.println("Beitrag nicht gefunden");
             return null;
         } else if (obid == 0) {

@@ -12,7 +12,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.ResourceBundle;
 
 public class WebViewWindowController implements Initializable {
@@ -58,13 +57,11 @@ public class WebViewWindowController implements Initializable {
             currReader = null;
             currBlogger = null;
             currUser = null;
-        }
-        else if (n instanceof Blogger) {
+        } else if (n instanceof Blogger) {
             System.out.println("webview user: " + n.getUsername());
             currBlogger = (Blogger) n;
             currUser = currBlogger;
-        }
-        else {
+        } else {
             System.out.println("webview user: " + n.getUsername());
             currReader = (Reader) n;
             currUser = currReader;
@@ -108,7 +105,7 @@ public class WebViewWindowController implements Initializable {
 
             int startIndex = (seitenzahl - 1) * 5;
             for (int i = startIndex; i < allArticles.size(); i++) {
-                if(i >= startIndex + 5) {
+                if (i >= startIndex + 5) {
                     break;
                 }
                 Article a = allArticles.get(i);
@@ -122,7 +119,7 @@ public class WebViewWindowController implements Initializable {
         }
 
         private void fillComments(Post b) {
-            System.out.println(" AID=" + b.getId() + " Kommentare=" +b.getComments().size());    //FIXME: debug only
+            System.out.println(" AID=" + b.getId() + " Kommentare=" + b.getComments().size());    //FIXME: debug only
             for (int j = 0; j < b.getComments().size(); j++) {
                 Comment k = b.getComments().get(j);
                 System.out.println("Kommentar anzeigen: " + k.getId()); //FIXME: debug only
@@ -142,8 +139,9 @@ public class WebViewWindowController implements Initializable {
         public void createComment(int parentID, String text) {
             text = DatabaseController.escapeString(text);
 
-            System.out.println("createComment(oberBeitragID=" + parentID + ", text="+ text +")");
-            Post b = DatabaseController.getPost(parentID); //FIXME: retarded shit
+            System.out.println("createComment(oberBeitragID=" + parentID + ", text=" + text + ")");
+            Post b = DatabaseController.getPost(parentID);
+
             currUser.createComment(text, b);
         }
 
@@ -151,14 +149,10 @@ public class WebViewWindowController implements Initializable {
             int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
             System.out.println("delete Beitrag: " + dbid);
             Post p = DatabaseController.getPost(dbid);
-            if (isArticle) {
-                Article a = (Article) p;
-                a.delete();
-            }
-            else {
-                Comment c = (Comment) p;
-                c.delete();
-            }
+            if (isArticle)
+                currBlogger.articleDelete((Article) p);
+            else
+                currBlogger.commentDelete((Comment) p);
         }
 
         /**

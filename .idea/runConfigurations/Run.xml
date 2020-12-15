@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Run" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="application.Main" />
+    <option name="MAIN_CLASS_NAME" value="controller.MainController" />
     <module name="Softwareprojekt.Blog" />
     <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\AdoptOpenJDK\javafx-sdk-15\lib&quot; --add-modules javafx.controls,javafx.graphics,javafx.fxml,javafx.web" />
     <method v="2">

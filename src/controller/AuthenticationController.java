@@ -13,6 +13,7 @@ public class AuthenticationController {
 
     /**
      * Es wird geschaut, ob der angegeben User in der DB ist und das Passwort übereinstimmt
+     *
      * @param username
      * @param password
      * @return Ein Objekt vom Typ Blogger,Reader oder Null
@@ -39,7 +40,8 @@ public class AuthenticationController {
     }
 
     /**
-     *Es wird bei der Registrierung geschaut, ob ein Nutzer mit dem angegeben Nutzer bereits in der DB existiert, wenn nicht, dann wird dieser hinzugefügt
+     * Es wird bei der Registrierung geschaut, ob ein Nutzer mit dem angegeben Nutzer bereits in der DB existiert, wenn nicht, dann wird dieser hinzugefügt
+     *
      * @param username
      * @param password
      * @return True oder False abhängig davon, ob der User registiert werden konnte oder nicht
@@ -49,16 +51,16 @@ public class AuthenticationController {
         username = DatabaseController.escapeString(username);
 
         User n = (User) DatabaseController.getUser(username);
-        if (n == null && username.length() >=5 && password.length() >= 5) {
+        if (n == null && username.length() >= 5 && password.length() >= 5) {
             String sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + username + "', '" + password + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
             int erfolgreich = DatabaseController.executeUpdate(sql);
             if (erfolgreich != -1) {
                 JOptionPane.showMessageDialog(null, "Benutzer wurde registirert");
                 return true;
             }
-        }else if(n != null){
+        } else if (n != null) {
             JOptionPane.showMessageDialog(null, "Benutzername ist vergeben");
-        }else {
+        } else {
             System.out.println("Fehlerhafte Registrierung");
             JOptionPane.showMessageDialog(null, "Benutzername und Passwort müssen mindestens 5 Zeichen bestehen");
         }
