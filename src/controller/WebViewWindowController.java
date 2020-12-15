@@ -123,7 +123,7 @@ public class WebViewWindowController implements Initializable {
             for (int j = 0; j < b.getComments().size(); j++) {
                 Comment k = b.getComments().get(j);
                 System.out.println("Kommentar anzeigen: " + k.getId()); //FIXME: debug only
-                String script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), b.getId(), k.getAuthor(), k.getText());
+                String script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), b.getId(), k.getAuthor().getUsername(), k.getText());
                 jsBridge.executeJavascript(script);
                 fillComments(k);
             }
