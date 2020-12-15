@@ -86,8 +86,8 @@ public abstract class Post {
     }
 
     public void delete() {
-        for (int i = 0; i < Comments.size(); i++) {
-            Comment k = this.Comments.get(i);
+        while(Comments.size() != 0) {
+            Comment k = this.Comments.get(0);
             k.delete(); //recursion
             this.deleteComment(k);    //eigene kommentare löschen
         }

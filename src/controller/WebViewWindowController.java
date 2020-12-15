@@ -145,10 +145,11 @@ public class WebViewWindowController implements Initializable {
             currUser.createComment(text, b);
         }
 
-        public void deleteBeitrag(String id, boolean isArticle) {
+        public void deletePost(String id, boolean isArticle) {
             int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
             System.out.println("delete Beitrag: " + dbid);
             Post p = DatabaseController.getPost(dbid);
+            System.out.println("ARTIKEL HAT " + p.getComments().size());
             if (isArticle)
                 currBlogger.deleteArticle((Article) p);
             else

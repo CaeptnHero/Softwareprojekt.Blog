@@ -91,7 +91,7 @@ function displayArticle(ID, Verfasser, Title, Text) {
         `<h2>${Title}</h2>
          <p>${Text}</p>
          <div class="post-actions">
-            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deleteBeitrag('${article.id}', true); reloadSite();">Löschen</button>
+            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deletePost('${article.id}', true); reloadSite();">Löschen</button>
          </div>
         <div class="comments"></div>`;
 
@@ -130,7 +130,7 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
     comment.innerHTML = `<span class="username">${verfasser}</span>
                     <p>${kommentarText}</p>
                     <div class="post-actions">
-                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deleteBeitrag('${comment.id}', false); reloadSite();">Löschen</button>
+                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deletePost('${comment.id}', false); reloadSite();">Löschen</button>
                     </div>
                     <div class="comments"></div>`;
 
