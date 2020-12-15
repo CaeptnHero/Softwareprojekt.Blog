@@ -11,11 +11,11 @@ public class Blogger extends User {
         return new Article(this, title, text);
     }
 
-    public void articleDelete(Article art) {
+    public void deleteArticle(Article art) {
         art.delete();
     }
 
-    public void commentDelete(Comment c) {
+    public void deleteComment(Comment c) {
         c.delete();
     }
 }

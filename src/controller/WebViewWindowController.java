@@ -101,7 +101,7 @@ public class WebViewWindowController implements Initializable {
         public void fillWeb(int seitenzahl) {
             System.out.println("Seite: " + seitenzahl);
             ArrayList<Article> allArticles;
-            allArticles = DatabaseController.getArticle();
+            allArticles = DatabaseController.getAllArticles();
 
             int startIndex = (seitenzahl - 1) * 5;
             for (int i = startIndex; i < allArticles.size(); i++) {
@@ -150,9 +150,9 @@ public class WebViewWindowController implements Initializable {
             System.out.println("delete Beitrag: " + dbid);
             Post p = DatabaseController.getPost(dbid);
             if (isArticle)
-                currBlogger.articleDelete((Article) p);
+                currBlogger.deleteArticle((Article) p);
             else
-                currBlogger.commentDelete((Comment) p);
+                currBlogger.deleteComment((Comment) p);
         }
 
         /**

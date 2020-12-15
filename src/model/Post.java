@@ -82,8 +82,6 @@ public abstract class Post {
         sql = "DELETE FROM beitrag WHERE BID = " + k.getId();
         DatabaseController.executeUpdate(sql);
         //#endregion
-
-
         Comments.remove(k);    //kommentar löschen
     }
 

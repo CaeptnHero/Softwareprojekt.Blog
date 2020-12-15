@@ -22,7 +22,6 @@ public final class DatabaseController {
 
     /**
      * Baut eine verbindung zur MySQL-Datenbank auf.
-     *
      * @author Daniel Isaak
      */
     public static void open() {
@@ -37,7 +36,6 @@ public final class DatabaseController {
 
     /**
      * Schließt die Verbindung zur MySQL-Datenbank.
-     *
      * @author Daniel Isaak
      */
     public static void close() {
@@ -50,6 +48,12 @@ public final class DatabaseController {
         }
     }
 
+    /**
+     * Speichert ein ResultSet zwischen.
+     * @param in zu speicherndes ResultSet.
+     * @return Zwischenspreichertes CachedRowSet
+     * @author Daniel Isaak
+     */
     private static CachedRowSet cacheRowSet(ResultSet in) throws SQLException {
         RowSetFactory factory = RowSetProvider.newFactory();
         CachedRowSet out = factory.createCachedRowSet();
@@ -57,6 +61,12 @@ public final class DatabaseController {
         return out;
     }
 
+    /**
+     * Entwertet eine Zeichenkette um SQL-injektionen zu vermeiden.
+     * @param str zu entwertender String
+     * @return Entwerteter String
+     * @author Daniel Isaak
+     */
     public static String escapeString(String str) {
         String data = "";
         if (!str.equals("")) {
@@ -74,9 +84,8 @@ public final class DatabaseController {
 
     /**
      * Führt eine SQL-Query aus (SELECT, ...).
-     *
-     * @param sql SQL-Befehl das ausgefuehrt werden soll.
-     * @return Resultset, welches alle zeilen der ausgefuehrten Abfrage zurückgibt.
+     * @param sql SQL-Befehl welcher ausgefuehrt werden soll.
+     * @return Resultset, welches alle Zeilen der ausgefuehrten Abfrage enthealt.
      * @author Daniel Isaak
      */
     public static ResultSet executeQuery(String sql) {
@@ -95,9 +104,8 @@ public final class DatabaseController {
 
     /**
      * Führt eine SQL-Update aus (INSERT, UPDATE, ...).
-     *
-     * @param sql SQL-Befehl das ausgefuehrt werden soll.
-     * @return Resultset, welches alle generierten Schlüssel zurückgibt.
+     * @param sql SQL-Befehl, welcher ausgefuehrt werden soll.
+     * @return neu generierter Schluessel.
      * @author Daniel Isaak
      */
     public static int executeUpdate(String sql) {
@@ -120,7 +128,6 @@ public final class DatabaseController {
 
     /**
      * Fuert eine Datenbankabfrage aus, welcher nach einem bestimmten nutzer sucht und diesen zurückgibt.
-     *
      * @param username name des nutzers
      * @return Object, welches entweder ein Blogger oder ein Reader ist.
      * @author Daniel Isaak
@@ -148,70 +155,75 @@ public final class DatabaseController {
 
     /**
      * Alle artikel abfragen
-     *
      * @return
      * @author
      */
-    public static ArrayList<Article> getArticle() {
+    public static ArrayList<Article> getAllArticles() {
         ArrayList<Article> article = new ArrayList<>();
-        ResultSet res = executeQuery("select * from artikel a, beitrag b where a.aid = b.bid ORDER BY a.aid DESC");
+        ResultSet res = executeQuery("select * from artikel a, beitrag b, Nutzer n where a.aid = b.bid AND n.nid = b.verfasser ORDER BY a.aid DESC");
 
         try {
             while (res.next()) {
                 int id = res.getInt("bid");
-                Blogger verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
-                String titel = res.getString("titel");
+                Blogger author = new Blogger(res.getInt("nid"), res.getString("nutzername"), res.getString("Passwort"));
+                String title = res.getString("titel");
                 String text = res.getString("text");
                 String date = res.getString("datum");
                 String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
                 LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
 
-                Article a = new Article(id, verfasser, titel, text, dateTime);
-//				Alle Kommentare des Artikels abfragen
-
+                Article a = new Article(id, author, title, text, dateTime);
+                // Alle Kommentare des Artikels abfragen
                 a.addComment(getComments(a));
-
-
                 article.add(a);
             }
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
         }
+
         return article;
     }
 
     /**
      * Alle Kommentare eines Oberbeitrags abfragen
-     *
-     * @param Oberbeitrag
+     * @param parent
      * @return
      * @author
      */
-    private static ArrayList<Comment> getComments(Post Oberbeitrag) {
-        ArrayList<Comment> kommentare = new ArrayList<>();
-        String query = "select * from beitrag b, kommentar k where b.bid = k.kid and b.oberbeitrag = " + Oberbeitrag.getId();
+    private static ArrayList<Comment> getComments(Post parent) {
+        ArrayList<Comment> comments = new ArrayList<>();
+        String query = "select * from beitrag b, kommentar k, Nutzer n where b.bid = k.kid and n.nid = b.verfasser and b.oberbeitrag = " + parent.getId();
         ResultSet res = executeQuery(query);    //FIXME: es kommt nichts zurück SQL abfrage liefer bei phpmyadmin jedoch 1 resultat
 
         try {
             while (res.next()) {
+                boolean isblogger = res.getBoolean("istBlogger");
+                int nid = res.getInt("nid");
+                String username = res.getString("nutzername");
+                String password = res.getString("Passwort");
+                User author = null;
+                if(isblogger)
+                    author = new Blogger(nid, username, password);
+                else
+                    author = new Reader(nid, username, password);
+
                 int id = res.getInt("bid");
-                User verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
                 String text = res.getString("text");
                 String date = res.getString("datum");
                 String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
                 LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
 
-                Comment k = new Comment(id, verfasser, text, dateTime, Oberbeitrag);
+                Comment k = new Comment(id, author, text, dateTime, parent);
                 k.addComment(getComments(k));    //rekursion
-                kommentare.add(k);
+                comments.add(k);
             }
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
         }
 
-        return kommentare;
+        return comments;
     }
 
     public static Post getPost(int bid) {
@@ -277,7 +289,6 @@ public final class DatabaseController {
 
     /**
      * Fragt die anzahl der Artikel ab und berechnet damit die Seitenanzahl.
-     *
      * @return aufgerundete Seitenanzahl
      * @author Daniel Isaak
      */

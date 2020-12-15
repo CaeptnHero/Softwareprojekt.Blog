@@ -103,9 +103,6 @@ public class MainController extends Application {
 
     @FXML
     private void handleButtonWebViewAction(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage oldStage = (Stage) source.getScene().getWindow();
-
         try {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../view/WebViewWindow.fxml"));
             Parent root = fxmlloader.load();

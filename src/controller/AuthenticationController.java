@@ -30,7 +30,6 @@ public class AuthenticationController {
                 JOptionPane.showMessageDialog(null, "Login fehlgeschlagen");
                 return null;
             }
-            System.out.println(n);
             System.out.println("Login erfolgreich");
             JOptionPane.showMessageDialog(null, "Login Erfolgreich");
         } catch (Exception e) {
@@ -52,9 +51,9 @@ public class AuthenticationController {
 
         User n = (User) DatabaseController.getUser(username);
         if (n == null && username.length() >= 5 && password.length() >= 5) {
-            String sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + username + "', '" + password + "', 0)"; //TODO: niemand der sich registriert ist momentan ein blogger
-            int erfolgreich = DatabaseController.executeUpdate(sql);
-            if (erfolgreich != -1) {
+            String sql = "INSERT INTO nutzer (nid, nutzername, passwort, istBlogger) VALUES (NULL, '" + username + "', '" + password + "', 0)";
+            int success = DatabaseController.executeUpdate(sql);
+            if (success != -1) {
                 JOptionPane.showMessageDialog(null, "Benutzer wurde registirert");
                 return true;
             }

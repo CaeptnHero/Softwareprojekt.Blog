@@ -25,7 +25,6 @@ function reloadSite() {
 }
 
 function hideBloggerFunctions() {
-    //return; //FIXME: debug
     document.querySelector("#create-article, #article-show").style.display = "none";
     document.querySelectorAll(".post-delete").forEach(button => {
        button.style.display = "none";
@@ -33,7 +32,6 @@ function hideBloggerFunctions() {
 }
 
 function hideUserFunctions() {
-    //return; //FIXME: debug
     hideBloggerFunctions();
     document.querySelectorAll(".post-actions").forEach(item => {
         item.style.display = "none";
@@ -78,7 +76,6 @@ function createArticle() {
 
     bridge.createArticle(title, text);
     this.currPage = 1;
-    reloadSite();
 }
 
 /**
@@ -108,7 +105,7 @@ function commentButtonClick(event) {
     commentForm.classList.add('create-comment');
     commentForm.innerHTML = `<label for="${bid}-comment">Text:</label>
         <textarea id="${bid}-comment" rows="4" cols="50"></textarea>
-        <button onclick="postComment('${bid}');">Veröffentlichen</button>`;
+        <button onclick="postComment('${bid}');reloadSite();">Veröffentlichen</button>`;
 
     event.currentTarget.parentElement.append(commentForm);
     event.currentTarget.disabled = true;
@@ -118,9 +115,6 @@ function postComment(htmlBID) {
     let bid = htmlBID.split('-')[1];
     let commentText = document.getElementById(`${htmlBID}-comment`).value;
     bridge.createComment(bid, commentText);
-
-    reloadSite();
-    //console.log(`htmlBID: ${htmlBID}\nComment: ${commentText}`); //FIXME: debug only
 }
 
 /**

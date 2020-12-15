@@ -1,9 +1,9 @@
 package model;
 
 public class Reader extends User {
-    public Reader(int id, String nutzername, String passwort) {
+    public Reader(int id, String username, String password) {
         this.id = id;
-        this.username = nutzername;
-        this.password = passwort;
+        this.username = username;
+        this.password = password;
     }
 }
