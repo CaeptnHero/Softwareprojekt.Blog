@@ -87,8 +87,7 @@ function displayArticle(ID, Verfasser, Title, Text, Date) {
     let article = document.createElement('article');
     article.id = `beitrag-${ID}`;
     article.innerHTML =
-        `<h2>${Title} <span>${Date.replace('T', ' ')}</span></h2>
-         
+        `<h2>${Title} <span><b>${Verfasser}</b><span class="date"> @ (${Date.replace('T', ' ')})</span></span></h2>
          <p>${Text}</p>
          <div class="post-actions">
             <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deletePost('${article.id}', true); reloadSite();">Löschen</button>
@@ -128,7 +127,7 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText, Date) 
     let comment = document.createElement('div');
     comment.id = `beitrag-${kommentarID}`;
     comment.innerHTML =
-                    `<span class="username">${verfasser} <span class="commentDate">(${Date.replace('T', ' ')})</span></span>
+                    `<span class="username"><b>${verfasser}</b><span class="date"> @ (${Date.replace('T', ' ')})</span></span>
                     <p>${kommentarText}</p>
                     <div class="post-actions">
                         <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deletePost('${comment.id}', false); reloadSite();">Löschen</button>

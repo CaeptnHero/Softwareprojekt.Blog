@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Dient als Schnittstelle zur MySQL-Datenbank
  */
 public final class DatabaseController {
-    static final String dbUrl = "jdbc:mysql://localhost:3306/blog?autoReconnect=true&serverTimezone=UTC";
+    static final String dbUrl = "jdbc:mysql://localhost:3306/blog?autoReconnect=true";
     static final String dbUsername = "root";
     static final String dbPassword = "";
 

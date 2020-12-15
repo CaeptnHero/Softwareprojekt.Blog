@@ -110,7 +110,7 @@ public class WebViewWindowController implements Initializable {
                 }
                 Article a = allArticles.get(i);
                 System.out.print("Index=" + i);    //FIXME: debug only
-                String script = String.format("displayArticle(%d, '%s', '%s', '%s', '%s')", a.getId(), a.getAuthor(), a.getTitle(), a.getText(), a.getDate());
+                String script = String.format("displayArticle(%d, '%s', '%s', '%s', '%s')", a.getId(), a.getAuthor().getUsername(), a.getTitle(), a.getText(), a.getDate());
                 jsBridge.executeJavascript(script);
 
                 //Kommentare einfügen
