@@ -15,7 +15,7 @@ function ready(username, usertype, currPage, scrollPosition) {
     this.usertype = usertype;
 
     document.getElementById("currUser").innerText += username + (usertype === 0 ? " Visitor" : (usertype === 1 ? " (Reader)" : " (Blogger)"));
-    bridge.addPage();
+    bridge.addPageNumbers();
     changePage(currPage);
     window.scrollTo(0, scrollPosition);
 }
@@ -39,7 +39,7 @@ function hideUserFunctions() {
 }
 
 // Funktion um weitere Seiten hinzuzufügen
-function Page(number){
+function addPageNumbers(number){
     var pageNav = document.querySelector("footer > nav > ul");
     for (i = 1; i <=number; i++ ) {
         var node = document.createElement("li");
@@ -56,11 +56,10 @@ function changePage(pagenumber) {
 
     var elements = document.querySelectorAll(`footer > nav > ul > li > a`);
     for (let i = 0; i < elements.length; i++) {
-        if(elements[i].innerHTML == pagenumber) {
+        if(elements[i].innerHTML == pagenumber)
             elements[i].classList.add("active");
-        } else {
+        else
             elements[i].classList.remove("active");
-        }
     }
 
     // Regeln Anwenden
@@ -84,11 +83,12 @@ function createArticle() {
  * @param Title
  * @param Text
  */
-function displayArticle(ID, Verfasser, Title, Text) {
+function displayArticle(ID, Verfasser, Title, Text, Date) {
     let article = document.createElement('article');
     article.id = `beitrag-${ID}`;
     article.innerHTML =
-        `<h2>${Title}</h2>
+        `<h2>${Title} <span>${Date.replace('T', ' ')}</span></h2>
+         
          <p>${Text}</p>
          <div class="post-actions">
             <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deletePost('${article.id}', true); reloadSite();">Löschen</button>
@@ -124,10 +124,11 @@ function postComment(htmlBID) {
  * @param verfasser Verfasser der Kommentar
  * @param kommentarText Text des Kommentar
  */
-function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
+function displayComment(kommentarID, beitragID, verfasser, kommentarText, Date) {
     let comment = document.createElement('div');
     comment.id = `beitrag-${kommentarID}`;
-    comment.innerHTML = `<span class="username">${verfasser}</span>
+    comment.innerHTML =
+                    `<span class="username">${verfasser} <span class="commentDate">(${Date.replace('T', ' ')})</span></span>
                     <p>${kommentarText}</p>
                     <div class="post-actions">
                         <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deletePost('${comment.id}', false); reloadSite();">Löschen</button>

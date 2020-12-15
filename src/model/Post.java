@@ -20,7 +20,6 @@ public abstract class Post {
         this.dateTime = LocalDateTime.now();
         this.parent = parent;
         Comments = new ArrayList<>();
-
         String sql = String.format("INSERT INTO Beitrag (Datum, Verfasser, Oberbeitrag) VALUES ('%s', %s, %s)", this.dateTime, this.author.getId(), this.parent == null ? "NULL" : this.parent.getId());
         this.id = DatabaseController.executeUpdate(sql);
     }

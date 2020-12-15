@@ -110,7 +110,7 @@ public class WebViewWindowController implements Initializable {
                 }
                 Article a = allArticles.get(i);
                 System.out.print("Index=" + i);    //FIXME: debug only
-                String script = String.format("displayArticle(%d, '%s', '%s', '%s')", a.getId(), a.getAuthor(), a.getTitle(), a.getText());
+                String script = String.format("displayArticle(%d, '%s', '%s', '%s', '%s')", a.getId(), a.getAuthor(), a.getTitle(), a.getText(), a.getDate());
                 jsBridge.executeJavascript(script);
 
                 //Kommentare einfügen
@@ -123,7 +123,7 @@ public class WebViewWindowController implements Initializable {
             for (int j = 0; j < b.getComments().size(); j++) {
                 Comment k = b.getComments().get(j);
                 System.out.println("Kommentar anzeigen: " + k.getId()); //FIXME: debug only
-                String script = String.format("displayComment(%d, %d, '%s', '%s')", k.getId(), b.getId(), k.getAuthor().getUsername(), k.getText());
+                String script = String.format("displayComment(%d, %d, '%s', '%s', '%s')", k.getId(), b.getId(), k.getAuthor().getUsername(), k.getText(), k.getDate());
                 jsBridge.executeJavascript(script);
                 fillComments(k);
             }
@@ -159,8 +159,8 @@ public class WebViewWindowController implements Initializable {
         /**
          * Die JavaScript Funktion "Page" wird mit dem Wert der Seitenazahl ausgeführt
          */
-        public void addPage() {
-            String s = String.format("Page('%s')", DatabaseController.getNumberOfPages());
+        public void addPageNumbers() {
+            String s = String.format("addPageNumbers('%s')", DatabaseController.getNumberOfPages());
             jsBridge.executeJavascript(s);
         }
     }

@@ -128,6 +128,12 @@ article > h2 {
     border-bottom: 3px solid #4C566A;
 }
 
+article > h2 > span {
+    /* TODO: Datum ein bisschen besser aussehen lassen */
+    float: right;
+    font-size: 0.7em;
+}
+
 form {
     margin-bottom: 64px;
 }
@@ -155,6 +161,10 @@ div.comments .username {
     display: block;
     background-color: #3B4252;
     transform: translate(-20px, -20px);
+}
+
+span.commentDate {
+    font-size: 0.7em;
 }
 
 /* ====================== Footer ====================== */
