@@ -16,6 +16,10 @@ a {
     text-decoration: none;
 }
 
+p, h2  {
+    word-wrap: break-word;
+}
+
 /*  ====================== Navigations ======================  */
 nav {
     display: flex;
