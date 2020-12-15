@@ -260,7 +260,8 @@ public final class DatabaseController {
                     String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
                     LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
 
-                    Comment k = new Comment(id, verfasser, text, dateTime, null); //TODO: Beitrag ist null
+                    Comment k = new Comment(id, verfasser, text, dateTime, getPost(res.getInt("Oberbeitrag"))); //TODO: Beitrag ist null
+                    k.addComment(getComments(k));
                     return k;
                 }
             } catch (Exception e) {

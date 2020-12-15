@@ -12,6 +12,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.ResourceBundle;
 
 public class WebViewWindowController implements Initializable {
@@ -31,7 +32,6 @@ public class WebViewWindowController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
-
         webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) { //on window reload
                 jsBridge = new Bridge();
@@ -147,17 +147,18 @@ public class WebViewWindowController implements Initializable {
             currUser.createComment(text, b);
         }
 
-        public void deleteBeitrag(String id) {
+        public void deleteBeitrag(String id, boolean isArticle) {
             int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
             System.out.println("delete Beitrag: " + dbid);
-
-            //FIXME: OBJECT ORIENTED MAYBE?
-            String sql = "DELETE FROM artikel WHERE AID = " + dbid;
-            DatabaseController.executeUpdate(sql);
-            sql = "DELETE FROM kommentar WHERE KID = " + dbid;
-            DatabaseController.executeUpdate(sql);
-            sql = "DELETE FROM beitrag WHERE BID = " + dbid;
-            DatabaseController.executeUpdate(sql);
+            Post p = DatabaseController.getPost(dbid);
+            if (isArticle) {
+                Article a = (Article) p;
+                a.delete();
+            }
+            else {
+                Comment c = (Comment) p;
+                c.delete();
+            }
         }
 
         /**

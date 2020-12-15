@@ -94,7 +94,7 @@ function displayArticle(ID, Verfasser, Title, Text) {
         `<h2>${Title}</h2>
          <p>${Text}</p>
          <div class="post-actions">
-            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deleteBeitrag('${article.id}');">Löschen</button>
+            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deleteBeitrag('${article.id}', true); reloadSite();">Löschen</button>
          </div>
         <div class="comments"></div>`;
 
@@ -136,26 +136,11 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText) {
     comment.innerHTML = `<span class="username">${verfasser}</span>
                     <p>${kommentarText}</p>
                     <div class="post-actions">
-                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="deleteBeitrag('${comment.id}');">Löschen</button>
+                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deleteBeitrag('${comment.id}', false); reloadSite();">Löschen</button>
                     </div>
                     <div class="comments"></div>`;
 
     document.querySelector(`#beitrag-${beitragID} .comments`).appendChild(comment);
-}
-
-/**
- * Beitrag aus der Webview und Datenbank löschen
- * @param id
- */
-function deleteBeitrag(id) {
-    let items = document.querySelectorAll(`#${id} div`);
-    let itemsarr = Array.from(items).filter(item => item.id !== "").reverse();
-    itemsarr.forEach( item => {
-        bridge.deleteBeitrag(item.id);
-    });
-    bridge.deleteBeitrag(id);
-
-    reloadSite();
 }
 
 /**
