@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +17,9 @@ import model.User;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ */
 public class MainController extends Application {
 
     private WebViewWindowController wvwc;
@@ -55,6 +57,10 @@ public class MainController extends Application {
         }
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param event
+     */
     @FXML
     private void handleButtonLoginAction(ActionEvent event) {
         if (user != null) {
@@ -64,9 +70,8 @@ public class MainController extends Application {
             pfPasswordLogin.setDisable(false);
             btLogin.setText("Login");
         } else {
-            AuthenticationController ac = new AuthenticationController();
             try {
-                user = ac.login(tfNameLogin.getText(), pfPasswordLogin.getText());
+                user = AuthenticationController.login(tfNameLogin.getText(), pfPasswordLogin.getText());
                 if (user != null) {
                     setStatus("Currently logged in as: " + tfNameLogin.getText() + " (" + user.toString() + ")");
                     btLogin.setText("Log off");
@@ -85,12 +90,15 @@ public class MainController extends Application {
         }
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param event
+     */
     @FXML
     private void handleButtonRegisterAction(ActionEvent event) {
         System.out.println(tfNameRegister.getText() + " " + pfPasswordRegister.getText());
-        AuthenticationController ac = new AuthenticationController();
         try {
-            boolean register = ac.register(tfNameRegister.getText(), pfPasswordRegister.getText());
+            boolean register = AuthenticationController.register(tfNameRegister.getText(), pfPasswordRegister.getText());
             if (register)
                 setStatus("Nutzer registriert: " + tfNameRegister.getText());
             else
@@ -101,6 +109,10 @@ public class MainController extends Application {
         }
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param event
+     */
     @FXML
     private void handleButtonWebViewAction(ActionEvent event) {
         try {
@@ -118,10 +130,12 @@ public class MainController extends Application {
         }
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param txt
+     */
     private void setStatus(String txt) {
         lblLoginStatus.setText(txt);
         lblRegisterStatus.setText(txt);
     }
 }
-
-

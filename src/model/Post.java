@@ -13,7 +13,13 @@ public abstract class Post {
     private Post parent;
     private ArrayList<Comment> Comments;
 
-    // ctor for UI
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * Konstruktor fuers user interface
+     * @param author
+     * @param text
+     * @param parent
+     */
     public Post(User author, String text, Post parent) {
         this.author = author;
         this.text = text;
@@ -24,7 +30,15 @@ public abstract class Post {
         this.id = DatabaseController.executeUpdate(sql);
     }
 
-    // ctor for db
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * Konstruktor fuer die Datenbank
+     * @param id
+     * @param author
+     * @param text
+     * @param dateTime
+     * @param parent
+     */
     public Post(int id, User author, String text, LocalDateTime dateTime, Post parent) {
         this.id = id;
         this.author = author;
@@ -74,6 +88,10 @@ public abstract class Post {
         return Comments;
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param k
+     */
     public void deleteComment(Comment k) {
         //#region Kommentar aus DB löschen
         String sql = "DELETE FROM kommentar WHERE KID = " + k.getId();
@@ -84,6 +102,9 @@ public abstract class Post {
         Comments.remove(k);    //kommentar löschen
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     */
     public void delete() {
         while(Comments.size() != 0) {
             Comment k = this.Comments.get(0);

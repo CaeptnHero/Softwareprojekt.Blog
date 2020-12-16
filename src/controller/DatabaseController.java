@@ -22,7 +22,6 @@ public final class DatabaseController {
 
     /**
      * Baut eine verbindung zur MySQL-Datenbank auf.
-     * @author Daniel Isaak
      */
     public static void open() {
         try {
@@ -36,7 +35,6 @@ public final class DatabaseController {
 
     /**
      * Schließt die Verbindung zur MySQL-Datenbank.
-     * @author Daniel Isaak
      */
     public static void close() {
         try {
@@ -52,7 +50,6 @@ public final class DatabaseController {
      * Speichert ein ResultSet zwischen.
      * @param in zu speicherndes ResultSet.
      * @return Zwischenspreichertes CachedRowSet
-     * @author Daniel Isaak
      */
     private static CachedRowSet cacheRowSet(ResultSet in) throws SQLException {
         RowSetFactory factory = RowSetProvider.newFactory();
@@ -65,7 +62,6 @@ public final class DatabaseController {
      * Entwertet eine Zeichenkette um SQL-injektionen zu vermeiden.
      * @param str zu entwertender String
      * @return Entwerteter String
-     * @author Daniel Isaak
      */
     public static String escapeString(String str) {
         String data = "";
@@ -106,7 +102,6 @@ public final class DatabaseController {
      * Führt eine SQL-Update aus (INSERT, UPDATE, ...).
      * @param sql SQL-Befehl, welcher ausgefuehrt werden soll.
      * @return neu generierter Schluessel.
-     * @author Daniel Isaak
      */
     public static int executeUpdate(String sql) {
         System.out.println("SQL UPDATE EXECUTED: " + sql);
@@ -130,7 +125,6 @@ public final class DatabaseController {
      * Fuert eine Datenbankabfrage aus, welcher nach einem bestimmten nutzer sucht und diesen zurückgibt.
      * @param username name des nutzers
      * @return Object, welches entweder ein Blogger oder ein Reader ist.
-     * @author Daniel Isaak
      */
     public static Object getUser(String username) {
         String SQL = "SELECT COUNT(*) as rowcount, NID, Nutzername, Passwort, istBlogger FROM nutzer WHERE nutzer.Nutzername = \"" + username + "\"";
@@ -154,9 +148,9 @@ public final class DatabaseController {
     }
 
     /**
+     * TODO: FINISH JAVADOC COMMENT
      * Alle artikel abfragen
      * @return
-     * @author
      */
     public static ArrayList<Article> getAllArticles() {
         ArrayList<Article> article = new ArrayList<>();
@@ -186,6 +180,7 @@ public final class DatabaseController {
     }
 
     /**
+     * TODO: FINISH JAVADOC COMMENT
      * Alle Kommentare eines Oberbeitrags abfragen
      * @param parent
      * @return
@@ -226,6 +221,11 @@ public final class DatabaseController {
         return comments;
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param bid
+     * @return
+     */
     public static Post getPost(int bid) {
         ResultSet res = executeQuery("select Oberbeitrag from beitrag where bid = " + bid);
         int obid = -1;

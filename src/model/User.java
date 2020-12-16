@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ */
 public abstract class User {
     protected int id;
     protected String username;
@@ -29,6 +32,12 @@ public abstract class User {
         this.password = password;
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param text
+     * @param oberbeitrag
+     * @return
+     */
     public Comment createComment(String text, Post oberbeitrag) {
         return new Comment(this, text, oberbeitrag);
     }

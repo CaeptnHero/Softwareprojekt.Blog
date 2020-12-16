@@ -7,14 +7,28 @@ public class Blogger extends User {
         this.password = password;
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param title
+     * @param text
+     * @return
+     */
     public Article createArticle(String title, String text) {
         return new Article(this, title, text);
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param art
+     */
     public void deleteArticle(Article art) {
         art.delete();
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param c
+     */
     public void deleteComment(Comment c) {
         c.delete();
     }

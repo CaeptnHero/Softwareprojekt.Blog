@@ -6,20 +6,16 @@ import javax.swing.*;
 
 /**
  * Ließt die Daten aus der DB von der Tabelle nutzer
- *
- * @author
  */
-public class AuthenticationController {
+public final class AuthenticationController {
 
     /**
-     * Es wird geschaut, ob der angegeben User in der DB ist und das Passwort übereinstimmt
-     *
+     * Es wird geschaut, ob der angegeben User in der DB ist und das Passwort übereinstimmt.
      * @param username
      * @param password
      * @return Ein Objekt vom Typ Blogger,Reader oder Null
-     * @author Andre Martens
      */
-    public User login(String username, String password) {
+    public static User login(String username, String password) {
         username = DatabaseController.escapeString(username);
 
         User n = null;
@@ -39,14 +35,12 @@ public class AuthenticationController {
     }
 
     /**
-     * Es wird bei der Registrierung geschaut, ob ein Nutzer mit dem angegeben Nutzer bereits in der DB existiert, wenn nicht, dann wird dieser hinzugefügt
-     *
+     * Es wird bei der Registrierung geschaut, ob ein Nutzer mit dem angegeben Nutzer bereits in der DB existiert, wenn nicht, dann wird dieser hinzugefügt.
      * @param username
      * @param password
      * @return True oder False abhängig davon, ob der User registiert werden konnte oder nicht
-     * @author Andre Martens
      */
-    public boolean register(String username, String password) {
+    public static boolean register(String username, String password) {
         username = DatabaseController.escapeString(username);
 
         User n = (User) DatabaseController.getUser(username);

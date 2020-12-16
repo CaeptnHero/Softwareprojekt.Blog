@@ -14,6 +14,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ */
 public class WebViewWindowController implements Initializable {
 
     private WebEngine webEngine;
@@ -51,6 +54,10 @@ public class WebViewWindowController implements Initializable {
         }
     }
 
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param n
+     */
     public void setUser(User n) {
         if (n == null) {
             System.out.println("webview user: " + "NONE");
@@ -71,22 +78,42 @@ public class WebViewWindowController implements Initializable {
     /**
      * Klasse die als Brueke zwischen Javascript und Java dient.
      * Alle methoden in dieser Klasse können über bridge.methode(); in Javascript/HTML aufgerufen werden.
-     *
      * @author Daniel Isaak
      */
     public class Bridge {
+
+        /**
+         * TODO: FINISH JAVADOC COMMENT
+         * @param script
+         * @return
+         */
         private Object executeJavascript(String script) {
             return webEngine.executeScript(script);
         }
 
+        /**
+         * TODO: FINISH JAVADOC COMMENT
+         * @param msg
+         * @param url
+         * @param line
+         */
         public void errorLog(String msg, String url, int line) {
             System.out.println("JS error in " + url + " : " + line + "\n" + msg);
         }
 
+        /**
+         * TODO: FINISH JAVADOC COMMENT
+         * @param msg
+         */
         public void consoleLog(String msg) {
             System.out.println("Javascript log: " + msg);
         }
 
+        /**
+         * TODO: FINISH JAVADOC COMMENT
+         * @param currPage
+         * @param scrollPosition
+         */
         public void reloadSite(int currPage, int scrollPosition) {
             WebViewWindowController.this.currPage = currPage;
             WebViewWindowController.this.scrollPosition = scrollPosition;
@@ -94,8 +121,7 @@ public class WebViewWindowController implements Initializable {
         }
 
         /**
-         * Beiträge werden aus der DB gelesen und anhand der Seitenanzahl die korrekten Beiträge auf der WebView angezeigt, durch die JavaScript funktion "fill"
-         *
+         * Beiträge werden aus der DB gelesen und anhand der Seitenanzahl die korrekten Beiträge auf der WebView angezeigt, durch die JavaScript funktion "displayArticle".
          * @param seitenzahl
          */
         public void fillWeb(int seitenzahl) {
@@ -118,6 +144,10 @@ public class WebViewWindowController implements Initializable {
             }
         }
 
+        /**
+         * TODO: FINISH JAVADOC COMMENT
+         * @param b
+         */
         private void fillComments(Post b) {
             System.out.println(" AID=" + b.getId() + " Kommentare=" + b.getComments().size());    //FIXME: debug only
             for (int j = 0; j < b.getComments().size(); j++) {
@@ -129,6 +159,11 @@ public class WebViewWindowController implements Initializable {
             }
         }
 
+        /**
+         * TODO: FINISH JAVADOC COMMENT
+         * @param title
+         * @param text
+         */
         public void createArticle(String title, String text) {
             title = DatabaseController.escapeString(title);
             text = DatabaseController.escapeString(text);
@@ -136,6 +171,11 @@ public class WebViewWindowController implements Initializable {
             currBlogger.createArticle(title, text);
         }
 
+        /**
+         * TODO: FINISH JAVADOC COMMENT
+         * @param parentID
+         * @param text
+         */
         public void createComment(int parentID, String text) {
             text = DatabaseController.escapeString(text);
 
@@ -145,6 +185,11 @@ public class WebViewWindowController implements Initializable {
             currUser.createComment(text, b);
         }
 
+        /**
+         * TODO: FINISH JAVADOC COMMENT
+         * @param id
+         * @param isArticle
+         */
         public void deletePost(String id, boolean isArticle) {
             int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
             System.out.println("delete Beitrag: " + dbid);
@@ -157,7 +202,7 @@ public class WebViewWindowController implements Initializable {
         }
 
         /**
-         * Die JavaScript Funktion "Page" wird mit dem Wert der Seitenazahl ausgeführt
+         * Die JavaScript Funktion "addPageNumbers" wird mit dem Wert der Seitenazahl ausgeführt
          */
         public void addPageNumbers() {
             String s = String.format("addPageNumbers('%s')", DatabaseController.getNumberOfPages());

@@ -1,15 +1,35 @@
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ */
 window.onload = function() {
     clearArticles();
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ * @param msg
+ * @param url
+ * @param line
+ */
 window.onerror = function (msg, url, line) {
     bridge.errorLog(msg, url, line);
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ * @param message
+ */
 window.console.log = function (message) {
     bridge.consoleLog(message);
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ * @param username
+ * @param usertype
+ * @param currPage
+ * @param scrollPosition
+ */
 function ready(username, usertype, currPage, scrollPosition) {
     this.currPage = currPage;
     this.usertype = usertype;
@@ -20,10 +40,16 @@ function ready(username, usertype, currPage, scrollPosition) {
     window.scrollTo(0, scrollPosition);
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ */
 function reloadSite() {
     bridge.reloadSite(this.currPage, window.scrollY);
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ */
 function hideBloggerFunctions() {
     document.querySelector("#create-article, #article-show").style.display = "none";
     document.querySelectorAll(".post-delete").forEach(button => {
@@ -31,6 +57,9 @@ function hideBloggerFunctions() {
     });
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ */
 function hideUserFunctions() {
     hideBloggerFunctions();
     document.querySelectorAll(".post-actions").forEach(item => {
@@ -38,7 +67,11 @@ function hideUserFunctions() {
     });
 }
 
-// Funktion um weitere Seiten hinzuzufügen
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ * Funktion um weitere Seiten hinzuzufügen
+ * @param number
+ */
 function addPageNumbers(number){
     var pageNav = document.querySelector("footer > nav > ul");
     for (i = 1; i <=number; i++ ) {
@@ -49,6 +82,10 @@ function addPageNumbers(number){
     }
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ * @param pagenumber
+ */
 function changePage(pagenumber) {
     this.currPage = pagenumber;
     clearArticles();
@@ -69,6 +106,9 @@ function changePage(pagenumber) {
         hideUserFunctions();
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ */
 function createArticle() {
     let title = document.getElementById('article-title').value;
     let text = document.getElementById('article-text').value;
@@ -78,6 +118,7 @@ function createArticle() {
 }
 
 /**
+ * TODO: FINISH JAVADOC COMMENT
  * Fügt einen Artikel der webview hinzu
  * @param ID
  * @param Title
@@ -97,6 +138,10 @@ function displayArticle(ID, Verfasser, Title, Text, Date) {
     document.getElementById("article-section").appendChild(article);
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ * @param event
+ */
 function commentButtonClick(event) {
     let bid = event.currentTarget.parentElement.parentElement.id;
 
@@ -110,6 +155,10 @@ function commentButtonClick(event) {
     event.currentTarget.disabled = true;
 }
 
+/**
+ * TODO: FINISH JAVADOC COMMENT
+ * @param htmlBID
+ */
 function postComment(htmlBID) {
     let bid = htmlBID.split('-')[1];
     let commentText = document.getElementById(`${htmlBID}-comment`).value;
@@ -143,5 +192,3 @@ function displayComment(kommentarID, beitragID, verfasser, kommentarText, Date) 
 function clearArticles() {
     document.getElementById('article-section').innerHTML = '';
 }
-
-
