@@ -122,14 +122,14 @@ public class WebViewWindowController implements Initializable {
 
         /**
          * Beiträge werden aus der DB gelesen und anhand der Seitenanzahl die korrekten Beiträge auf der WebView angezeigt, durch die JavaScript funktion "displayArticle".
-         * @param seitenzahl
+         * @param numPages anzahl der Seiten
          */
-        public void fillWeb(int seitenzahl) {
-            System.out.println("Seite: " + seitenzahl);
+        public void fillWeb(int numPages) {
+            System.out.println("Seite: " + numPages);
             ArrayList<Article> allArticles;
             allArticles = DatabaseController.getAllArticles();
 
-            int startIndex = (seitenzahl - 1) * 5;
+            int startIndex = (numPages - 1) * 5;
             for (int i = startIndex; i < allArticles.size(); i++) {
                 if (i >= startIndex + 5) {
                     break;
@@ -164,7 +164,9 @@ public class WebViewWindowController implements Initializable {
          * @param title
          * @param text
          */
-        public void createArticle(String title, String text) {
+        public void createArticle(String title, String text) throws UserViolationException {
+            if (currBlogger == null)
+                throw new UserViolationException();
             title = DatabaseController.escapeString(title);
             text = DatabaseController.escapeString(text);
 
@@ -176,12 +178,13 @@ public class WebViewWindowController implements Initializable {
          * @param parentID
          * @param text
          */
-        public void createComment(int parentID, String text) {
-            text = DatabaseController.escapeString(text);
+        public void createComment(int parentID, String text) throws UserViolationException {
+            if (currUser == null)
+                throw new UserViolationException();
 
+            text = DatabaseController.escapeString(text);
             System.out.println("createComment(oberBeitragID=" + parentID + ", text=" + text + ")");
             Post b = DatabaseController.getPost(parentID);
-
             currUser.createComment(text, b);
         }
 
@@ -190,7 +193,10 @@ public class WebViewWindowController implements Initializable {
          * @param id
          * @param isArticle
          */
-        public void deletePost(String id, boolean isArticle) {
+        public void deletePost(String id, boolean isArticle) throws UserViolationException {
+            if (currBlogger == null)
+                throw new UserViolationException();
+
             int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
             System.out.println("delete Beitrag: " + dbid);
             Post p = DatabaseController.getPost(dbid);
@@ -210,4 +216,9 @@ public class WebViewWindowController implements Initializable {
         }
     }
 
+    private class UserViolationException extends Exception {
+        public UserViolationException() {
+            super("Violated User Structure"); //FIXME: irgendeine passedere message.
+        }
+    }
 }
