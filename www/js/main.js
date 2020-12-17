@@ -143,13 +143,13 @@ function displayArticle(ID, Verfasser, Title, Text, Date) {
  * @param event
  */
 function commentButtonClick(event) {
-    let bid = event.currentTarget.parentElement.parentElement.id;
-
+    let parent = event.currentTarget.parentElement.parentElement;
+    let parentIsArticle = (parent.nodeName == 'ARTICLE');
     let commentForm = document.createElement('form');
     commentForm.classList.add('create-comment');
-    commentForm.innerHTML = `<label for="${bid}-comment">Text:</label>
-        <textarea id="${bid}-comment" rows="4" cols="50"></textarea>
-        <button onclick="postComment('${bid}');reloadSite();">Veröffentlichen</button>`;
+    commentForm.innerHTML = `<label for="${parent.id}-comment">Text:</label>
+        <textarea id="${parent.id}-comment" rows="4" cols="50"></textarea>
+        <button onclick="postComment('${parent.id}', ${parentIsArticle});reloadSite();">Veröffentlichen</button>`;
 
     event.currentTarget.parentElement.append(commentForm);
     event.currentTarget.disabled = true;
@@ -159,10 +159,10 @@ function commentButtonClick(event) {
  * TODO: FINISH JAVADOC COMMENT
  * @param htmlBID
  */
-function postComment(htmlBID) {
+function postComment(htmlBID, parentIsArticle) {
     let bid = htmlBID.split('-')[1];
     let commentText = document.getElementById(`${htmlBID}-comment`).value;
-    bridge.createComment(bid, commentText);
+    bridge.createComment(bid, commentText, parentIsArticle);
 }
 
 /**

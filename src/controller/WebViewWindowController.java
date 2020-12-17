@@ -26,6 +26,7 @@ public class WebViewWindowController implements Initializable {
     private User currUser = null;
     private int currPage = 1;
     private int scrollPosition = 0;
+    private ArrayList<Article> allArticles;
 
     @FXML
     private WebView webView = new WebView();
@@ -40,6 +41,7 @@ public class WebViewWindowController implements Initializable {
                 JSObject jso = (JSObject) jsBridge.executeJavascript("window");
                 jso.setMember("bridge", jsBridge);
 
+                allArticles = DatabaseController.getAllArticles();
                 int usertype = currUser == null ? 0 : (currReader != null ? 1 : -1);
                 String username = ((currUser != null) ? currUser.getUsername() : "");
                 jsBridge.executeJavascript(String.format("ready(' %s', %d, %d, %d);", username, usertype, currPage, scrollPosition));
@@ -126,8 +128,6 @@ public class WebViewWindowController implements Initializable {
          */
         public void fillWeb(int numPages) {
             System.out.println("Seite: " + numPages);
-            ArrayList<Article> allArticles;
-            allArticles = DatabaseController.getAllArticles();
 
             int startIndex = (numPages - 1) * 5;
             for (int i = startIndex; i < allArticles.size(); i++) {
@@ -178,14 +178,14 @@ public class WebViewWindowController implements Initializable {
          * @param parentID
          * @param text
          */
-        public void createComment(int parentID, String text) throws UserViolationException {
+        public void createComment(int parentID, String text, boolean parentIsArticle) throws UserViolationException {
             if (currUser == null)
                 throw new UserViolationException();
 
             text = DatabaseController.escapeString(text);
             System.out.println("createComment(oberBeitragID=" + parentID + ", text=" + text + ")");
-            Post b = DatabaseController.getPost(parentID);
-            currUser.createComment(text, b);
+            Post parent = findPost(parentID, parentIsArticle);
+            currUser.createComment(text, parent);
         }
 
         /**
@@ -199,12 +199,10 @@ public class WebViewWindowController implements Initializable {
 
             int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
             System.out.println("delete Beitrag: " + dbid);
-            Post p = DatabaseController.getPost(dbid);
-            System.out.println("ARTIKEL HAT " + p.getComments().size());
             if (isArticle)
-                currBlogger.deleteArticle((Article) p);
+                currBlogger.deleteArticle((Article) findPost(dbid, isArticle));
             else
-                currBlogger.deleteComment((Comment) p);
+                currBlogger.deleteComment((Comment) findPost(dbid, isArticle));
         }
 
         /**
@@ -214,6 +212,30 @@ public class WebViewWindowController implements Initializable {
             String s = String.format("addPageNumbers('%s')", DatabaseController.getNumberOfPages());
             jsBridge.executeJavascript(s);
         }
+    }
+
+    private Post findPost(int id, boolean isArticle) {
+        Post res = null;
+        if (isArticle) {
+            for (Article a : allArticles)
+                if (a.getId() == id)
+                    res = a;
+        } else {
+            for (Article a : allArticles)
+                res = findComment(a.getComments(), id);
+        }
+        return res;
+    }
+
+    private Comment findComment(ArrayList<Comment> comments, int id) {
+        Comment res = null;
+        for (Comment c : comments) {
+            if (c.getComments().size() != 0)
+                res = findComment(c.getComments(), id);
+            if(c.getId() == id)
+                res = c;
+        }
+        return res;
     }
 
     private class UserViolationException extends Exception {

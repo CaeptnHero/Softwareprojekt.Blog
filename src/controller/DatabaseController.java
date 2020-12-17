@@ -153,7 +153,7 @@ public final class DatabaseController {
      * @return
      */
     public static ArrayList<Article> getAllArticles() {
-        ArrayList<Article> article = new ArrayList<>();
+        ArrayList<Article> articles = new ArrayList<>();
         ResultSet res = executeQuery("select * from artikel a, beitrag b, Nutzer n where a.aid = b.bid AND n.nid = b.verfasser ORDER BY a.aid DESC");
 
         try {
@@ -169,14 +169,14 @@ public final class DatabaseController {
                 Article a = new Article(id, author, title, text, dateTime);
                 // Alle Kommentare des Artikels abfragen
                 a.addComment(getComments(a));
-                article.add(a);
+                articles.add(a);
             }
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
         }
 
-        return article;
+        return articles;
     }
 
     /**
@@ -226,7 +226,7 @@ public final class DatabaseController {
      * @param bid
      * @return
      */
-    public static Post getPost(int bid) {
+    /*public static Post getPost(int bid) { FIXME: USELESS NOW
         ResultSet res = executeQuery("select Oberbeitrag from beitrag where bid = " + bid);
         int obid = -1;
         try {
@@ -285,7 +285,7 @@ public final class DatabaseController {
         }
 
         return null;
-    }
+    }*/
 
     /**
      * Fragt die anzahl der Artikel ab und berechnet damit die Seitenanzahl.
