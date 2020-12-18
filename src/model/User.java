@@ -44,6 +44,6 @@ public abstract class User {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName();
+        return String.format("%s (%s)",getUsername(), getClass().getSimpleName());
     }
 }

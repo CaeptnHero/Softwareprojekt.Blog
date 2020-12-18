@@ -42,9 +42,9 @@ public class WebViewWindowController implements Initializable {
                 jso.setMember("bridge", jsBridge);
 
                 allArticles = DatabaseController.getAllArticles();
-                int usertype = currUser == null ? 0 : (currReader != null ? 1 : -1);
-                String username = ((currUser != null) ? currUser.getUsername() : "");
-                jsBridge.executeJavascript(String.format("ready(' %s', %d, %d, %d);", username, usertype, currPage, scrollPosition));
+                int usertype = currUser == null ? -1 : (currBlogger != null ? 1 : 0); //-1 = Visitor, 0 = Reader, 1 = Blogger
+                System.out.println("usertype = " + usertype);
+                jsBridge.executeJavascript(String.format("ready(' %s', %d, %d, %d);", (currUser != null ? currUser : "Visitor"), usertype, currPage, scrollPosition));
             }
         });
 
@@ -61,20 +61,48 @@ public class WebViewWindowController implements Initializable {
      * @param n
      */
     public void setUser(User n) {
-        if (n == null) {
-            System.out.println("webview user: " + "NONE");
-            currReader = null;
-            currBlogger = null;
-            currUser = null;
-        } else if (n instanceof Blogger) {
-            System.out.println("webview user: " + n.getUsername());
-            currBlogger = (Blogger) n;
-            currUser = currBlogger;
+        currBlogger = n instanceof Blogger ? (Blogger) n : null;
+        currReader = n instanceof Reader ? (Reader) n : null;
+        currUser = n;
+        System.out.println("Webview User: " + (n != null ? n : "Visitor"));
+    }
+
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param id
+     * @param isArticle
+     * @return
+     */
+    private Post findPost(int id, boolean isArticle) {
+        Post res = null;
+        if (isArticle) {
+            for (Article a : allArticles) {
+                if (a.getId() == id)
+                    res = a;
+            }
         } else {
-            System.out.println("webview user: " + n.getUsername());
-            currReader = (Reader) n;
-            currUser = currReader;
+            for (Article a : allArticles) {
+                res = findComment(a.getComments(), id);
+            }
         }
+        return res;
+    }
+
+    /**
+     * TODO: FINISH JAVADOC COMMENT
+     * @param comments
+     * @param id
+     * @return
+     */
+    private Comment findComment(ArrayList<Comment> comments, int id) {
+        Comment res = null;
+        for (Comment c : comments) {
+            if (c.getComments().size() != 0)
+                res = findComment(c.getComments(), id);
+            if(c.getId() == id)
+                res = c;
+        }
+        return res;
     }
 
     /**
@@ -131,9 +159,9 @@ public class WebViewWindowController implements Initializable {
 
             int startIndex = (numPages - 1) * 5;
             for (int i = startIndex; i < allArticles.size(); i++) {
-                if (i >= startIndex + 5) {
+                if (i >= startIndex + 5)
                     break;
-                }
+
                 Article a = allArticles.get(i);
                 System.out.print("Index=" + i);    //FIXME: debug only
                 String script = String.format("displayArticle(%d, '%s', '%s', '%s', '%s')", a.getId(), a.getAuthor().getUsername(), a.getTitle(), a.getText(), a.getDate());
@@ -163,10 +191,12 @@ public class WebViewWindowController implements Initializable {
          * TODO: FINISH JAVADOC COMMENT
          * @param title
          * @param text
+         * @throws UserViolationException
          */
         public void createArticle(String title, String text) throws UserViolationException {
             if (currBlogger == null)
                 throw new UserViolationException();
+
             title = DatabaseController.escapeString(title);
             text = DatabaseController.escapeString(text);
 
@@ -177,12 +207,14 @@ public class WebViewWindowController implements Initializable {
          * TODO: FINISH JAVADOC COMMENT
          * @param parentID
          * @param text
+         * @throws UserViolationException
          */
         public void createComment(int parentID, String text, boolean parentIsArticle) throws UserViolationException {
             if (currUser == null)
                 throw new UserViolationException();
 
             text = DatabaseController.escapeString(text);
+
             System.out.println("createComment(oberBeitragID=" + parentID + ", text=" + text + ")");
             Post parent = findPost(parentID, parentIsArticle);
             currUser.createComment(text, parent);
@@ -192,6 +224,7 @@ public class WebViewWindowController implements Initializable {
          * TODO: FINISH JAVADOC COMMENT
          * @param id
          * @param isArticle
+         * @throws UserViolationException
          */
         public void deletePost(String id, boolean isArticle) throws UserViolationException {
             if (currBlogger == null)
@@ -214,31 +247,7 @@ public class WebViewWindowController implements Initializable {
         }
     }
 
-    private Post findPost(int id, boolean isArticle) {
-        Post res = null;
-        if (isArticle) {
-            for (Article a : allArticles)
-                if (a.getId() == id)
-                    res = a;
-        } else {
-            for (Article a : allArticles)
-                res = findComment(a.getComments(), id);
-        }
-        return res;
-    }
-
-    private Comment findComment(ArrayList<Comment> comments, int id) {
-        Comment res = null;
-        for (Comment c : comments) {
-            if (c.getComments().size() != 0)
-                res = findComment(c.getComments(), id);
-            if(c.getId() == id)
-                res = c;
-        }
-        return res;
-    }
-
-    private class UserViolationException extends Exception {
+    public final class UserViolationException extends Exception {
         public UserViolationException() {
             super("Violated User Structure"); //FIXME: irgendeine passedere message.
         }

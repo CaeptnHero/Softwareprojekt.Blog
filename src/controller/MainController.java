@@ -41,7 +41,7 @@ public class MainController extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Main.fxml"));
-            BorderPane root = (BorderPane) loader.load();
+            BorderPane root = loader.load();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("../view/application.css").toExternalForm());
             primaryStage.setScene(scene);
@@ -73,7 +73,7 @@ public class MainController extends Application {
             try {
                 user = AuthenticationController.login(tfNameLogin.getText(), pfPasswordLogin.getText());
                 if (user != null) {
-                    setStatus("Currently logged in as: " + tfNameLogin.getText() + " (" + user.toString() + ")");
+                    setStatus("Currently logged in as: " + user);
                     btLogin.setText("Log off");
                     tfNameLogin.setDisable(true);
                     pfPasswordLogin.setDisable(true);

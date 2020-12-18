@@ -21,59 +21,47 @@ public final class DatabaseController {
     private static Statement statement;
 
     /**
-     * Baut eine verbindung zur MySQL-Datenbank auf.
+     * Baut die Verbindung zur MySQL-Datenbank auf.
      */
     public static void open() {
         try {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
             statement = connection.createStatement();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            System.out.println("Error opening connection to the Database: ");
             e.printStackTrace();
         }
     }
 
     /**
-     * Schließt die Verbindung zur MySQL-Datenbank.
+     * Baut die Verbindung zur MySQL-Datenbank ab.
      */
     public static void close() {
         try {
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            System.out.println("Error closing connection to the Database: ");
             e.printStackTrace();
         }
     }
 
     /**
-     * Speichert ein ResultSet zwischen.
-     * @param in zu speicherndes ResultSet.
-     * @return Zwischenspreichertes CachedRowSet
-     */
-    private static CachedRowSet cacheRowSet(ResultSet in) throws SQLException {
-        RowSetFactory factory = RowSetProvider.newFactory();
-        CachedRowSet out = factory.createCachedRowSet();
-        out.populate(in);
-        return out;
-    }
-
-    /**
      * Entwertet eine Zeichenkette um SQL-injektionen zu vermeiden.
-     * @param str zu entwertender String
+     * @param s zu entwertender String
      * @return Entwerteter String
      */
-    public static String escapeString(String str) {
+    public static String escapeString(String s) {
         String data = "";
-        if (!str.equals("")) {
-            str = str.replace("\\", "\\\\");
-            str = str.replace("'", "\\'");
-            str = str.replace("\0", "\\0");
-            str = str.replace("\n", "\\n");
-            str = str.replace("\r", "\\r");
-            str = str.replace("\"", "\\\"");
-            str = str.replace("\\x1a", "\\Z");
-            data = str;
+        if (!s.equals("")) {
+            s = s.replace("\\", "\\\\");
+            s = s.replace("'", "\\'");
+            s = s.replace("\0", "\\0");
+            s = s.replace("\n", "\\n");
+            s = s.replace("\r", "\\r");
+            s = s.replace("\"", "\\\"");
+            s = s.replace("\\x1a", "\\Z");
+            data = s;
         }
         return data;
     }
@@ -88,9 +76,12 @@ public final class DatabaseController {
         System.out.println("SQL QUERY EXECUTED: " + sql);
         try {
             open();
-            return cacheRowSet(statement.executeQuery(sql));
+            ResultSet result = statement.executeQuery(sql);
+            CachedRowSet cachedResult = RowSetProvider.newFactory().createCachedRowSet();
+            cachedResult.populate(result);
+            return cachedResult;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            System.out.println("Error Executing database query: ");
             e.printStackTrace();
         } finally {
             close();
@@ -109,11 +100,10 @@ public final class DatabaseController {
             open();
             statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet res = statement.getGeneratedKeys();
-            if (res.next()) {
+            if (res.next())
                 return res.getInt(1);
-            }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            System.out.println("Error Executing database update: ");
             e.printStackTrace();
         } finally {
             close();
@@ -141,7 +131,6 @@ public final class DatabaseController {
                     return new Reader(nid, un, pw);
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -172,7 +161,6 @@ public final class DatabaseController {
                 articles.add(a);
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
 
@@ -189,7 +177,7 @@ public final class DatabaseController {
     private static ArrayList<Comment> getComments(Post parent) {
         ArrayList<Comment> comments = new ArrayList<>();
         String query = "select * from beitrag b, kommentar k, Nutzer n where b.bid = k.kid and n.nid = b.verfasser and b.oberbeitrag = " + parent.getId();
-        ResultSet res = executeQuery(query);    //FIXME: es kommt nichts zurück SQL abfrage liefer bei phpmyadmin jedoch 1 resultat
+        ResultSet res = executeQuery(query);
 
         try {
             while (res.next()) {
@@ -207,7 +195,7 @@ public final class DatabaseController {
                 String text = res.getString("text");
                 String date = res.getString("datum");
                 String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
-                LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
+                LocalDateTime dateTime = LocalDateTime.parse(formattedDate);
 
                 Comment k = new Comment(id, author, text, dateTime, parent);
                 k.addComment(getComments(k));    //rekursion
@@ -290,7 +278,6 @@ public final class DatabaseController {
     /**
      * Fragt die anzahl der Artikel ab und berechnet damit die Seitenanzahl.
      * @return aufgerundete Seitenanzahl
-     * @author Daniel Isaak
      */
     public static int getNumberOfPages() {
         int anzahl = 0;
@@ -298,8 +285,8 @@ public final class DatabaseController {
         try {
             res.next();
             anzahl = res.getInt(1);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return (int) Math.ceil(anzahl / 5.0);
     }

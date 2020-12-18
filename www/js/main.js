@@ -34,7 +34,7 @@ function ready(username, usertype, currPage, scrollPosition) {
     this.currPage = currPage;
     this.usertype = usertype;
 
-    document.getElementById("currUser").innerText += username + (usertype === 0 ? " Visitor" : (usertype === 1 ? " (Reader)" : " (Blogger)"));
+    document.getElementById("currUser").innerText += username
     bridge.addPageNumbers();
     changePage(currPage);
     window.scrollTo(0, scrollPosition);
@@ -100,9 +100,9 @@ function changePage(pagenumber) {
     }
 
     // Regeln Anwenden
-    if (this.usertype === 1)
+    if (this.usertype === 0)
         hideBloggerFunctions();
-    else if (this.usertype === 0)
+    else if (this.usertype === -1)
         hideUserFunctions();
 }
 
