@@ -18,7 +18,7 @@ public class Article extends Post {
         super(verfasser, text, null);
         this.title = title;
 
-        String sql = String.format("INSERT INTO Artikel VALUES (%s, '%s', '%s')", this.getId(), title, text);
+        String sql = String.format("INSERT INTO article VALUES (%s, '%s', '%s')", this.getId(), title, text);
         DatabaseController.executeUpdate(sql);
     }
 
@@ -56,9 +56,9 @@ public class Article extends Post {
      * TODO: FINISH JAVADOC COMMENT
      */
     private void deleteFromDatabase() {
-        String sql = "DELETE FROM artikel WHERE AID = " + this.getId();
+        String sql = "DELETE FROM article WHERE AID = " + this.getId();
         DatabaseController.executeUpdate(sql);
-        sql = "DELETE FROM beitrag WHERE BID = " + this.getId();
+        sql = "DELETE FROM post WHERE PID = " + this.getId();
         DatabaseController.executeUpdate(sql);
     }
 }

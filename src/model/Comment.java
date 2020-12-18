@@ -15,7 +15,7 @@ public class Comment extends Post {
     public Comment(User author, String text, Post parent) {
         super(author, text, parent);
 
-        String sql = String.format("INSERT INTO Kommentar VALUES (%s, '%s')", this.getId(), text);
+        String sql = String.format("INSERT INTO comment VALUES (%s, '%s')", this.getId(), text);
         DatabaseController.executeUpdate(sql);
     }
 
@@ -44,9 +44,9 @@ public class Comment extends Post {
      * TODO: FINISH JAVADOC COMMENT
      */
     public void deleteFromDatabase() {
-        String sql = "DELETE FROM kommentar WHERE KID = " + this.getId();
+        String sql = "DELETE FROM comment WHERE CID = " + this.getId();
         DatabaseController.executeUpdate(sql);
-        sql = "DELETE FROM beitrag WHERE BID = " + this.getId();
+        sql = "DELETE FROM post WHERE PID = " + this.getId();
         DatabaseController.executeUpdate(sql);
     }
 }

@@ -3,7 +3,6 @@ package controller;
 import model.*;
 
 import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -117,15 +116,15 @@ public final class DatabaseController {
      * @return Object, welches entweder ein Blogger oder ein Reader ist.
      */
     public static Object getUser(String username) {
-        String SQL = "SELECT COUNT(*) as rowcount, NID, Nutzername, Passwort, istBlogger FROM nutzer WHERE nutzer.Nutzername = \"" + username + "\"";
+        String SQL = "SELECT COUNT(*) as rowcount, UID, username, password, isBlogger FROM user WHERE user.username = \"" + username + "\"";
         ResultSet res = executeQuery(SQL);
         try {
             res.next();
             if (res.getInt("rowcount") == 1) {
-                int nid = res.getInt("NID");
-                String un = res.getString("Nutzername");
-                String pw = res.getString("Passwort");
-                if (res.getBoolean("istBlogger"))
+                int nid = res.getInt("UID");
+                String un = res.getString("username");
+                String pw = res.getString("password");
+                if (res.getBoolean("isBlogger"))
                     return new Blogger(nid, un, pw);
                 else
                     return new Reader(nid, un, pw);
@@ -143,15 +142,15 @@ public final class DatabaseController {
      */
     public static ArrayList<Article> getAllArticles() {
         ArrayList<Article> articles = new ArrayList<>();
-        ResultSet res = executeQuery("select * from artikel a, beitrag b, Nutzer n where a.aid = b.bid AND n.nid = b.verfasser ORDER BY a.aid DESC");
+        ResultSet res = executeQuery("select * from article a, post p, user u where a.aid = p.pid AND u.uid = p.author ORDER BY a.aid DESC");
 
         try {
             while (res.next()) {
-                int id = res.getInt("bid");
-                Blogger author = new Blogger(res.getInt("nid"), res.getString("nutzername"), res.getString("Passwort"));
-                String title = res.getString("titel");
+                int id = res.getInt("pid");
+                Blogger author = new Blogger(res.getInt("uid"), res.getString("username"), res.getString("password"));
+                String title = res.getString("title");
                 String text = res.getString("text");
-                String date = res.getString("datum");
+                String date = res.getString("date");
                 String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
                 LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
 
@@ -176,24 +175,24 @@ public final class DatabaseController {
      */
     private static ArrayList<Comment> getComments(Post parent) {
         ArrayList<Comment> comments = new ArrayList<>();
-        String query = "select * from beitrag b, kommentar k, Nutzer n where b.bid = k.kid and n.nid = b.verfasser and b.oberbeitrag = " + parent.getId();
+        String query = "select * from post p, comment c, user u where p.pid = c.cid and u.uid = p.author and p.parent = " + parent.getId();
         ResultSet res = executeQuery(query);
 
         try {
             while (res.next()) {
-                boolean isblogger = res.getBoolean("istBlogger");
-                int nid = res.getInt("nid");
-                String username = res.getString("nutzername");
-                String password = res.getString("Passwort");
+                boolean isblogger = res.getBoolean("isBlogger");
+                int uid = res.getInt("uid");
+                String username = res.getString("username");
+                String password = res.getString("password");
                 User author = null;
                 if(isblogger)
-                    author = new Blogger(nid, username, password);
+                    author = new Blogger(uid, username, password);
                 else
-                    author = new Reader(nid, username, password);
+                    author = new Reader(uid, username, password);
 
-                int id = res.getInt("bid");
+                int id = res.getInt("pid");
                 String text = res.getString("text");
-                String date = res.getString("datum");
+                String date = res.getString("date");
                 String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
                 LocalDateTime dateTime = LocalDateTime.parse(formattedDate);
 
@@ -281,7 +280,7 @@ public final class DatabaseController {
      */
     public static int getNumberOfPages() {
         int anzahl = 0;
-        ResultSet res = executeQuery("SELECT count(*) from artikel");
+        ResultSet res = executeQuery("SELECT count(*) from article");
         try {
             res.next();
             anzahl = res.getInt(1);

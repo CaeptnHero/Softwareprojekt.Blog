@@ -74,18 +74,19 @@ public class WebViewWindowController implements Initializable {
      * @return
      */
     private Post findPost(int id, boolean isArticle) {
-        Post res = null;
         if (isArticle) {
             for (Article a : allArticles) {
                 if (a.getId() == id)
-                    res = a;
+                    return a;
             }
         } else {
             for (Article a : allArticles) {
-                res = findComment(a.getComments(), id);
+                Post res = findComment(a.getComments(), id);
+                if (res != null)
+                    return res;
             }
         }
-        return res;
+        return null;
     }
 
     /**
@@ -97,6 +98,8 @@ public class WebViewWindowController implements Initializable {
     private Comment findComment(ArrayList<Comment> comments, int id) {
         Comment res = null;
         for (Comment c : comments) {
+            if (res != null)
+                return res;
             if (c.getComments().size() != 0)
                 res = findComment(c.getComments(), id);
             if(c.getId() == id)

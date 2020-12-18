@@ -26,7 +26,7 @@ public abstract class Post {
         this.dateTime = LocalDateTime.now();
         this.parent = parent;
         Comments = new ArrayList<>();
-        String sql = String.format("INSERT INTO Beitrag (Datum, Verfasser, Oberbeitrag) VALUES ('%s', %s, %s)", this.dateTime, this.author.getId(), this.parent == null ? "NULL" : this.parent.getId());
+        String sql = String.format("INSERT INTO post VALUES (NULL,'%s', %s, %s)", this.dateTime, this.author.getId(), this.parent == null ? "NULL" : this.parent.getId());
         this.id = DatabaseController.executeUpdate(sql);
     }
 
@@ -94,9 +94,9 @@ public abstract class Post {
      */
     public void deleteComment(Comment k) {
         //#region Kommentar aus DB löschen
-        String sql = "DELETE FROM kommentar WHERE KID = " + k.getId();
+        String sql = "DELETE FROM comment WHERE CID = " + k.getId();
         DatabaseController.executeUpdate(sql);
-        sql = "DELETE FROM beitrag WHERE BID = " + k.getId();
+        sql = "DELETE FROM post WHERE PID = " + k.getId();
         DatabaseController.executeUpdate(sql);
         //#endregion
         Comments.remove(k);    //kommentar löschen
