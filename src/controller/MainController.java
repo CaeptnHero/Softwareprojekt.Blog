@@ -99,10 +99,13 @@ public class MainController extends Application {
         System.out.println(tfNameRegister.getText() + " " + pfPasswordRegister.getText());
         try {
             boolean register = AuthenticationController.register(tfNameRegister.getText(), pfPasswordRegister.getText());
-            if (register)
+            if (register) {
                 setStatus("Nutzer registriert: " + tfNameRegister.getText());
-            else
+                tfNameRegister.setText("");
+                pfPasswordRegister.setText("");
+            } else {
                 setStatus("Registrierung fehlgeschlagen");
+            }
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
