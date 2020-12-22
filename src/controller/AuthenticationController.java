@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 public final class AuthenticationController {
 
     private static final Object lock = new Object();
+
     /**
      * TODO: FINISH JAVADOC COMMENT
      * Es wird geschaut, ob der angegeben User in der DB ist und das Passwort übereinstimmt
@@ -58,11 +59,11 @@ public final class AuthenticationController {
             String sql = "INSERT INTO user VALUES (NULL, '" + username + "', '" + password + "', 0)";
             int success = DatabaseController.executeUpdate(sql);
             if (success != -1) {
-                showMessage( "Benutzer wurde registirert");
+                showMessage("Benutzer wurde registirert");
                 return true;
             }
         } else if (n != null) {
-            showMessage( "Benutzername ist vergeben");
+            showMessage("Benutzername ist vergeben");
         } else {
             System.out.println("Fehlerhafte Registrierung");
             showMessage("Benutzername und Passwort müssen mindestens 5 Zeichen bestehen");
@@ -72,6 +73,7 @@ public final class AuthenticationController {
 
     /**
      * Zeigt eine Messagebox mit einer Nachricht an
+     *
      * @param msg Anzuzeigende Nachricht
      */
     private static void showMessage(String msg) {
@@ -97,6 +99,7 @@ public final class AuthenticationController {
             public void mouseEntered(MouseEvent e) {
                 button.setBackground(Color.decode("#4c566a"));
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 button.setBackground(Color.decode("#434c5e"));
@@ -110,7 +113,7 @@ public final class AuthenticationController {
         mbxFrame.setAlwaysOnTop(true);
 
         Thread t = new Thread(() -> {
-            synchronized(lock) {
+            synchronized (lock) {
                 while (mbxFrame.isVisible()) {
                     try {
                         lock.wait();

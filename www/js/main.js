@@ -1,37 +1,30 @@
-/**
- * TODO: FINISH JAVADOC COMMENT
- */
 window.onload = function () {
     clearArticles();
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
- *
- * @param msg
- * @param url
- * @param line
+ * Sendet bei einem Javascript error den error an Java um ihn zu verarbeiten
  */
 window.onerror = function (msg, url, line) {
     bridge.errorLog(msg, url, line);
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
+ * Ueberschreibt die Javascript console.log() funktion um die Nachrichten direkt an Java zu senden
  *
- * @param message
+ * @param {String} message zu loggende Nachricht
  */
 window.console.log = function (message) {
     bridge.consoleLog(message);
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
+ * Wird ausgeführt wenn das Dokument vollstaendig geladen wurde und das Bridge-Objekt injiziert wurde
  *
- * @param username
- * @param usertype
- * @param currPage
- * @param scrollPosition
+ * @param {String} username Nutzername des derzeitigen nutzers
+ * @param {Integer} usertype Nutzertyp, -1 = Visitor, 0 = Reader, 1 = Blogger
+ * @param {Integer} currPage Seite auf welche die Webseite wechseln soll
+ * @param {Double} scrollPosition Position der Scrollbar
  */
 function ready(username, usertype, currPage, scrollPosition) {
     this.currPage = currPage;
@@ -44,16 +37,14 @@ function ready(username, usertype, currPage, scrollPosition) {
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
- *
+ * Uebergibt Java die derzeitige Seite und Scrollbar position und laed die seite ueber Java neu
  */
 function reloadSite() {
     bridge.reloadSite(this.currPage, window.scrollY);
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
- *
+ * Versteckt Funktionen in HTML, welche nur fuer Blogger zugaenglich sein sollen.
  */
 function hideBloggerFunctions() {
     document.querySelector("#create-article, #article-show").style.display = "none";
@@ -63,8 +54,7 @@ function hideBloggerFunctions() {
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
- *
+ * Versteckt Funktionen im HTML, welche nur fuer angemeldete Nutzer zugaenglich sein sollen.
  */
 function hideUserFunctions() {
     hideBloggerFunctions();
@@ -77,7 +67,7 @@ function hideUserFunctions() {
  * TODO: FINISH JAVADOC COMMENT
  * Funktion um weitere Seiten hinzuzufügen
  *
- * @param number
+ * @param {Integer} number
  */
 function addPageNumbers(number) {
     var pageNav = document.querySelector("footer > nav > ul");
@@ -92,7 +82,7 @@ function addPageNumbers(number) {
 /**
  * TODO: FINISH JAVADOC COMMENT
  *
- * @param pagenumber
+ * @param {Integer} pagenumber
  */
 function changePage(pagenumber) {
     this.currPage = pagenumber;
@@ -115,7 +105,7 @@ function changePage(pagenumber) {
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
+ * Holt sich die noetigen informationen aus dem DOM und uebergibt sie Java zum erstellen eines Artikels
  */
 function createArticle() {
     let title = document.getElementById('article-title').value;
@@ -128,9 +118,11 @@ function createArticle() {
 /**
  * Fügt einen Artikel der webview hinzu TODO: FINISH JAVADOC COMMENT
  *
- * @param ID
- * @param Title
- * @param Text
+ * @param {Integer} ID Identifikator des Artikels
+ * @param {String} Title Titel des Artikels
+ * @param {String} Text Text des Artikels
+ * @param {Date} Date Datum der veroeffentlichung des Artikels
+ * @param {boolean} isBlogger gibt an, ob der verfasser ein blogger ist oder nicht
  */
 function displayArticle(ID, Verfasser, Title, Text, Date, isBlogger) {
     let article = document.createElement('article');
@@ -158,18 +150,19 @@ function commentButtonClick(event) {
     commentForm.classList.add('create-comment');
     commentForm.innerHTML = `<label for="${parent.id}-comment">Text:</label>
         <textarea id="${parent.id}-comment" rows="4" cols="50"></textarea>
-        <button onclick="postComment('${parent.id}', ${parentIsArticle});reloadSite();">Veröffentlichen</button>`;
+        <button onclick="createComment('${parent.id}', ${parentIsArticle});reloadSite();">Veröffentlichen</button>`;
 
     event.currentTarget.parentElement.append(commentForm);
     event.currentTarget.disabled = true;
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
+ * Holt sich die noetigen informationen aus dem DOM und uebergibt sie Java zum erstellen eines Kommentars
  *
- * @param htmlBID
+ * @param {String} htmlBID Beitrag Identifikator
+ * @param {boolean} parentIsArticle gibt an, ob der zu kommentierende Oberbeitrag ein Artikel oder ein Kommentar ist
  */
-function postComment(htmlBID, parentIsArticle) {
+function createComment(htmlBID, parentIsArticle) {
     let bid = htmlBID.split('-')[1];
     let commentText = document.getElementById(`${htmlBID}-comment`).value;
     bridge.createComment(bid, commentText, parentIsArticle);
@@ -178,10 +171,10 @@ function postComment(htmlBID, parentIsArticle) {
 /**
  * Fügt in der webview einen Beitrag(Artikel/Kommentar) ein Kommentar hinzu
  *
- * @param beitragID ID des neuen Kommentar
- * @param kommentarID ID des Beitrags der Kommentiert werden soll
- * @param verfasser Verfasser der Kommentar
- * @param kommentarText Text des Kommentar
+ * @param {Integer} beitragID ID des neuen Kommentar
+ * @param {Integer} kommentarID ID des Beitrags der Kommentiert werden soll
+ * @param {String} verfasser Verfasser der Kommentar
+ * @param {String} kommentarText Text des Kommentar
  */
 function displayComment(kommentarID, beitragID, verfasser, kommentarText, Date, isBlogger) {
     let comment = document.createElement('div');

@@ -23,7 +23,6 @@ public class Article extends Post {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
      * Konstruktor fuer die Datenbank
      *
      * @param id Identifikator des Artikels
