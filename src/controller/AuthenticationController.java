@@ -4,6 +4,8 @@ import model.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -75,19 +77,37 @@ public final class AuthenticationController {
     private static void showMessage(String msg) {
         JFrame mbxFrame = new JFrame();
         mbxFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        mbxFrame.setSize(200, 120);
+        mbxFrame.setSize(msg.length() * 8, 80);
+        mbxFrame.getContentPane().setBackground(Color.decode("#3b4252"));
         mbxFrame.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel(msg, SwingConstants.CENTER);
-        mbxFrame.add(label, BorderLayout.CENTER);
-        JButton button = new JButton("OK");
-        button.addActionListener(e -> mbxFrame.dispatchEvent(new WindowEvent(mbxFrame, WindowEvent.WINDOW_CLOSING)));
-        mbxFrame.add(button, BorderLayout.SOUTH);
-        mbxFrame.setAlwaysOnTop(true);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         mbxFrame.setLocation((screen.width - mbxFrame.getWidth()) / 2, (screen.height - mbxFrame.getHeight()) / 2);
         mbxFrame.setResizable(false);
+
+        JLabel label = new JLabel(msg, SwingConstants.CENTER);
+        label.setForeground(Color.decode("#d8dee9"));
+        mbxFrame.add(label, BorderLayout.CENTER);
+
+        JButton button = new JButton("OK");
+        button.setBorderPainted(false);
+        button.setBackground(Color.decode("#434c5e"));
+        button.setForeground(Color.decode("#d8dee9"));
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(Color.decode("#4c566a"));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(Color.decode("#434c5e"));
+            }
+        });
+        button.addActionListener(e -> mbxFrame.dispatchEvent(new WindowEvent(mbxFrame, WindowEvent.WINDOW_CLOSING)));
+        mbxFrame.add(button, BorderLayout.SOUTH);
+
+        mbxFrame.setUndecorated(true);
         mbxFrame.setVisible(true);
+        mbxFrame.setAlwaysOnTop(true);
 
         Thread t = new Thread(() -> {
             synchronized(lock) {
