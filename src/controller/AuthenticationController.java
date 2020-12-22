@@ -17,8 +17,9 @@ public final class AuthenticationController {
     private static final Object lock = new Object();
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * Es wird geschaut, ob der angegeben User in der DB ist und das Passwort übereinstimmt
+     * Die Daten des USers werden aus der DB geholt und mit den Eingabedaten verglichen. Sind diese Korrekt war der Login erfolgreich
+     * und der User bekommt einen hinweis dazu.
+     * War die Überprüfung Feherhaft, bekommt der User einen Hinweis und wird nicht eingeloggt.
      *
      * @param username
      * @param password
@@ -44,12 +45,13 @@ public final class AuthenticationController {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * Es wird bei der Registrierung geschaut, ob ein Nutzer mit dem angegeben Nutzer bereits in der DB existiert, wenn nicht, dann wird dieser hinzugefügt
+     * Es wird in der DB geschaut, ob der User orhanden ist. Wenn nicht, werden die kriterien überprüft.
+     * Sind diese erfüllt, wird der User registriert, in die DB eingetragen und bekommt einen Hinweis dazu.
+     * Sind die Kriterien nicht erfüllt, bekommt der User einen Hinweis
      *
      * @param username
      * @param password
-     * @return True oder False abhängig davon, ob der User registiert werden konnte oder nicht
+     * @return True oder False, abhängig davon, ob der User registiert werden konnte oder nicht
      */
     public static boolean register(String username, String password) {
         username = DatabaseController.escapeString(username);

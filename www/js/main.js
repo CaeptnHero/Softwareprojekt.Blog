@@ -64,8 +64,8 @@ function hideUserFunctions() {
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
- * Funktion um weitere Seiten hinzuzufügen
+ * Funktion um weitere Seiten hinzuzufügen, abhängig von der Anzahl der gesammten Artikel in der DB
+ * Anzahl der Artikel / 5 = Anzahl der Seiten (ausgerunedt)
  *
  * @param {Integer} number
  */
@@ -80,7 +80,8 @@ function addPageNumbers(number) {
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
+ * Bei einem Seitenwechsel werden alle Artikel und Kommentare der aktuellen Seite wentfernt und mit den Artikel und KOmmentaren der
+ * Nächsten Seite gefüllt
  *
  * @param {Integer} pagenumber
  */
