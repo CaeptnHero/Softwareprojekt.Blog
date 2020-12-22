@@ -12,8 +12,8 @@ public class Article extends Post {
      * Konstruktor fuers user interface
      *
      * @param author verfasser des Artikels
-     * @param title titel des Artikels
-     * @param text text des Artikels
+     * @param title  titel des Artikels
+     * @param text   text des Artikels
      */
     public Article(Blogger author, String title, String text) {
         super(author, text, null);
@@ -26,10 +26,10 @@ public class Article extends Post {
     /**
      * Konstruktor fuer die Datenbank
      *
-     * @param id Identifikator des Artikels
-     * @param author verfasser des Artikels
-     * @param title titel des Artikels
-     * @param text text des Artikels
+     * @param id       Identifikator des Artikels
+     * @param author   verfasser des Artikels
+     * @param title    titel des Artikels
+     * @param text     text des Artikels
      * @param dateTime zeitpunkt des erstellens
      */
     public Article(int id, Blogger author, String title, String text, LocalDateTime dateTime) {

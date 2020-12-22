@@ -5,7 +5,7 @@ public class Blogger extends User {
     /**
      * Erstellt einen User mit den Rechten eines Bloggers
      *
-     * @param id Identifikator des Bloggers
+     * @param id       Identifikator des Bloggers
      * @param username Nutzername des Bloggers
      * @param password Passwort des Bloggers
      */
@@ -16,8 +16,9 @@ public class Blogger extends User {
 
     /**
      * Ertstellt einen neuen Artikel verfasst von diesem Blogger
+     *
      * @param title titel des Artikels
-     * @param text text des Artikels
+     * @param text  text des Artikels
      * @return gibt den erstellten Artikel zuruek
      */
     public Article createArticle(String title, String text) {
@@ -26,6 +27,7 @@ public class Blogger extends User {
 
     /**
      * Loescht einen Artikel
+     *
      * @param art zu loeschender Artikel
      */
     public void deleteArticle(Article art) {
@@ -34,6 +36,7 @@ public class Blogger extends User {
 
     /**
      * Loescht einen Kommentar
+     *
      * @param com zu loeschender Kommentar
      */
     public void deleteComment(Comment com) {

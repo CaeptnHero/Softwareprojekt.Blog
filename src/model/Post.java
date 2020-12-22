@@ -18,7 +18,7 @@ public abstract class Post {
      * Konstruktor fuers user interface
      *
      * @param author verfasser des Beitrags
-     * @param text text des Beitrags
+     * @param text   text des Beitrags
      * @param parent Oberbeitrag des Beitrags
      */
     public Post(User author, String text, Post parent) {
@@ -35,11 +35,11 @@ public abstract class Post {
     /**
      * Konstruktor fuer die Datenbank
      *
-     * @param id Identifikator des Beitrags
-     * @param author verfasser des Beitrags
-     * @param text text des Beitrags
+     * @param id       Identifikator des Beitrags
+     * @param author   verfasser des Beitrags
+     * @param text     text des Beitrags
      * @param dateTime zeitpunkt des erstellens
-     * @param parent Oberbeitrag des Beitrags
+     * @param parent   Oberbeitrag des Beitrags
      */
     public Post(int id, User author, String text, LocalDateTime dateTime, Post parent) {
         this.id = id;

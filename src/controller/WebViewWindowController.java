@@ -69,7 +69,7 @@ public class WebViewWindowController implements Initializable {
     /**
      * Findet einen Beitrag in der ArrayList allArticles
      *
-     * @param id Identifikator des zu findenden Beitrags
+     * @param id        Identifikator des zu findenden Beitrags
      * @param isArticle Sagt aus, ob der zu findende Beitrag ein Artikel ist oder ein Kommentar
      * @return null, falls der Beitrag nicht gefunden wurde. Ein Post-Objekt, falls der zu findende Beitrag gefunden wurde.
      */
@@ -93,7 +93,7 @@ public class WebViewWindowController implements Initializable {
      * Findet ein Kommentar in einer Kommentar ArrayList
      *
      * @param comments Kommentarliste in welcher der gesuchte kommentar gesucht werden soll
-     * @param id Identifikator des zu findenden Kommentar
+     * @param id       Identifikator des zu findenden Kommentar
      * @return null, falls der Kommentar nicht gefunden wurde. Ein Comment-Objekt, falls der zu findende Kommentar gefunden wurde.
      */
     private Comment findComment(ArrayList<Comment> comments, int id) {
@@ -128,8 +128,8 @@ public class WebViewWindowController implements Initializable {
         /**
          * Gibt Javascript Fehler aus
          *
-         * @param msg Fehlernachricht
-         * @param url Dateipfad in dem der Fehler aufgetaucht ist
+         * @param msg  Fehlernachricht
+         * @param url  Dateipfad in dem der Fehler aufgetaucht ist
          * @param line zeile in dem der Fehler aufgetaucht ist
          */
         public void errorLog(String msg, String url, int line) {
@@ -148,7 +148,7 @@ public class WebViewWindowController implements Initializable {
         /**
          * Laed die WebView neu und setzt die derzeitige Seite und Scrollbar position.
          *
-         * @param currPage derzeitige Seite
+         * @param currPage       derzeitige Seite
          * @param scrollPosition Scrollbar position
          */
         public void reloadSite(int currPage, int scrollPosition) {
@@ -198,7 +198,7 @@ public class WebViewWindowController implements Initializable {
          * Methode zum erstellen von Artikeln von Javascript aus
          *
          * @param title Titel des Artikels
-         * @param text Text des Artikels
+         * @param text  Text des Artikels
          * @throws UserViolationException wird geworfen, wenn diese methode von einem user ausgefürt wird, welcher kein Blogger ist
          */
         public void createArticle(String title, String text) throws UserViolationException {
@@ -214,8 +214,8 @@ public class WebViewWindowController implements Initializable {
         /**
          * Methode zum erstellen von Kommentaren von Javascript aus
          *
-         * @param parentID Identifikator des Oberbeitrags
-         * @param text Text des Kommentars
+         * @param parentID        Identifikator des Oberbeitrags
+         * @param text            Text des Kommentars
          * @param parentIsArticle sagt aus, ob der zu kommentierende Beitrag ein Artikel oder ein Kommentar ist
          * @throws UserViolationException wird geworfen, wenn diese methode von einem unangemeldeten Nutzer ausgefuert wird
          */
@@ -227,13 +227,16 @@ public class WebViewWindowController implements Initializable {
 
             System.out.println("createComment(oberBeitragID=" + parentID + ", text=" + text + ")");
             Post parent = findPost(parentID, parentIsArticle);
-            currUser.createComment(text, parent);
+            if (currBlogger != null)
+                currBlogger.createComment(text, parent);
+            else
+                currReader.createComment(text, parent);
         }
 
         /**
          * Methode zum loeschen von Beiträgen von Javascript aus
          *
-         * @param id Identifikator des zu loeschenden Beitrags
+         * @param id        Identifikator des zu loeschenden Beitrags
          * @param isArticle sagt aus, ob ein das zu loeschende ein Artikel oder ein Kommentar ist
          * @throws UserViolationException wird geworfen, wenn diese methode von einem user ausgefürt wird, welcher kein Blogger ist
          */
@@ -258,7 +261,9 @@ public class WebViewWindowController implements Initializable {
         }
     }
 
-	public final class UserViolationException extends Exception {
+    public final class UserViolationException extends Exception {
+		private static final long serialVersionUID = -2392433922334610372L;
+
 		public UserViolationException() {
             super("Violated User Structure. User was trying to use a function he is not eligible of using.");
         }

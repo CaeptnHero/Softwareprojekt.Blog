@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Blog</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link href="css/main.css" rel="stylesheet">
     <script src="js/main.js"></script>
 </head>
 
@@ -18,11 +18,11 @@
 
 <main>
     <button id="article-show" onclick="document.getElementById(`create-article`).classList.toggle(`collapsed`);">Neuer Blogeintrag</button>
-    <form id="create-article" class="collapsed">
+    <form class="collapsed" id="create-article">
         <label for="article-title">Titel des Beitrags:</label>
         <input id="article-title" type="text">
         <label for="article-text">Text:</label>
-        <textarea id="article-text" rows="4" cols="50"></textarea>
+        <textarea cols="50" id="article-text" rows="4"></textarea>
 
         <button onclick="createArticle();reloadSite();">Veröffentlichen</button>
     </form>
@@ -33,34 +33,58 @@
             <p>Diese hier ist ein Beispieltext für den Artikel. Weitere Funktionen folgen.</p>
 
             <div class="post-actions">
-                <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+                <button>Kommentieren</button>
+                <button class="post-delete">Löschen</button>
             </div>
             <div class="comments">
                 <div id="beitrag-2">
                     <span class="username">Kommentar 1</span>
                     <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+                        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+                        dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+                        sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                        invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                        justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+                        ipsum dolor sit amet.
                     </p>
                     <div class="post-actions">
-                        <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+                        <button>Kommentieren</button>
+                        <button class="post-delete">Löschen</button>
                     </div>
                     <div class="comments">
                         <div id="beitrag-3">
                             <span class="username">Kommentar 2</span>
                             <p>
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                                sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                                sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+                                rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                                amet.
                             </p>
                             <div class="post-actions">
-                                <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+                                <button>Kommentieren</button>
+                                <button class="post-delete">Löschen</button>
                             </div>
                             <div class="comments">
                                 <div id="beitrag-4">
                                     <span class="username">Kommentar 3</span>
                                     <p>
-                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+                                        vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+                                        no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+                                        amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                                        labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+                                        et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                                        sanctus est Lorem ipsum dolor sit amet.
                                     </p>
                                     <div class="post-actions">
-                                        <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+                                        <button>Kommentieren</button>
+                                        <button class="post-delete">Löschen</button>
                                     </div>
                                     <div class="comments">
 
@@ -71,19 +95,35 @@
                         <div id="beitrag-5">
                             <span class="username">Kommentar 4</span>
                             <p>
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                                sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                                sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+                                rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                                amet.
                             </p>
                             <div class="post-actions">
-                                <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+                                <button>Kommentieren</button>
+                                <button class="post-delete">Löschen</button>
                             </div>
                             <div class="comments">
                                 <div id="beitrag-6">
                                     <span class="username">Kommentar 6</span>
                                     <p>
-                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+                                        vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+                                        no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+                                        amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                                        labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+                                        et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                                        sanctus est Lorem ipsum dolor sit amet.
                                     </p>
                                     <div class="post-actions">
-                                        <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+                                        <button>Kommentieren</button>
+                                        <button class="post-delete">Löschen</button>
                                     </div>
                                     <div class="comments">
 
@@ -96,10 +136,17 @@
                 <div id="beitrag-7">
                     <span class="username">Kommentar 5</span>
                     <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+                        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+                        dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+                        sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                        invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                        justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+                        ipsum dolor sit amet.
                     </p>
                     <div class="post-actions">
-                        <button>Kommentieren</button> <button class="post-delete">Löschen</button>
+                        <button>Kommentieren</button>
+                        <button class="post-delete">Löschen</button>
                     </div>
                     <div class="comments">
 

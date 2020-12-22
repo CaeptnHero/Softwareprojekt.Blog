@@ -10,7 +10,7 @@ public abstract class User {
     /**
      * Erstellt einen Nutzer
      *
-     * @param id Identifikator des Nutzer
+     * @param id       Identifikator des Nutzer
      * @param username Nutzername des Nutzer
      * @param password Passwort des Nutzer
      */
@@ -61,7 +61,7 @@ public abstract class User {
     /**
      * Erstellt einen neuen Kommentar
      *
-     * @param text Text des Kommentars
+     * @param text   Text des Kommentars
      * @param parent Oberbeitrag des Kommentars
      * @return Erstellter Kommentar
      */
