@@ -14,9 +14,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-/**
- * TODO: FINISH JAVADOC COMMENT
- */
 public class WebViewWindowController implements Initializable {
 
     private WebEngine webEngine;
@@ -31,6 +28,9 @@ public class WebViewWindowController implements Initializable {
     @FXML
     private WebView webView = new WebView();
 
+    /**
+     * Initialisiert die Webview und Injiziert ein JSObject zur Kommunikation zwischen Java und Javascript
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         webEngine = webView.getEngine();
@@ -41,9 +41,8 @@ public class WebViewWindowController implements Initializable {
                 JSObject jso = (JSObject) jsBridge.executeJavascript("window");
                 jso.setMember("bridge", jsBridge);
 
-                allArticles = DatabaseController.getAllArticles();
+                allArticles = DatabaseController.getArticles();
                 int usertype = currUser == null ? -1 : (currBlogger != null ? 1 : 0); //-1 = Visitor, 0 = Reader, 1 = Blogger
-                System.out.println("usertype = " + usertype);
                 jsBridge.executeJavascript(String.format("ready(' %s', %d, %d, %d);", (currUser != null ? currUser : "Visitor"), usertype, currPage, scrollPosition));
             }
         });
@@ -51,27 +50,28 @@ public class WebViewWindowController implements Initializable {
         try {
             webEngine.load(new File("www\\index.html").toURI().toURL().toString());
         } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param n
+     * Setzt den neuen Nutzer der für die Webview genutzt werden soll
+     *
+     * @param n neuer Nutzer welcher gesetzt werden soll
      */
     public void setUser(User n) {
-        currBlogger = n instanceof Blogger ? (Blogger) n : null;
-        currReader = n instanceof Reader ? (Reader) n : null;
         currUser = n;
-        System.out.println("Webview User: " + (n != null ? n : "Visitor"));
+        currBlogger = currUser instanceof Blogger ? (Blogger) currUser : null;
+        currReader = currUser instanceof Reader ? (Reader) currUser : null;
+        System.out.println("Webview User: " + (currUser != null ? currUser : "Visitor"));
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param id
-     * @param isArticle
-     * @return
+     * Findet einen Beitrag in der ArrayList allArticles
+     *
+     * @param id Identifikator des zu findenden Beitrags
+     * @param isArticle Sagt aus, ob der zu findende Beitrag ein Artikel ist oder ein Kommentar
+     * @return null, falls der Beitrag nicht gefunden wurde. Ein Post-Objekt, falls der zu findende Beitrag gefunden wurde.
      */
     private Post findPost(int id, boolean isArticle) {
         if (isArticle) {
@@ -90,10 +90,11 @@ public class WebViewWindowController implements Initializable {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param comments
-     * @param id
-     * @return
+     * Findet ein Kommentar in einer Kommentar ArrayList
+     *
+     * @param comments Kommentarliste in welcher der gesuchte kommentar gesucht werden soll
+     * @param id Identifikator des zu findenden Kommentar
+     * @return null, falls der Kommentar nicht gefunden wurde. Ein Comment-Objekt, falls der zu findende Kommentar gefunden wurde.
      */
     private Comment findComment(ArrayList<Comment> comments, int id) {
         Comment res = null;
@@ -102,7 +103,7 @@ public class WebViewWindowController implements Initializable {
                 return res;
             if (c.getComments().size() != 0)
                 res = findComment(c.getComments(), id);
-            if(c.getId() == id)
+            if (c.getId() == id)
                 res = c;
         }
         return res;
@@ -111,14 +112,14 @@ public class WebViewWindowController implements Initializable {
     /**
      * Klasse die als Brueke zwischen Javascript und Java dient.
      * Alle methoden in dieser Klasse können über bridge.methode(); in Javascript/HTML aufgerufen werden.
-     * @author Daniel Isaak
      */
     public class Bridge {
 
         /**
-         * TODO: FINISH JAVADOC COMMENT
-         * @param script
-         * @return
+         * Injiziert javascript code in die Webengine
+         *
+         * @param script zu Injizierendes script
+         * @return Ruekgabeobjekt von Javascript
          */
         private Object executeJavascript(String script) {
             return webEngine.executeScript(script);
@@ -126,6 +127,7 @@ public class WebViewWindowController implements Initializable {
 
         /**
          * TODO: FINISH JAVADOC COMMENT
+         *
          * @param msg
          * @param url
          * @param line
@@ -135,17 +137,19 @@ public class WebViewWindowController implements Initializable {
         }
 
         /**
-         * TODO: FINISH JAVADOC COMMENT
-         * @param msg
+         * Logging methode für Javascript
+         *
+         * @param msg Log Nachricht
          */
         public void consoleLog(String msg) {
             System.out.println("Javascript log: " + msg);
         }
 
         /**
-         * TODO: FINISH JAVADOC COMMENT
-         * @param currPage
-         * @param scrollPosition
+         * Laed die WebView neu und setzt die derzeitige Seite und Scrollbar position.
+         *
+         * @param currPage derzeitige Seite
+         * @param scrollPosition Scrollbar position
          */
         public void reloadSite(int currPage, int scrollPosition) {
             WebViewWindowController.this.currPage = currPage;
@@ -155,6 +159,7 @@ public class WebViewWindowController implements Initializable {
 
         /**
          * Beiträge werden aus der DB gelesen und anhand der Seitenanzahl die korrekten Beiträge auf der WebView angezeigt, durch die JavaScript funktion "displayArticle".
+         *
          * @param numPages anzahl der Seiten
          */
         public void fillWeb(int numPages) {
@@ -167,7 +172,7 @@ public class WebViewWindowController implements Initializable {
 
                 Article a = allArticles.get(i);
                 System.out.print("Index=" + i);    //FIXME: debug only
-                String script = String.format("displayArticle(%d, '%s', '%s', '%s', '%s')", a.getId(), a.getAuthor().getUsername(), a.getTitle(), a.getText(), a.getDate());
+                String script = String.format("displayArticle(%d, '%s', '%s', '%s', '%s', %b)", a.getId(), a.getAuthor().getUsername(), a.getTitle(), a.getText(), a.getDate(), a.getAuthor().getIsBlogger());
                 jsBridge.executeJavascript(script);
 
                 //Kommentare einfügen
@@ -177,6 +182,7 @@ public class WebViewWindowController implements Initializable {
 
         /**
          * TODO: FINISH JAVADOC COMMENT
+         *
          * @param b
          */
         private void fillComments(Post b) {
@@ -184,17 +190,18 @@ public class WebViewWindowController implements Initializable {
             for (int j = 0; j < b.getComments().size(); j++) {
                 Comment k = b.getComments().get(j);
                 System.out.println("Kommentar anzeigen: " + k.getId()); //FIXME: debug only
-                String script = String.format("displayComment(%d, %d, '%s', '%s', '%s')", k.getId(), b.getId(), k.getAuthor().getUsername(), k.getText(), k.getDate());
+                String script = String.format("displayComment(%d, %d, '%s', '%s', '%s', %b)", k.getId(), b.getId(), k.getAuthor().getUsername(), k.getText(), k.getDate(), k.getAuthor().getIsBlogger());
                 jsBridge.executeJavascript(script);
                 fillComments(k);
             }
         }
 
         /**
-         * TODO: FINISH JAVADOC COMMENT
-         * @param title
-         * @param text
-         * @throws UserViolationException
+         * Methode zum erstellen von Artikeln von Javascript aus
+         *
+         * @param title Titel des Artikels
+         * @param text Text des Artikels
+         * @throws UserViolationException wird geworfen, wenn diese methode von einem user ausgefürt wird, welcher kein Blogger ist
          */
         public void createArticle(String title, String text) throws UserViolationException {
             if (currBlogger == null)
@@ -207,10 +214,12 @@ public class WebViewWindowController implements Initializable {
         }
 
         /**
-         * TODO: FINISH JAVADOC COMMENT
-         * @param parentID
-         * @param text
-         * @throws UserViolationException
+         * Methode zum erstellen von Kommentaren von Javascript aus
+         *
+         * @param parentID Identifikator des Oberbeitrags
+         * @param text Text des Kommentars
+         * @param parentIsArticle sagt aus, ob der zu kommentierende Beitrag ein Artikel oder ein Kommentar ist
+         * @throws UserViolationException wird geworfen, wenn diese methode von einem unangemeldeten Nutzer ausgefuert wird
          */
         public void createComment(int parentID, String text, boolean parentIsArticle) throws UserViolationException {
             if (currUser == null)
@@ -224,10 +233,11 @@ public class WebViewWindowController implements Initializable {
         }
 
         /**
-         * TODO: FINISH JAVADOC COMMENT
-         * @param id
-         * @param isArticle
-         * @throws UserViolationException
+         * Methode zum loeschen von Beiträgen von Javascript aus
+         *
+         * @param id Identifikator des zu loeschenden Beitrags
+         * @param isArticle sagt aus, ob ein das zu loeschende ein Artikel oder ein Kommentar ist
+         * @throws UserViolationException wird geworfen, wenn diese methode von einem user ausgefürt wird, welcher kein Blogger ist
          */
         public void deletePost(String id, boolean isArticle) throws UserViolationException {
             if (currBlogger == null)
@@ -250,9 +260,9 @@ public class WebViewWindowController implements Initializable {
         }
     }
 
-    public final class UserViolationException extends Exception {
-        public UserViolationException() {
-            super("Violated User Structure"); //FIXME: irgendeine passedere message.
+	public final class UserViolationException extends Exception {
+		public UserViolationException() {
+            super("Violated User Structure. User was trying to use a function he is not eligible of using.");
         }
     }
 }

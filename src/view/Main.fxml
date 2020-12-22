@@ -65,7 +65,7 @@
                             <Label text="Passwort:" GridPane.rowIndex="1" />
                             <TextField fx:id="tfNameRegister" GridPane.columnIndex="1" GridPane.columnSpan="2" />
                             <PasswordField fx:id="pfPasswordRegister" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                            <Button fx:id="btRegister" mnemonicParsing="false" onAction="#handleButtonRegisterAction" prefHeight="25.0" prefWidth="124.0" text="Registrieren" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            <Button mnemonicParsing="false" onAction="#handleButtonRegisterAction" prefHeight="25.0" prefWidth="124.0" text="Registrieren" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                      <Label fx:id="lblRegisterStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="322.0" textAlignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                         </GridPane>
                     </AnchorPane>
@@ -74,6 +74,6 @@
         </VBox>
     </center>
     <top>
-        <Button fx:id="btnWW" mnemonicParsing="false" onAction="#handleButtonWebViewAction" prefHeight="25.0" prefWidth="684.0" text="Open Blog" />
+        <Button mnemonicParsing="false" onAction="#handleButtonWebViewAction" prefHeight="25.0" prefWidth="684.0" text="Open Blog" />
     </top>
 </BorderPane>

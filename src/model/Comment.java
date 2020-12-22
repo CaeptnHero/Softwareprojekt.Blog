@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 
 public class Comment extends Post {
     /**
-     * TODO: FINISH JAVADOC COMMENT
      * Konstruktor fuers user interface
-     * @param author
-     * @param text
-     * @param parent
+     *
+     * @param author verfasser des Kommentars
+     * @param text text des Kommentars
+     * @param parent Oberbeitrag des Kommentars
      */
     public Comment(User author, String text, Post parent) {
         super(author, text, parent);
@@ -21,18 +21,19 @@ public class Comment extends Post {
 
     /**
      * Konstruktor fuer die Datenbank
-     * @param id
-     * @param author
-     * @param text
-     * @param dateTime
-     * @param parent
+     *
+     * @param id Identifikator des Kommentars
+     * @param author verfasser des Kommentars
+     * @param text text des Kommentars
+     * @param dateTime zeitpunkt des erstellens
+     * @param parent Oberbeitrag des Kommentars
      */
     public Comment(int id, User author, String text, LocalDateTime dateTime, Post parent) {
         super(id, author, text, dateTime, parent);
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
+     * Loescht sich selbst
      */
     public void delete() {
         super.delete();    //eigene kommentare löschen
@@ -41,7 +42,7 @@ public class Comment extends Post {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
+     * Loescht sich selbst aus der Datenbank
      */
     public void deleteFromDatabase() {
         String sql = "DELETE FROM comment WHERE CID = " + this.getId();

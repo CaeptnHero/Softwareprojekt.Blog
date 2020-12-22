@@ -1,35 +1,44 @@
 package model;
 
 public class Blogger extends User {
+
+    /**
+     * Erstellt einen User mit den Rechten eines Bloggers
+     *
+     * @param id Identifikator des Bloggers
+     * @param username Nutzername des Bloggers
+     * @param password Passwort des Bloggers
+     */
     public Blogger(int id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
+        super(id, username, password);
+        super.setIsBlogger(true);
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param title
-     * @param text
-     * @return
+     * Ertstellt einen neuen Artikel verfasst von diesem Blogger
+     * @param title titel des Artikels
+     * @param text text des Artikels
+     * @return gibt den erstellten Artikel zuruek
      */
     public Article createArticle(String title, String text) {
         return new Article(this, title, text);
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param art
+     * Loescht einen Artikel
+     * @param art zu loeschender Artikel
      */
     public void deleteArticle(Article art) {
         art.delete();
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param c
+     * Loescht einen Kommentar
+     * @param com zu loeschender Kommentar
      */
-    public void deleteComment(Comment c) {
-        c.delete();
+    public void deleteComment(Comment com) {
+        com.delete();
     }
+
+
 }

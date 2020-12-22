@@ -1,12 +1,13 @@
 /**
  * TODO: FINISH JAVADOC COMMENT
  */
-window.onload = function() {
+window.onload = function () {
     clearArticles();
 }
 
 /**
  * TODO: FINISH JAVADOC COMMENT
+ *
  * @param msg
  * @param url
  * @param line
@@ -17,6 +18,7 @@ window.onerror = function (msg, url, line) {
 
 /**
  * TODO: FINISH JAVADOC COMMENT
+ *
  * @param message
  */
 window.console.log = function (message) {
@@ -25,6 +27,7 @@ window.console.log = function (message) {
 
 /**
  * TODO: FINISH JAVADOC COMMENT
+ *
  * @param username
  * @param usertype
  * @param currPage
@@ -42,6 +45,7 @@ function ready(username, usertype, currPage, scrollPosition) {
 
 /**
  * TODO: FINISH JAVADOC COMMENT
+ *
  */
 function reloadSite() {
     bridge.reloadSite(this.currPage, window.scrollY);
@@ -49,16 +53,18 @@ function reloadSite() {
 
 /**
  * TODO: FINISH JAVADOC COMMENT
+ *
  */
 function hideBloggerFunctions() {
     document.querySelector("#create-article, #article-show").style.display = "none";
     document.querySelectorAll(".post-delete").forEach(button => {
-       button.style.display = "none";
+        button.style.display = "none";
     });
 }
 
 /**
  * TODO: FINISH JAVADOC COMMENT
+ *
  */
 function hideUserFunctions() {
     hideBloggerFunctions();
@@ -70,11 +76,12 @@ function hideUserFunctions() {
 /**
  * TODO: FINISH JAVADOC COMMENT
  * Funktion um weitere Seiten hinzuzufügen
+ *
  * @param number
  */
-function addPageNumbers(number){
+function addPageNumbers(number) {
     var pageNav = document.querySelector("footer > nav > ul");
-    for (i = 1; i <=number; i++ ) {
+    for (i = 1; i <= number; i++) {
         var node = document.createElement("li");
         node.innerHTML = `<a href='#' onclick='changePage(${i});'>${i}</a>`;
 
@@ -84,6 +91,7 @@ function addPageNumbers(number){
 
 /**
  * TODO: FINISH JAVADOC COMMENT
+ *
  * @param pagenumber
  */
 function changePage(pagenumber) {
@@ -93,7 +101,7 @@ function changePage(pagenumber) {
 
     var elements = document.querySelectorAll(`footer > nav > ul > li > a`);
     for (let i = 0; i < elements.length; i++) {
-        if(elements[i].innerHTML == pagenumber)
+        if (elements[i].innerHTML == pagenumber)
             elements[i].classList.add("active");
         else
             elements[i].classList.remove("active");
@@ -118,17 +126,17 @@ function createArticle() {
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
- * Fügt einen Artikel der webview hinzu
+ * Fügt einen Artikel der webview hinzu TODO: FINISH JAVADOC COMMENT
+ *
  * @param ID
  * @param Title
  * @param Text
  */
-function displayArticle(ID, Verfasser, Title, Text, Date) {
+function displayArticle(ID, Verfasser, Title, Text, Date, isBlogger) {
     let article = document.createElement('article');
     article.id = `beitrag-${ID}`;
     article.innerHTML =
-        `<h2>${Title} <span><b>${Verfasser}</b><span class="date"> @ (${Date.replace('T', ' ')})</span></span></h2>
+        `<h2>${Title} <span><b ${isBlogger ? "class='blogger'" : ""}>${Verfasser}</b><span class="date"> @ (${Date.replace('T', ' ')})</span></span></h2>
          <p>${Text}</p>
          <div class="post-actions">
             <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deletePost('${article.id}', true); reloadSite();">Löschen</button>
@@ -140,6 +148,7 @@ function displayArticle(ID, Verfasser, Title, Text, Date) {
 
 /**
  * TODO: FINISH JAVADOC COMMENT
+ *
  * @param event
  */
 function commentButtonClick(event) {
@@ -157,6 +166,7 @@ function commentButtonClick(event) {
 
 /**
  * TODO: FINISH JAVADOC COMMENT
+ *
  * @param htmlBID
  */
 function postComment(htmlBID, parentIsArticle) {
@@ -167,21 +177,22 @@ function postComment(htmlBID, parentIsArticle) {
 
 /**
  * Fügt in der webview einen Beitrag(Artikel/Kommentar) ein Kommentar hinzu
+ *
  * @param beitragID ID des neuen Kommentar
  * @param kommentarID ID des Beitrags der Kommentiert werden soll
  * @param verfasser Verfasser der Kommentar
  * @param kommentarText Text des Kommentar
  */
-function displayComment(kommentarID, beitragID, verfasser, kommentarText, Date) {
+function displayComment(kommentarID, beitragID, verfasser, kommentarText, Date, isBlogger) {
     let comment = document.createElement('div');
     comment.id = `beitrag-${kommentarID}`;
     comment.innerHTML =
-                    `<span class="username"><b>${verfasser}</b><span class="date"> @ (${Date.replace('T', ' ')})</span></span>
-                    <p>${kommentarText}</p>
-                    <div class="post-actions">
-                        <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deletePost('${comment.id}', false); reloadSite();">Löschen</button>
-                    </div>
-                    <div class="comments"></div>`;
+        `<span class="username"><b ${isBlogger ? "class='blogger'" : ""}>${verfasser}</b><span class="date"> @ (${Date.replace('T', ' ')})</span></span>
+         <p>${kommentarText}</p>
+         <div class="post-actions">
+            <button onclick="commentButtonClick(event);">Kommentieren</button> <button class="post-delete" onclick="bridge.deletePost('${comment.id}', false); reloadSite();">Löschen</button>
+         </div>
+         <div class="comments"></div>`;
 
     document.querySelector(`#beitrag-${beitragID} .comments`).appendChild(comment);
 }

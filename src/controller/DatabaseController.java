@@ -20,7 +20,7 @@ public final class DatabaseController {
     private static Statement statement;
 
     /**
-     * Baut die Verbindung zur MySQL-Datenbank auf.
+     * Baut die Verbindung zur MySQL-Datenbank auf
      */
     public static void open() {
         try {
@@ -33,7 +33,7 @@ public final class DatabaseController {
     }
 
     /**
-     * Baut die Verbindung zur MySQL-Datenbank ab.
+     * Baut die Verbindung zur MySQL-Datenbank ab
      */
     public static void close() {
         try {
@@ -46,7 +46,8 @@ public final class DatabaseController {
     }
 
     /**
-     * Entwertet eine Zeichenkette um SQL-injektionen zu vermeiden.
+     * Entwertet eine Zeichenkette um SQL-injektionen zu vermeiden
+     *
      * @param s zu entwertender String
      * @return Entwerteter String
      */
@@ -66,10 +67,10 @@ public final class DatabaseController {
     }
 
     /**
-     * Führt eine SQL-Query aus (SELECT, ...).
-     * @param sql SQL-Befehl welcher ausgefuehrt werden soll.
-     * @return Resultset, welches alle Zeilen der ausgefuehrten Abfrage enthealt.
-     * @author Daniel Isaak
+     * Führt eine SQL-Query aus (SELECT, ...)
+     *
+     * @param sql SQL-Befehl welcher ausgefuehrt werden soll
+     * @return ResultSet, welches alle Zeilen der ausgefuehrten Abfrage enthaelt
      */
     public static ResultSet executeQuery(String sql) {
         System.out.println("SQL QUERY EXECUTED: " + sql);
@@ -89,9 +90,10 @@ public final class DatabaseController {
     }
 
     /**
-     * Führt eine SQL-Update aus (INSERT, UPDATE, ...).
-     * @param sql SQL-Befehl, welcher ausgefuehrt werden soll.
-     * @return neu generierter Schluessel.
+     * Führt eine SQL-Update aus (INSERT, UPDATE, ...)
+     *
+     * @param sql SQL-Befehl, welcher ausgefuehrt werden soll
+     * @return neu generierter Schluessel
      */
     public static int executeUpdate(String sql) {
         System.out.println("SQL UPDATE EXECUTED: " + sql);
@@ -111,9 +113,10 @@ public final class DatabaseController {
     }
 
     /**
-     * Fuert eine Datenbankabfrage aus, welcher nach einem bestimmten nutzer sucht und diesen zurückgibt.
+     * Fuert eine Datenbankabfrage aus, welcher nach einem bestimmten nutzer sucht und diesen zurückgibt
+     *
      * @param username name des nutzers
-     * @return Object, welches entweder ein Blogger oder ein Reader ist.
+     * @return Object, welches entweder ein Blogger oder ein Reader ist
      */
     public static Object getUser(String username) {
         String SQL = "SELECT COUNT(*) as rowcount, UID, username, password, isBlogger FROM user WHERE user.username = \"" + username + "\"";
@@ -136,11 +139,11 @@ public final class DatabaseController {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * Alle artikel abfragen
-     * @return
+     * Alle Artikel und deren Kommentare aus der Datenbank abfragen
+     *
+     * @return Alle Artikel in einer ArrayList
      */
-    public static ArrayList<Article> getAllArticles() {
+    public static ArrayList<Article> getArticles() {
         ArrayList<Article> articles = new ArrayList<>();
         ResultSet res = executeQuery("select * from article a, post p, user u where a.aid = p.pid AND u.uid = p.author ORDER BY a.aid DESC");
 
@@ -152,7 +155,7 @@ public final class DatabaseController {
                 String text = res.getString("text");
                 String date = res.getString("date");
                 String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
-                LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
+                LocalDateTime dateTime = LocalDateTime.parse(formattedDate);
 
                 Article a = new Article(id, author, title, text, dateTime);
                 // Alle Kommentare des Artikels abfragen
@@ -167,11 +170,10 @@ public final class DatabaseController {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
      * Alle Kommentare eines Oberbeitrags abfragen
-     * @param parent
-     * @return
-     * @author
+     *
+     * @param parent Oberbeitrag, von welchem wir die Kommentare haben wollen
+     * @return Kommentarliste des Oberbeitrags
      */
     private static ArrayList<Comment> getComments(Post parent) {
         ArrayList<Comment> comments = new ArrayList<>();
@@ -180,12 +182,12 @@ public final class DatabaseController {
 
         try {
             while (res.next()) {
-                boolean isblogger = res.getBoolean("isBlogger");
+                boolean isBlogger = res.getBoolean("isBlogger");
                 int uid = res.getInt("uid");
                 String username = res.getString("username");
                 String password = res.getString("password");
                 User author = null;
-                if(isblogger)
+                if (isBlogger)
                     author = new Blogger(uid, username, password);
                 else
                     author = new Reader(uid, username, password);
@@ -201,7 +203,6 @@ public final class DatabaseController {
                 comments.add(k);
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
 
@@ -209,84 +210,19 @@ public final class DatabaseController {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param bid
-     * @return
-     */
-    /*public static Post getPost(int bid) { FIXME: USELESS NOW
-        ResultSet res = executeQuery("select Oberbeitrag from beitrag where bid = " + bid);
-        int obid = -1;
-        try {
-            res.next();
-            obid = res.getInt("Oberbeitrag");
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
-
-        if (obid == -1) {
-            System.out.println("Beitrag nicht gefunden");
-            return null;
-        } else if (obid == 0) {
-            res = executeQuery("select * from artikel a, beitrag b where a.aid = b.bid and b.bid = " + bid);
-            try {
-                while (res.next()) {
-                    int id = res.getInt("bid");
-                    Blogger verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
-                    String titel = res.getString("titel");
-                    String text = res.getString("text");
-                    String date = res.getString("datum");
-                    String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
-                    LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
-
-                    Article a = new Article(id, verfasser, titel, text, dateTime);
-
-                    //	Alle Kommentare des Artikels abfragen
-                    a.addComment(getComments(a));
-                    return a;
-                }
-            } catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
-            }
-
-        } else {
-            res = executeQuery("select * from Kommentar k, beitrag b where k.kid = b.bid and b.bid = " + bid);
-            try {
-                while (res.next()) {
-                    int id = res.getInt("bid");
-                    Blogger verfasser = null;//res.getInt("b.verfasser");	//TODO: getVerfasser aus RAM / wenn nicht vorhanden => db abfrage starten
-                    String text = res.getString("text");
-                    String date = res.getString("datum");
-                    String formattedDate = date.substring(0, 10) + "T" + date.substring(11, 19);
-                    LocalDateTime dateTime = LocalDateTime.parse(formattedDate);    //TODO: testen ob das parsen funktioniert
-
-                    Comment k = new Comment(id, verfasser, text, dateTime, getPost(res.getInt("Oberbeitrag"))); //TODO: Beitrag ist null
-                    k.addComment(getComments(k));
-                    return k;
-                }
-            } catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-    }*/
-
-    /**
      * Fragt die anzahl der Artikel ab und berechnet damit die Seitenanzahl.
+     *
      * @return aufgerundete Seitenanzahl
      */
     public static int getNumberOfPages() {
-        int anzahl = 0;
+        int count = 0;
         ResultSet res = executeQuery("SELECT count(*) from article");
         try {
             res.next();
-            anzahl = res.getInt(1);
+            count = res.getInt(1);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return (int) Math.ceil(anzahl / 5.0);
+        return (int) Math.ceil(count / 5.0);
     }
 }

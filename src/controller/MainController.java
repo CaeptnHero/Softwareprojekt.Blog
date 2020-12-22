@@ -2,6 +2,7 @@ package controller;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,24 +13,26 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.User;
 
 import java.awt.*;
 import java.io.IOException;
 
 /**
- * TODO: FINISH JAVADOC COMMENT
+ * Controller-Klasse, welche das Hauptfenster verwaltet.
  */
 public class MainController extends Application {
 
     private WebViewWindowController wvwc;
-    private User user;
+    private User currUser;
+
     @FXML
-    private TextField tfNameLogin, tfNameRegister, tfTitel;
+    private TextField tfNameLogin, tfNameRegister;
     @FXML
     private PasswordField pfPasswordLogin, pfPasswordRegister;
     @FXML
-    private Button btLogin, btRegister, btnWW;
+    private Button btLogin;
     @FXML
     private Label lblLoginStatus, lblRegisterStatus;
 
@@ -37,6 +40,9 @@ public class MainController extends Application {
         launch(args);
     }
 
+    /**
+     * laed die FXML-Datei des Hauptfensters und zeigt ihn auf der mitte des Bildschirms an
+     */
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -48,6 +54,7 @@ public class MainController extends Application {
             primaryStage.setResizable(false);
             primaryStage.setTitle("Blog");
             primaryStage.show();
+            primaryStage.setOnCloseRequest(windowEvent -> System.exit(0));
 
             Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
             primaryStage.setX((screen.width - primaryStage.getWidth()) / 2);
@@ -58,22 +65,33 @@ public class MainController extends Application {
     }
 
     /**
+     * Setzt einen String in zwei Labels im User Interface um einen Status anzuzeigen
+     *
+     * @param message anzuzeigende nachricht
+     */
+    private void setStatus(String message) {
+        lblLoginStatus.setText(message);
+        lblRegisterStatus.setText(message);
+    }
+
+    /**
      * TODO: FINISH JAVADOC COMMENT
+     *
      * @param event
      */
     @FXML
     private void handleButtonLoginAction(ActionEvent event) {
-        if (user != null) {
+        if (currUser != null) {
             setStatus("");
-            user = null;
+            currUser = null;
             tfNameLogin.setDisable(false);
             pfPasswordLogin.setDisable(false);
             btLogin.setText("Login");
         } else {
             try {
-                user = AuthenticationController.login(tfNameLogin.getText(), pfPasswordLogin.getText());
-                if (user != null) {
-                    setStatus("Currently logged in as: " + user);
+                currUser = AuthenticationController.login(tfNameLogin.getText(), pfPasswordLogin.getText());
+                if (currUser != null) {
+                    setStatus("Currently logged in as: " + currUser);
                     btLogin.setText("Log off");
                     tfNameLogin.setDisable(true);
                     pfPasswordLogin.setDisable(true);
@@ -83,7 +101,6 @@ public class MainController extends Application {
                 tfNameLogin.setText("");
                 pfPasswordLogin.setText("");
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 setStatus("Error in login.");
                 e.printStackTrace();
             }
@@ -92,6 +109,7 @@ public class MainController extends Application {
 
     /**
      * TODO: FINISH JAVADOC COMMENT
+     *
      * @param event
      */
     @FXML
@@ -107,14 +125,14 @@ public class MainController extends Application {
                 setStatus("Registrierung fehlgeschlagen");
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param event
+     * Laed die FMXL des Webviewfensters, setzt den Nutzer fuer die webview und zeigt das webviewfenster an
+     *
+     * @param event eventobjekt des "Open WebView" Buttons
      */
     @FXML
     private void handleButtonWebViewAction(ActionEvent event) {
@@ -122,23 +140,17 @@ public class MainController extends Application {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../view/WebViewWindow.fxml"));
             Parent root = fxmlloader.load();
             wvwc = fxmlloader.getController();
-            wvwc.setUser(user);
+            wvwc.setUser(currUser);
             Stage stage = new Stage();
             stage.setTitle("WebView");
             stage.setScene(new Scene(root));
             stage.show();
+
+            Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+            stage.setX((screen.width - stage.getWidth()) / 2);
+            stage.setY((screen.height - stage.getHeight()) / 2);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
-
-    /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param txt
-     */
-    private void setStatus(String txt) {
-        lblLoginStatus.setText(txt);
-        lblRegisterStatus.setText(txt);
     }
 }

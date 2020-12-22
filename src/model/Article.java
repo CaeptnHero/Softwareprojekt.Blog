@@ -8,14 +8,14 @@ public class Article extends Post {
     private String title;
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
      * Konstruktor fuers user interface
-     * @param verfasser
-     * @param title
-     * @param text
+     *
+     * @param author verfasser des Artikels
+     * @param title titel des Artikels
+     * @param text text des Artikels
      */
-    public Article(Blogger verfasser, String title, String text) {
-        super(verfasser, text, null);
+    public Article(Blogger author, String title, String text) {
+        super(author, text, null);
         this.title = title;
 
         String sql = String.format("INSERT INTO article VALUES (%s, '%s', '%s')", this.getId(), title, text);
@@ -25,14 +25,15 @@ public class Article extends Post {
     /**
      * TODO: FINISH JAVADOC COMMENT
      * Konstruktor fuer die Datenbank
-     * @param id
-     * @param verfasser
-     * @param title
-     * @param text
-     * @param dateTime
+     *
+     * @param id Identifikator des Artikels
+     * @param author verfasser des Artikels
+     * @param title titel des Artikels
+     * @param text text des Artikels
+     * @param dateTime zeitpunkt des erstellens
      */
-    public Article(int id, Blogger verfasser, String title, String text, LocalDateTime dateTime) {
-        super(id, verfasser, text, dateTime, null);
+    public Article(int id, Blogger author, String title, String text, LocalDateTime dateTime) {
+        super(id, author, text, dateTime, null);
         this.title = title;
     }
 
@@ -45,7 +46,7 @@ public class Article extends Post {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
+     * Loescht sich selbst
      */
     public void delete() {
         super.delete();
@@ -53,7 +54,7 @@ public class Article extends Post {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
+     * Loescht sich selbst aus der Datenbank
      */
     private void deleteFromDatabase() {
         String sql = "DELETE FROM article WHERE AID = " + this.getId();

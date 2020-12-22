@@ -20,6 +20,10 @@ p, h2  {
     word-wrap: break-word;
 }
 
+.blogger {
+    color: #b48ead;
+}
+
 /*  ====================== Navigations ======================  */
 nav {
     display: flex;
@@ -184,20 +188,4 @@ div.comments .username {
 footer {
     text-align: center;
     font-size: 13px;
-}
-
-/* EASTER EGG */
-.easteregg {
-    animation: skew 3s infinite;
-    transform: skew(20deg);
-    animation-direction: alternate;
-}
-
-@keyframes skew {
-    0% {
-        transform: skew(20deg, 20deg);
-    }
-    100% {
-        transform: skew(-20deg, -20deg);
-    }
 }

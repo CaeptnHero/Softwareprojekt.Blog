@@ -14,11 +14,11 @@ public abstract class Post {
     private ArrayList<Comment> Comments;
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
      * Konstruktor fuers user interface
-     * @param author
-     * @param text
-     * @param parent
+     *
+     * @param author verfasser des Beitrags
+     * @param text text des Beitrags
+     * @param parent Oberbeitrag des Beitrags
      */
     public Post(User author, String text, Post parent) {
         this.author = author;
@@ -26,6 +26,7 @@ public abstract class Post {
         this.dateTime = LocalDateTime.now();
         this.parent = parent;
         Comments = new ArrayList<>();
+
         String sql = String.format("INSERT INTO post VALUES (NULL,'%s', %s, %s)", this.dateTime, this.author.getId(), this.parent == null ? "NULL" : this.parent.getId());
         this.id = DatabaseController.executeUpdate(sql);
     }
@@ -33,11 +34,12 @@ public abstract class Post {
     /**
      * TODO: FINISH JAVADOC COMMENT
      * Konstruktor fuer die Datenbank
-     * @param id
-     * @param author
-     * @param text
-     * @param dateTime
-     * @param parent
+     *
+     * @param id Identifikator des Beitrags
+     * @param author verfasser des Beitrags
+     * @param text text des Beitrags
+     * @param dateTime zeitpunkt des erstellens
+     * @param parent Oberbeitrag des Beitrags
      */
     public Post(int id, User author, String text, LocalDateTime dateTime, Post parent) {
         this.id = id;
@@ -89,24 +91,24 @@ public abstract class Post {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     * @param k
+     * Loescht einen Kommentar aus sich selbst und aus der Datenbank
+     *
+     * @param k zu loeschender Kommentar
      */
     public void deleteComment(Comment k) {
-        //#region Kommentar aus DB löschen
         String sql = "DELETE FROM comment WHERE CID = " + k.getId();
         DatabaseController.executeUpdate(sql);
         sql = "DELETE FROM post WHERE PID = " + k.getId();
         DatabaseController.executeUpdate(sql);
-        //#endregion
+
         Comments.remove(k);    //kommentar löschen
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
+     * Loescht sich selbst und alle eigenen kommentare
      */
     public void delete() {
-        while(Comments.size() != 0) {
+        while (Comments.size() != 0) {
             Comment k = this.Comments.get(0);
             k.delete(); //recursion
             this.deleteComment(k);    //eigene kommentare löschen
