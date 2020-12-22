@@ -75,7 +75,7 @@ function addPageNumbers(number) {
         var node = document.createElement("li");
         node.innerHTML = `<a href='#' onclick='changePage(${i});'>${i}</a>`;
 
-        pageNav.appendChild(node) //TODO: Anpassen sobald das Layout fertig. Als Beispiel <div class="message">Add Message<br>Title: <input type="text usw.
+        pageNav.appendChild(node)
     }
 }
 
@@ -117,7 +117,7 @@ function createArticle() {
 }
 
 /**
- * Fügt einen Artikel der webview hinzu TODO: FINISH JAVADOC COMMENT
+ * Fügt einen Artikel der webview hinzu
  *
  * @param {Integer} ID Identifikator des Artikels
  * @param {String} Title Titel des Artikels

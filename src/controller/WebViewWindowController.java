@@ -171,7 +171,6 @@ public class WebViewWindowController implements Initializable {
                     break;
 
                 Article a = allArticles.get(i);
-                System.out.print("Index=" + i);    //FIXME: debug only
                 String script = String.format("displayArticle(%d, '%s', '%s', '%s', '%s', %b)", a.getId(), a.getAuthor().getUsername(), a.getTitle(), a.getText(), a.getDate(), a.getAuthor().getIsBlogger());
                 jsBridge.executeJavascript(script);
 
@@ -189,7 +188,6 @@ public class WebViewWindowController implements Initializable {
             System.out.println(" AID=" + b.getId() + " Kommentare=" + b.getComments().size());    //FIXME: debug only
             for (int j = 0; j < b.getComments().size(); j++) {
                 Comment k = b.getComments().get(j);
-                System.out.println("Kommentar anzeigen: " + k.getId()); //FIXME: debug only
                 String script = String.format("displayComment(%d, %d, '%s', '%s', '%s', %b)", k.getId(), b.getId(), k.getAuthor().getUsername(), k.getText(), k.getDate(), k.getAuthor().getIsBlogger());
                 jsBridge.executeJavascript(script);
                 fillComments(k);

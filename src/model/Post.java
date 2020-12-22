@@ -33,7 +33,6 @@ public abstract class Post {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
      * Konstruktor fuer die Datenbank
      *
      * @param id Identifikator des Beitrags
