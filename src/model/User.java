@@ -1,14 +1,19 @@
 package model;
 
-/**
- * TODO: FINISH JAVADOC COMMENT
- */
 public abstract class User {
+
     private int id;
     private String username;
     private String password;
     private boolean isBlogger;
 
+    /**
+     * Erstellt einen Nutzer
+     *
+     * @param id Identifikator des Nutzer
+     * @param username Nutzername des Nutzer
+     * @param password Passwort des Nutzer
+     */
     public User(int id, String username, String password) {
         this.id = id;
         this.username = username;
@@ -63,4 +68,5 @@ public abstract class User {
     public Comment createComment(String text, Post parent) {
         return new Comment(this, text, parent);
     }
+
 }

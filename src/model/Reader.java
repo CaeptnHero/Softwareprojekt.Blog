@@ -1,6 +1,7 @@
 package model;
 
 public class Reader extends User {
+
     /**
      * Erstellt einen User mit den Rechten eines Readers
      *
@@ -11,4 +12,5 @@ public class Reader extends User {
     public Reader(int id, String username, String password) {
         super(id, username, password);
     }
+
 }

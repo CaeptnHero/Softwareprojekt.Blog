@@ -40,5 +40,4 @@ public class Blogger extends User {
         com.delete();
     }
 
-
 }

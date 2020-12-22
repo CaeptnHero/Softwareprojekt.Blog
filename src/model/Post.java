@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public abstract class Post {
+
     private int id;
     private String text;
     private LocalDateTime dateTime;
@@ -114,4 +115,5 @@ public abstract class Post {
             this.deleteComment(k);    //eigene kommentare löschen
         }
     }
+
 }

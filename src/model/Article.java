@@ -5,6 +5,7 @@ import controller.DatabaseController;
 import java.time.LocalDateTime;
 
 public class Article extends Post {
+
     private String title;
 
     /**
@@ -61,4 +62,5 @@ public class Article extends Post {
         sql = "DELETE FROM post WHERE PID = " + this.getId();
         DatabaseController.executeUpdate(sql);
     }
+
 }

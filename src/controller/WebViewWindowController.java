@@ -126,11 +126,11 @@ public class WebViewWindowController implements Initializable {
         }
 
         /**
-         * TODO: FINISH JAVADOC COMMENT
+         * Gibt Javascript Fehler aus
          *
-         * @param msg
-         * @param url
-         * @param line
+         * @param msg Fehlernachricht
+         * @param url Dateipfad in dem der Fehler aufgetaucht ist
+         * @param line zeile in dem der Fehler aufgetaucht ist
          */
         public void errorLog(String msg, String url, int line) {
             System.out.println("JS error in " + url + " : " + line + "\n" + msg);
@@ -265,4 +265,5 @@ public class WebViewWindowController implements Initializable {
             super("Violated User Structure. User was trying to use a function he is not eligible of using.");
         }
     }
+
 }
