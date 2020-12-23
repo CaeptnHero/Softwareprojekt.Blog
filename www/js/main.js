@@ -102,7 +102,7 @@ function changePage(pagenumber) {
 /**
  * Holt sich die noetigen informationen aus dem DOM und uebergibt sie Java zum erstellen eines Artikels
  */
-function createArticle() {
+function postArticle() {
     let title = document.getElementById('article-title').value;
     let text = document.getElementById('article-text').value;
 
@@ -145,7 +145,7 @@ function commentButtonClick(event) {
     commentForm.classList.add('create-comment');
     commentForm.innerHTML = `<label for="${parent.id}-comment">Text:</label>
         <textarea id="${parent.id}-comment" rows="4" cols="50"></textarea>
-        <button onclick="createComment('${parent.id}', ${parentIsArticle});reloadSite();">Veröffentlichen</button>`;
+        <button onclick="postComment('${parent.id}', ${parentIsArticle});reloadSite();">Veröffentlichen</button>`;
 
     event.currentTarget.parentElement.append(commentForm);
     event.currentTarget.disabled = true;
@@ -157,7 +157,7 @@ function commentButtonClick(event) {
  * @param {String}  htmlBID Beitrag Identifikator
  * @param {boolean} parentIsArticle gibt an, ob der zu kommentierende Oberbeitrag ein Artikel oder ein Kommentar ist
  */
-function createComment(htmlBID, parentIsArticle) {
+function postComment(htmlBID, parentIsArticle) {
     let bid = htmlBID.split('-')[1];
     let commentText = document.getElementById(`${htmlBID}-comment`).value;
     bridge.createComment(bid, commentText, parentIsArticle);
