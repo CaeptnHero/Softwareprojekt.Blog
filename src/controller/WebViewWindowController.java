@@ -181,7 +181,7 @@ public class WebViewWindowController implements Initializable {
         /**
          * Teilt der Webview mit, welche Kommentare zu welchem Beitrag gehören, und dass diese angezeigt werden sollen
          *
-         * @param b Beitrag dessen Kommentare angezeigz werden sollen
+         * @param b Beitrag dessen Kommentare angezeigt werden sollen
          */
         private void fillComments(Post b) {
             System.out.println(" BID=" + b.getId() + " Kommentare=" + b.getComments().size());
@@ -261,9 +261,9 @@ public class WebViewWindowController implements Initializable {
     }
 
     public final class UserViolationException extends Exception {
-		private static final long serialVersionUID = -2392433922334610372L;
+        private static final long serialVersionUID = -2392433922334610372L;
 
-		public UserViolationException() {
+        public UserViolationException() {
             super("Violated User Structure. User was trying to use a function he is not eligible of using.");
         }
     }

@@ -136,7 +136,7 @@ function displayArticle(ID, Verfasser, Title, Text, Date, isBlogger) {
 /**
  * Fügt dem Beitrag bei dem der 'Kommentieren' Button gedrückt ein Formular hinzu, um ein Kommentar verfassen zu können
  *
- * @param Eventparameter
+ * @param event Eventparameter
  */
 function commentButtonClick(event) {
     let parent = event.currentTarget.parentElement.parentElement;
