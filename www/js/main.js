@@ -21,16 +21,16 @@ window.console.log = function (message) {
 /**
  * Wird ausgeführt wenn das Dokument vollstaendig geladen wurde und das Bridge-Objekt injiziert wurde
  *
- * @param {String} username Nutzername des derzeitigen nutzers
+ * @param {String}  username Nutzername des derzeitigen nutzers
  * @param {Integer} usertype Nutzertyp, -1 = Visitor, 0 = Reader, 1 = Blogger
  * @param {Integer} currPage Seite auf welche die Webseite wechseln soll
- * @param {Double} scrollPosition Position der Scrollbar
+ * @param {Double}  scrollPosition Position der Scrollbar
  */
 function ready(username, usertype, currPage, scrollPosition) {
     this.currPage = currPage;
     this.usertype = usertype;
 
-    document.getElementById("currUser").innerText += username
+    document.getElementById("currUser").innerText += username;
     bridge.addPageNumbers();
     changePage(currPage);
     window.scrollTo(0, scrollPosition);
@@ -86,19 +86,13 @@ function addPageNumbers(number) {
  * @param {Integer} pagenumber
  */
 function changePage(pagenumber) {
-    this.currPage = pagenumber;
     clearArticles();
+    let elements = document.querySelectorAll(`footer > nav > ul > li > a`);
+    elements[this.currPage - 1].classList.remove("active");
+    elements[pagenumber - 1].classList.add("active");
+    this.currPage = pagenumber;
     bridge.fillWeb(pagenumber);
 
-    var elements = document.querySelectorAll(`footer > nav > ul > li > a`);
-    for (let i = 0; i < elements.length; i++) {
-        if (elements[i].innerHTML == pagenumber)
-            elements[i].classList.add("active");
-        else
-            elements[i].classList.remove("active");
-    }
-
-    // Regeln Anwenden
     if (this.usertype === 0)
         hideBloggerFunctions();
     else if (this.usertype === -1)
@@ -120,9 +114,9 @@ function createArticle() {
  * Fügt einen Artikel der webview hinzu
  *
  * @param {Integer} ID Identifikator des Artikels
- * @param {String} Title Titel des Artikels
- * @param {String} Text Text des Artikels
- * @param {Date} Date Datum der veroeffentlichung des Artikels
+ * @param {String}  Title Titel des Artikels
+ * @param {String}  Text Text des Artikels
+ * @param {Date}    Date Datum der veroeffentlichung des Artikels
  * @param {boolean} isBlogger gibt an, ob der verfasser ein blogger ist oder nicht
  */
 function displayArticle(ID, Verfasser, Title, Text, Date, isBlogger) {
@@ -160,7 +154,7 @@ function commentButtonClick(event) {
 /**
  * Holt sich die noetigen informationen aus dem DOM und uebergibt sie Java zum erstellen eines Kommentars
  *
- * @param {String} htmlBID Beitrag Identifikator
+ * @param {String}  htmlBID Beitrag Identifikator
  * @param {boolean} parentIsArticle gibt an, ob der zu kommentierende Oberbeitrag ein Artikel oder ein Kommentar ist
  */
 function createComment(htmlBID, parentIsArticle) {
@@ -174,8 +168,8 @@ function createComment(htmlBID, parentIsArticle) {
  *
  * @param {Integer} beitragID ID des neuen Kommentar
  * @param {Integer} kommentarID ID des Beitrags der Kommentiert werden soll
- * @param {String} verfasser Verfasser der Kommentar
- * @param {String} kommentarText Text des Kommentar
+ * @param {String}  verfasser Verfasser der Kommentar
+ * @param {String}  kommentarText Text des Kommentar
  */
 function displayComment(kommentarID, beitragID, verfasser, kommentarText, Date, isBlogger) {
     let comment = document.createElement('div');

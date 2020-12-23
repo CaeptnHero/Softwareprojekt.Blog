@@ -20,7 +20,6 @@ public class WebViewWindowController implements Initializable {
     private Bridge jsBridge;
     private Reader currReader = null;
     private Blogger currBlogger = null;
-    private User currUser = null;
     private int currPage = 1;
     private int scrollPosition = 0;
     private ArrayList<Article> allArticles;
@@ -42,8 +41,9 @@ public class WebViewWindowController implements Initializable {
                 jso.setMember("bridge", jsBridge);
 
                 allArticles = DatabaseController.getArticles();
-                int usertype = currUser == null ? -1 : (currBlogger != null ? 1 : 0); //-1 = Visitor, 0 = Reader, 1 = Blogger
-                jsBridge.executeJavascript(String.format("ready(' %s', %d, %d, %d);", (currUser != null ? currUser : "Visitor"), usertype, currPage, scrollPosition));
+                int usertype = currBlogger != null ? 1 : (currReader != null ? 0 : -1); //-1 = Visitor, 0 = Reader, 1 = Blogger
+                String username = currBlogger != null ? currBlogger.getUsername() : (currReader != null ? currReader.getUsername() : "Visitor");
+                jsBridge.executeJavascript(String.format("ready(' %s', %d, %d, %d);", username, usertype, currPage, scrollPosition));
             }
         });
 
@@ -57,13 +57,12 @@ public class WebViewWindowController implements Initializable {
     /**
      * Setzt den neuen Nutzer der für die Webview genutzt werden soll
      *
-     * @param n neuer Nutzer welcher gesetzt werden soll
+     * @param u neuer Nutzer welcher gesetzt werden soll
      */
-    public void setUser(User n) {
-        currUser = n;
-        currBlogger = currUser instanceof Blogger ? (Blogger) currUser : null;
-        currReader = currUser instanceof Reader ? (Reader) currUser : null;
-        System.out.println("Webview User: " + (currUser != null ? currUser : "Visitor"));
+    public void setUser(User u) {
+        currBlogger = u instanceof Blogger ? (Blogger) u : null;
+        currReader = u instanceof Reader ? (Reader) u : null;
+        System.out.println("Webview User: " + (u != null ? u : "Visitor"));
     }
 
     /**
@@ -220,7 +219,7 @@ public class WebViewWindowController implements Initializable {
          * @throws UserViolationException wird geworfen, wenn diese methode von einem unangemeldeten Nutzer ausgefuert wird
          */
         public void createComment(int parentID, String text, boolean parentIsArticle) throws UserViolationException {
-            if (currUser == null)
+            if (currBlogger == null && currReader == null)
                 throw new UserViolationException();
 
             text = DatabaseController.escapeString(text);
