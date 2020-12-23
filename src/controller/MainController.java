@@ -93,11 +93,11 @@ public class MainController extends Application {
                     btLogin.setText("Log off");
                     tfNameLogin.setDisable(true);
                     pfPasswordLogin.setDisable(true);
+                    tfNameLogin.setText("");
+                    pfPasswordLogin.setText("");
                 } else {
                     setStatus("Login Failed! Wrong Username or Password");
                 }
-                tfNameLogin.setText("");
-                pfPasswordLogin.setText("");
             } catch (Exception e) {
                 setStatus("Error in login.");
                 e.printStackTrace();

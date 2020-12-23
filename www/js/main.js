@@ -22,9 +22,9 @@ window.console.log = function (message) {
  * Wird ausgeführt wenn das Dokument vollstaendig geladen wurde und das Bridge-Objekt injiziert wurde
  *
  * @param {String}  username Nutzername des derzeitigen nutzers
- * @param {Integer} usertype Nutzertyp, -1 = Visitor, 0 = Reader, 1 = Blogger
- * @param {Integer} currPage Seite auf welche die Webseite wechseln soll
- * @param {Double}  scrollPosition Position der Scrollbar
+ * @param {BigInteger} usertype Nutzertyp, -1 = Visitor, 0 = Reader, 1 = Blogger
+ * @param {BigInteger} currPage Seite auf welche die Webseite wechseln soll
+ * @param {BigInteger}  scrollPosition Position der Scrollbar
  */
 function ready(username, usertype, currPage, scrollPosition) {
     this.currPage = currPage;
@@ -67,7 +67,7 @@ function hideUserFunctions() {
  * Funktion um weitere Seiten hinzuzufügen, abhängig von der Anzahl der gesammten Artikel in der DB
  * Anzahl der Artikel / 5 = Anzahl der Seiten (ausgerunedt)
  *
- * @param {Integer} number
+ * @param {BigInteger} number
  */
 function addPageNumbers(number) {
     var pageNav = document.querySelector("footer > nav > ul");
@@ -83,7 +83,7 @@ function addPageNumbers(number) {
  * Bei einem Seitenwechsel werden alle Artikel und Kommentare der aktuellen Seite wentfernt und mit den Artikel und KOmmentaren der
  * Nächsten Seite gefüllt
  *
- * @param {Integer} pagenumber
+ * @param {BigInteger} pagenumber
  */
 function changePage(pagenumber) {
     clearArticles();
@@ -113,7 +113,7 @@ function postArticle() {
 /**
  * Fügt einen Artikel der webview hinzu
  *
- * @param {Integer} ID Identifikator des Artikels
+ * @param {BigInteger} ID Identifikator des Artikels
  * @param {String}  Title Titel des Artikels
  * @param {String}  Text Text des Artikels
  * @param {Date}    Date Datum der veroeffentlichung des Artikels
@@ -166,8 +166,8 @@ function postComment(htmlBID, parentIsArticle) {
 /**
  * Fügt in der webview einen Beitrag(Artikel/Kommentar) ein Kommentar hinzu
  *
- * @param {Integer} beitragID ID des neuen Kommentar
- * @param {Integer} kommentarID ID des Beitrags der Kommentiert werden soll
+ * @param {BigInteger} beitragID ID des neuen Kommentar
+ * @param {BigInteger} kommentarID ID des Beitrags der Kommentiert werden soll
  * @param {String}  verfasser Verfasser der Kommentar
  * @param {String}  kommentarText Text des Kommentar
  */
