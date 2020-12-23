@@ -179,12 +179,12 @@ public class WebViewWindowController implements Initializable {
         }
 
         /**
-         * TODO: FINISH JAVADOC COMMENT
+         * Teilt der Webview mit, welche Kommentare zu welchem Beitrag gehören, und dass diese angezeigt werden sollen
          *
-         * @param b
+         * @param b Beitrag dessen Kommentare angezeigz werden sollen
          */
         private void fillComments(Post b) {
-            System.out.println(" AID=" + b.getId() + " Kommentare=" + b.getComments().size());    //FIXME: debug only
+            System.out.println(" BID=" + b.getId() + " Kommentare=" + b.getComments().size());
             for (int j = 0; j < b.getComments().size(); j++) {
                 Comment k = b.getComments().get(j);
                 String script = String.format("displayComment(%d, %d, '%s', '%s', '%s', %b)", k.getId(), b.getId(), k.getAuthor().getUsername(), k.getText(), k.getDate(), k.getAuthor().getIsBlogger());

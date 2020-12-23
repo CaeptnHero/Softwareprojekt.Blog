@@ -134,9 +134,9 @@ function displayArticle(ID, Verfasser, Title, Text, Date, isBlogger) {
 }
 
 /**
- * TODO: FINISH JAVADOC COMMENT
+ * Fügt dem Beitrag bei dem der 'Kommentieren' Button gedrückt ein Formular hinzu, um ein Kommentar verfassen zu können
  *
- * @param event
+ * @param Eventparameter
  */
 function commentButtonClick(event) {
     let parent = event.currentTarget.parentElement.parentElement;
