@@ -73,9 +73,8 @@ public class MainController extends Application {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     *
-     * @param event
+     * Event zum verarbeiten vom Button Klick vom Login-Button
+     * Entnimmt Logininformationen aus zugehörigen Textboxen und fuehrt einen Loginversuch aus
      */
     @FXML
     private void handleButtonLoginAction(ActionEvent event) {
@@ -106,9 +105,8 @@ public class MainController extends Application {
     }
 
     /**
-     * TODO: FINISH JAVADOC COMMENT
-     *
-     * @param event
+     * Event zum verarbeiten vom Button Klick vom Registrierungs-Button
+     * Entnimmt Registrierungsinformationen aus zugehörigen Textboxen und fuehrt einen Registrierungsversuch aus
      */
     @FXML
     private void handleButtonRegisterAction(ActionEvent event) {
