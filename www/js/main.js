@@ -88,8 +88,10 @@ function addPageNumbers(number) {
 function changePage(pagenumber) {
     clearArticles();
     let elements = document.querySelectorAll(`footer > nav > ul > li > a`);
-    elements[this.currPage - 1].classList.remove("active");
-    elements[pagenumber - 1].classList.add("active");
+    if (elements.length !== 0) {
+        elements[this.currPage - 1].classList.remove("active");
+        elements[pagenumber - 1].classList.add("active");
+    }
     this.currPage = pagenumber;
     bridge.fillWeb(pagenumber);
 

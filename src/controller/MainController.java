@@ -88,17 +88,17 @@ public class MainController extends Application {
             try {
                 currUser = AuthenticationController.login(tfNameLogin.getText(), pfPasswordLogin.getText());
                 if (currUser != null) {
-                    setStatus("Currently logged in as: " + currUser);
-                    btLogin.setText("Log off");
+                    setStatus("Eingeloggt als: " + currUser);
+                    btLogin.setText("Logoff");
                     tfNameLogin.setDisable(true);
                     pfPasswordLogin.setDisable(true);
                     tfNameLogin.setText("");
                     pfPasswordLogin.setText("");
                 } else {
-                    setStatus("Login Failed! Wrong Username or Password");
+                    setStatus("Login Fehlgeschlagen! Falscher Name/Passwort");
                 }
             } catch (Exception e) {
-                setStatus("Error in login.");
+                setStatus("Fehler in login.");
                 e.printStackTrace();
             }
         }

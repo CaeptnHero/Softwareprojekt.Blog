@@ -42,7 +42,7 @@ public class WebViewWindowController implements Initializable {
 
                 allArticles = DatabaseController.getArticles();
                 int usertype = currBlogger != null ? 1 : (currReader != null ? 0 : -1); //-1 = Visitor, 0 = Reader, 1 = Blogger
-                String username = currBlogger != null ? currBlogger.getUsername() : (currReader != null ? currReader.getUsername() : "Visitor");
+                String username = currBlogger != null ? currBlogger.getUsername() + " (Blogger)" : (currReader != null ? currReader.getUsername() + " (Reader)" : "Visitor");
                 jsBridge.executeJavascript(String.format("ready(' %s', %d, %d, %d);", username, usertype, currPage, scrollPosition));
             }
         });

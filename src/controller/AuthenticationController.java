@@ -61,7 +61,7 @@ public final class AuthenticationController {
             String sql = "INSERT INTO user VALUES (NULL, '" + username + "', '" + password + "', 0)";
             int success = DatabaseController.executeUpdate(sql);
             if (success != -1) {
-                showMessage("Benutzer wurde registirert");
+                showMessage("Benutzer wurde registriert");
                 return true;
             }
         } else if (n != null) {
