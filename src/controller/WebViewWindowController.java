@@ -62,7 +62,6 @@ public class WebViewWindowController implements Initializable {
     public void setUser(User u) {
         currBlogger = u instanceof Blogger ? (Blogger) u : null;
         currReader = u instanceof Reader ? (Reader) u : null;
-        System.out.println("Webview User: " + (u != null ? u : "Visitor"));
     }
 
     /**
@@ -162,8 +161,6 @@ public class WebViewWindowController implements Initializable {
          * @param numPages anzahl der Seiten
          */
         public void fillWeb(int numPages) {
-            System.out.println("Seite: " + numPages);
-
             int startIndex = (numPages - 1) * 5;
             for (int i = startIndex; i < allArticles.size(); i++) {
                 if (i >= startIndex + 5)
@@ -184,7 +181,6 @@ public class WebViewWindowController implements Initializable {
          * @param b Beitrag dessen Kommentare angezeigt werden sollen
          */
         private void fillComments(Post b) {
-            System.out.println(" BID=" + b.getId() + " Kommentare=" + b.getComments().size());
             for (int j = 0; j < b.getComments().size(); j++) {
                 Comment k = b.getComments().get(j);
                 String script = String.format("displayComment(%d, %d, '%s', '%s', '%s', %b)", k.getId(), b.getId(), k.getAuthor().getUsername(), k.getText(), k.getDate(), k.getAuthor().getIsBlogger());
@@ -224,7 +220,6 @@ public class WebViewWindowController implements Initializable {
 
             text = DatabaseController.escapeString(text);
 
-            System.out.println("createComment(oberBeitragID=" + parentID + ", text=" + text + ")");
             Post parent = findPost(parentID, parentIsArticle);
             if (currBlogger != null)
                 currBlogger.createComment(text, parent);
@@ -244,7 +239,6 @@ public class WebViewWindowController implements Initializable {
                 throw new UserViolationException();
 
             int dbid = Integer.parseInt(id.substring(id.indexOf('-') + 1));
-            System.out.println("delete Beitrag: " + dbid);
             if (isArticle)
                 currBlogger.deleteArticle((Article) findPost(dbid, isArticle));
             else

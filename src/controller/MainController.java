@@ -110,7 +110,6 @@ public class MainController extends Application {
      */
     @FXML
     private void handleButtonRegisterAction(ActionEvent event) {
-        System.out.println(tfNameRegister.getText() + " " + pfPasswordRegister.getText());
         try {
             boolean register = AuthenticationController.register(tfNameRegister.getText(), pfPasswordRegister.getText());
             if (register) {

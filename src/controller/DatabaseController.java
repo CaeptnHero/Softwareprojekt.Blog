@@ -28,7 +28,6 @@ public final class DatabaseController {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
             statement = connection.createStatement();
         } catch (SQLException e) {
-            System.out.println("Error opening connection to the Database: ");
             e.printStackTrace();
         }
     }
@@ -41,7 +40,6 @@ public final class DatabaseController {
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            System.out.println("Error closing connection to the Database: ");
             e.printStackTrace();
         }
     }
@@ -74,7 +72,6 @@ public final class DatabaseController {
      * @return ResultSet, welches alle Zeilen der ausgefuehrten Abfrage enthaelt
      */
     public static ResultSet executeQuery(String sql) {
-        System.out.println("SQL QUERY EXECUTED: " + sql);
         try {
             open();
             ResultSet result = statement.executeQuery(sql);
@@ -82,7 +79,6 @@ public final class DatabaseController {
             cachedResult.populate(result);
             return cachedResult;
         } catch (SQLException e) {
-            System.out.println("Error Executing database query: ");
             e.printStackTrace();
         } finally {
             close();
@@ -97,7 +93,6 @@ public final class DatabaseController {
      * @return neu generierter Schluessel
      */
     public static int executeUpdate(String sql) {
-        System.out.println("SQL UPDATE EXECUTED: " + sql);
         try {
             open();
             statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -105,7 +100,6 @@ public final class DatabaseController {
             if (res.next())
                 return res.getInt(1);
         } catch (SQLException e) {
-            System.out.println("Error Executing database update: ");
             e.printStackTrace();
         } finally {
             close();

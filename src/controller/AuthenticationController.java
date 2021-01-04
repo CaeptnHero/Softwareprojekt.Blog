@@ -32,11 +32,9 @@ public final class AuthenticationController {
         try {
             n = (User) DatabaseController.getUser(username);
             if (n == null || !n.getPassword().equals(password)) {
-                System.out.println("Login fehlgeschlagen");
                 showMessage("Login fehlgeschlagen");
                 return null;
             }
-            System.out.println("Login erfolgreich");
             showMessage("Login Erfolgreich");
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,7 +65,6 @@ public final class AuthenticationController {
         } else if (n != null) {
             showMessage("Benutzername ist vergeben");
         } else {
-            System.out.println("Fehlerhafte Registrierung");
             showMessage("Benutzername und Passwort müssen mindestens 5 Zeichen bestehen");
         }
         return false;
